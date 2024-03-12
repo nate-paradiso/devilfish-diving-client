@@ -1,4 +1,4 @@
-import { lusitana } from "../../src/app/fonts";
+import { lusitana } from "../styles/fonts";
 
 import "./globals.css";
 
