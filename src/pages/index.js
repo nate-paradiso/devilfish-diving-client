@@ -1,7 +1,8 @@
+import { PayPal } from "../components/paypal";
 export default function Home() {
   return (
     <main>
-      <div> hello world</div>
+      <PayPal />
     </main>
   );
 }
