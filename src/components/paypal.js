@@ -1,39 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 // Renders errors or successfull transactions on the screen.
 function Message({ content }) {
   return <p>{content}</p>;
 }
-
-const url = process.env.NEXT_PUBLIC_BACKEND_URL;
-console.log(url);
+const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+console.log(serverUrl);
 export const PayPal = () => {
   const initialOptions = {
-    "client-id": process.env.PAYPAL_CLIENT_ID,
-    "enable-funding": "card",
-    "disable-funding": "paylater,venmo",
+    intent: "capture",
+    "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
+    "enable-funding": "venmo,card",
+    "disable-funding": "paylater",
     "data-sdk-integration-source": "integrationbuilder_sc",
   };
 
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    // Fetch test endpoint from server
-    fetch(`${url}/api/test`)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        setMessage(data.message);
-      })
-      .catch(error => {
-        console.error("Error fetching test endpoint:", error);
-      });
-  }, []); // Run this effect only once on component mount
-
   return (
-    <div className="App">
-      <PayPalScriptProvider options={initialOptions}>
+    <PayPalScriptProvider options={initialOptions}>
+      <div className="App">
         <PayPalButtons
           style={{
             shape: "rect",
@@ -41,24 +28,25 @@ export const PayPal = () => {
           }}
           createOrder={async () => {
             try {
-              const response = await fetch("/api/orders", {
+              const response = await fetch(`${serverUrl}/api/orders`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
                 },
+
                 // use the "body" param to optionally pass additional order information
                 // like product ids and quantities
+
                 body: JSON.stringify({
-                  cart: [
-                    {
-                      id: "YOUR_PRODUCT_ID",
-                      quantity: "YOUR_PRODUCT_QUANTITY",
-                    },
-                  ],
+                  trip: {
+                    description: "dive trip",
+                    cost: "200.00",
+                  },
                 }),
               });
 
               const orderData = await response.json();
+              // console.log(orderData);
 
               if (orderData.id) {
                 return orderData.id;
@@ -77,7 +65,7 @@ export const PayPal = () => {
           }}
           onApprove={async (data, actions) => {
             try {
-              const response = await fetch(`/api/orders/${data.orderID}/capture`, {
+              const response = await fetch(`${serverUrl}/api/orders/${data.orderID}/capture`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -103,9 +91,7 @@ export const PayPal = () => {
                 // (3) Successful transaction -> Show confirmation or thank you message
                 // Or go to another URL:  actions.redirect('thank_you.html');
                 const transaction = orderData.purchase_units[0].payments.captures[0];
-                setMessage(
-                  `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`,
-                );
+                setMessage("Payment Successful. Thank you!");
                 console.log("Capture result", orderData, JSON.stringify(orderData, null, 2));
               }
             } catch (error) {
@@ -114,8 +100,8 @@ export const PayPal = () => {
             }
           }}
         />
-      </PayPalScriptProvider>
-      <Message content={message} />
-    </div>
+        <Message content={message} />
+      </div>
+    </PayPalScriptProvider>
   );
 };
