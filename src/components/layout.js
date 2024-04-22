@@ -8,7 +8,7 @@ const metadata = {
 
 const RootLayout = ({ children }) => {
   return (
-    <div>
+    <>
       <Head>
         {" "}
         {/* Use Head component to manage metadata */}
@@ -17,11 +17,8 @@ const RootLayout = ({ children }) => {
       </Head>
 
       {/* Main content */}
-      <main>{children}</main>
-
-      {/* Footer */}
-      <footer>{/* Footer content */}</footer>
-    </div>
+      <>{children}</>
+    </>
   );
 };
 

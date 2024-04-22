@@ -1,12 +1,14 @@
-import { PayPal } from "../components/paypal";
+// import { PayPal } from "../components/paypal";
 import { Header } from "../components/Header";
 
 export default function Home() {
   return (
     <main>
       <Header />
-      <div>hhhhomepage</div>
-      <PayPal />
+
+      <div></div>
+
+      {/* <PayPal /> */}
     </main>
   );
 }
