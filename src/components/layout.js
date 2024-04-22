@@ -1,17 +1,20 @@
-import { lusitana } from "../styles/fonts";
+import React from "react";
+import Head from "next/head"; // Import Head component from Next.js
 
 const metadata = {
   title: "Devilfish Diving LLC",
   description: "Devilfish Diving LLC is a scuba diving charter based in Seattle, Washington.",
 };
+
 const RootLayout = ({ children }) => {
   return (
-    <div className={`${lusitana.className} antialiased`}>
-      {/* Header */}
-      <head>
-        <h1>{metadata.title}</h1>
-        <p>{metadata.description}</p>
-      </head>
+    <div>
+      <Head>
+        {" "}
+        {/* Use Head component to manage metadata */}
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+      </Head>
 
       {/* Main content */}
       <main>{children}</main>
