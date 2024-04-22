@@ -1,4 +1,4 @@
-// import { PayPal } from "../components/paypal";
+import { PayPal } from "../components/paypal";
 import { Header } from "../components/Header";
 
 export default function Home() {
@@ -6,7 +6,7 @@ export default function Home() {
     <main>
       <Header />
       <div>hhhhomepage</div>
-      {/* <PayPal /> */}
+      <PayPal />
     </main>
   );
 }
