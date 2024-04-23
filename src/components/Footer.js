@@ -1,5 +1,4 @@
-import React from "react";
-import Link from "next/link";
+import Image from "next/image";
 
 const Footer = () => {
   return (
@@ -23,8 +22,15 @@ const Footer = () => {
         <p>Copyright Devilfish Diving LLC</p>
       </div>
       <div>
+        {/* Replace <img> with <Image> */}
         <a href="https://www.instagram.com/" target="blank">
-          <img className="w-8" src="/images/icons8-instagram.svg" alt="Instagram Icon" />
+          <Image
+            className="w-8"
+            src="/images/icons8-instagram.svg"
+            alt="Instagram Icon"
+            width={32}
+            height={32}
+          />
         </a>
       </div>
     </div>
