@@ -34,6 +34,11 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section>
+        <div>
+          <img src="" alt="" />
+        </div>
+      </section>
     </main>
   );
 }
