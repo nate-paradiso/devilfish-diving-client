@@ -9,7 +9,7 @@ export const theme = {
     colors: {
       darkBlue: "#5682c2",
       lightBlue: "#416394",
-      hoverColor: "",
+      // hoverColor: "",
     },
   },
   variants: {
