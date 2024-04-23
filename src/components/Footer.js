@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <div
+    <footer
       className="flex justify-between items-center text-white text-sm 
       bg-lightBlue
       h-32
@@ -33,7 +33,7 @@ const Footer = () => {
           />
         </a>
       </div>
-    </div>
+    </footer>
   );
 };
 

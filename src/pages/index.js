@@ -6,10 +6,12 @@ export default function Home() {
   return (
     <main>
       <Hero />
+      <div className="flex justify-center m-8">
+        <button className="border-solid p-2 rounded-full border-2 border-sky-500 ">
+          Book a Dive
+        </button>
+      </div>
       <section className="flex justify-center items-center flex-col">
-        <div className="">
-          <h2 className="m-8 text-xl text-#0E1111">Serving Marine Area 10</h2>
-        </div>
         <div
           className="bg-cover bg-center w-full flex justify-center items-center"
           style={{
@@ -67,6 +69,9 @@ export default function Home() {
               />
             </div>
           </div>
+        </div>
+        <div className="">
+          <h2 className="m-8 text-xl font-karla text-#0E1111">Serving Marine Area 10</h2>
         </div>
       </section>
     </main>
