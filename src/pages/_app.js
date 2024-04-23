@@ -1,12 +1,12 @@
 import React from "react";
-import RootLayout from "../components/layout";
+import Layout from "../components/layout";
 import "../styles/tailwind.css";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <RootLayout>
+    <Layout>
       <Component {...pageProps} />
-    </RootLayout>
+    </Layout>
   );
 }
 

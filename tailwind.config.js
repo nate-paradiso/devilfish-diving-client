@@ -4,9 +4,9 @@ export const content = [
   "./src/components/**/*.{js,ts,jsx,tsx}",
 ];
 export const theme = {
+  fontFamily: {},
   extend: {
     colors: {
-      linkHover: "#21334f",
       darkBlue: "#21334f",
       lightBlue: "#5682c2",
     },
