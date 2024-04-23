@@ -1,42 +1,72 @@
-// import { PayPal } from "../components/paypal";
-
+import React from "react";
+import Image from "next/image";
 import Hero from "../components/Hero";
 
 export default function Home() {
   return (
     <main>
-      {/* <PayPal /> */}
       <Hero />
       <section className="flex justify-center items-center flex-col">
-        {/* Use Tailwind CSS for background image and opacity */}
         <div className="">
-          <h2 className="m-8 text-xl color-white">Serving Marine Area 10 </h2>
+          <h2 className="m-8 text-xl text-#0E1111">Serving Marine Area 10</h2>
         </div>
         <div
-          className="bg-cover bg-center w-full flex justify-center align-middle"
+          className="bg-cover bg-center w-full flex justify-center items-center"
           style={{
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/MA10-1.png')`, // Add linear gradient with desired opacity,
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/MA10-1.png')`,
+            height: "300px", // Adjust height as needed
           }}
         >
-          <div className=" justify-evenly flex flex-wrap align-middle m-4">
+          <div className="justify-evenly flex flex-wrap items-center m-4">
             <div className="flex justify-evenly flex-col">
-              <img className="w-16 m-2" src="/images/scuba.png" alt="Mask" />
-              <img className="w-16 m-2" src="/images/diving (1).png" alt="Scuba Tanks" />
+              <Image
+                className="w-16 m-2"
+                src="/images/scuba.png"
+                alt="Mask"
+                width={64}
+                height={64}
+              />
+              <Image
+                className="w-16 m-2"
+                src="/images/tank.png"
+                alt="Scuba Tanks"
+                width={64}
+                height={64}
+              />
             </div>
             <div className="flex justify-evenly flex-col">
-              <img className="w-16 m-2" src="/images/boat.png" alt="Boat" />
-              <img className="w-16 m-2" src="/images/life.png" alt="Life Ring" />
+              <Image
+                className="w-16 m-2"
+                src="/images/boat.png"
+                alt="Boat"
+                width={64}
+                height={64}
+              />
+              <Image
+                className="w-16 m-2"
+                src="/images/life.png"
+                alt="Life Ring"
+                width={64}
+                height={64}
+              />
             </div>
             <div className="flex justify-evenly flex-col">
-              <img className="w-16 m-2" src="/images/camera.png" alt="Camera" />
-              <img className="w-16 m-2" src="/images/fins.png" alt="Fins" />
+              <Image
+                className="w-16 m-2"
+                src="/images/camera.png"
+                alt="Camera"
+                width={64}
+                height={64}
+              />
+              <Image
+                className="w-16 m-2"
+                src="/images/fins.png"
+                alt="Fins"
+                width={64}
+                height={64}
+              />
             </div>
           </div>
-        </div>
-      </section>
-      <section>
-        <div>
-          <img src="" alt="" />
         </div>
       </section>
     </main>
