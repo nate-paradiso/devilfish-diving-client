@@ -9,6 +9,9 @@ export const Nav = () => {
       w-full
       border-none p-4 "
     >
+      <Link className="mr-2 transition-colors duration-200 hover:text-darkBlue" href="/">
+        Home
+      </Link>
       <Link className="mr-2 transition-colors duration-200 hover:text-darkBlue" href="/DiveSites">
         Dive Sites
       </Link>

@@ -8,21 +8,29 @@ export default function Home() {
       {/* <PayPal /> */}
       <Hero />
       <section className="flex justify-center items-center flex-col">
-        <div className="bg-lightBlue">
-          <h2 className="m-8 text-xl">Serving Marine Area 10 </h2>
+        {/* Use Tailwind CSS for background image and opacity */}
+        <div className="">
+          <h2 className="m-8 text-xl color-white">Serving Marine Area 10 </h2>
         </div>
-        <div className="flex justify-evenly flex flex-wrap m-4">
-          <div>
-            <img className="w-16 m-2" src="/images/scuba.svg" alt="Scuba Tanks" />
-            <img className="w-16 m-2" src="/images/diving.svg" alt="Scuba Tanks" />
-          </div>
-          <div>
-            <img className="w-16 m-2" src="/images/anchor.svg" alt="Anchor" />
-            <img className="w-16 m-2" src="/images/life.svg" alt="Life Ring" />
-          </div>
-          <div>
-            <img className="w-16 m-2" src="/images/whale.svg" alt="Whale" />
-            <img className="w-16 m-2" src="/images/sunset.svg" alt="Sunset" />
+        <div
+          className="bg-cover bg-center w-full flex justify-center align-middle"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/MA10-1.png')`, // Add linear gradient with desired opacity,
+          }}
+        >
+          <div className=" justify-evenly flex flex-wrap align-middle m-4">
+            <div className="flex justify-evenly flex-col">
+              <img className="w-16 m-2" src="/images/scuba.png" alt="Mask" />
+              <img className="w-16 m-2" src="/images/diving (1).png" alt="Scuba Tanks" />
+            </div>
+            <div className="flex justify-evenly flex-col">
+              <img className="w-16 m-2" src="/images/boat.png" alt="Boat" />
+              <img className="w-16 m-2" src="/images/life.png" alt="Life Ring" />
+            </div>
+            <div className="flex justify-evenly flex-col">
+              <img className="w-16 m-2" src="/images/camera.png" alt="Camera" />
+              <img className="w-16 m-2" src="/images/fins.png" alt="Fins" />
+            </div>
           </div>
         </div>
       </section>

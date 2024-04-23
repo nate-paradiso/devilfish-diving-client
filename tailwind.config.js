@@ -7,8 +7,9 @@ export const theme = {
   fontFamily: {},
   extend: {
     colors: {
-      darkBlue: "#21334f",
-      lightBlue: "#5682c2",
+      darkBlue: "#5682c2",
+      lightBlue: "#416394",
+      hoverColor: "",
     },
   },
   variants: {
