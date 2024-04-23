@@ -15,6 +15,7 @@ const RootLayout = ({ children }) => {
         {/* Use Head component to manage metadata */}
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
+        <link rel="icon" href="/octocon.ico" sizes="any" />
       </Head>
 
       {/* Main content */}
