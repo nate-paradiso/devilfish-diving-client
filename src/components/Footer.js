@@ -12,7 +12,7 @@ const Footer = () => {
       <div>
         <p>
           <a
-            className="transition-colors duration-200 hover:text-darkBlue"
+            className="transition-colors duration-200 hover:text-gray-300"
             href="mailto:devilfishdiving@gmail.com"
           >
             devilfishdiving@gmail.com

@@ -7,7 +7,9 @@ function Message({ content }) {
 }
 const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 console.log(serverUrl);
-export const PayPal = () => {
+
+export const PayPal = ({ selectedDate }) => {
+  console.log(selectedDate, "from paypal");
   const initialOptions = {
     intent: "capture",
     "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
@@ -39,8 +41,9 @@ export const PayPal = () => {
 
                 body: JSON.stringify({
                   trip: {
-                    description: "dive trip",
-                    cost: "200.00",
+                    description: "Dive trip - 2 person on",
+                    cost: "300.00",
+                    diveDate: selectedDate,
                   },
                 }),
               });
