@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <div
+    <footer
       className="flex justify-between items-center text-white text-sm 
       bg-lightBlue
       h-32
@@ -12,7 +12,7 @@ const Footer = () => {
       <div>
         <p>
           <a
-            className="transition-colors duration-200 hover:text-darkBlue"
+            className="transition-colors duration-200 hover:text-gray-300"
             href="mailto:devilfishdiving@gmail.com"
           >
             devilfishdiving@gmail.com
@@ -33,7 +33,7 @@ const Footer = () => {
           />
         </a>
       </div>
-    </div>
+    </footer>
   );
 };
 
