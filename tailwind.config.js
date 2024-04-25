@@ -5,14 +5,24 @@ export const content = [
   "./app/**/*.{js,ts,jsx,tsx}",
 ];
 export const theme = {
-  fontFamily: {
-    sans: ["var(--font-roboto)"],
-  },
   extend: {
+    fontFamily: {
+      sans: ["var(--font-roboto)", "sans-serif"],
+    },
+    fontWeight: {
+      thin: 100,
+      light: 300,
+      normal: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700,
+      extrabold: 800,
+      black: 900,
+    },
     colors: {
       darkBlue: "#5682c2",
       lightBlue: "#416394",
-      // hoverColor: "",
+      hoverColor: "rgb(209 213 219)",
     },
   },
   variants: {

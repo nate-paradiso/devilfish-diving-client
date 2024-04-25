@@ -9,20 +9,20 @@ export const Nav = () => {
       w-full
       border-none p-4 "
     >
-      <Link className="mr-2 transition-colors duration-200 hover:text-gray-300" href="/">
+      <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/">
         Home
       </Link>
-      <Link className="mr-2 transition-colors duration-200 hover:text-gray-300" href="/DiveSites">
+      <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/DiveSites">
         Dive Sites
       </Link>
 
-      <Link className="mr-2 transition-colors duration-200 hover:text-gray-300" href="/Vessel">
+      <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/Vessel">
         Vessel
       </Link>
-      <Link className="mr-2 transition-colors duration-200 hover:text-gray-300" href="/About">
+      <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/About">
         About
       </Link>
-      <Link className="mr-2 transition-colors duration-200 hover:text-gray-300" href="/Calendar">
+      <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/Calendar">
         Calendar
       </Link>
       {/* <Link className="mr-2 transition-colors duration-200 hover:text-darkBlue" href="/Book">

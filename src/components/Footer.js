@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -12,13 +13,20 @@ const Footer = () => {
       <div>
         <p>
           <a
-            className="transition-colors duration-200 hover:text-gray-300"
+            className="transition-colors duration-200 hover:text-hoverColor"
             href="mailto:devilfishdiving@gmail.com"
           >
             devilfishdiving@gmail.com
           </a>
         </p>
-
+        <a className="hover:text-hoverColor" href="https://www.devilfishdive.com/">
+          devilfishdive.com
+        </a>
+        <p>
+          <Link className="hover:text-hoverColor" href="/">
+            Refund Policy
+          </Link>
+        </p>
         <p>Copyright Devilfish Diving LLC</p>
       </div>
       <div>
