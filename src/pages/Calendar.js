@@ -74,6 +74,10 @@ const Calendar = () => {
     return ![1, 2, 3, 4].includes(dayOfWeek); // Return false for Monday to Thursday
   };
 
+  const calendarOptions = {
+    // Other options...
+    longPressDelay: 0, // Shorten the long press delay to 0 milliseconds
+  };
   return (
     <>
       <div className="m-4">
@@ -94,6 +98,7 @@ const Calendar = () => {
             right: "prev,next",
           }}
           eventClick={handleEventClick}
+          {...calendarOptions} // Spread the calendar options here
         />
         {selectedDate && (
           <div>
