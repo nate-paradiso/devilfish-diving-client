@@ -233,109 +233,196 @@ const ReleaseForm = () => {
   }, []); // Empty dependency array ensures this runs once after initial render
 
   return (
-    <div>
+    <section className="max-w-[800px] mx-auto">
       {" "}
       <form
-        className="gform"
+        className="gform "
         method="POST"
         data-email="example@gmail.com"
         action="https://script.google.com/macros/s/AKfycbyKtArGioofU_EUBp2bfM8L9GxFv2TVhLCs27pCwzq9Pqz1hVZkSysoj8vRFP6YzUBOow/exec"
       >
-        <label className="mt-2 flex flex-col">
-          Diver 1 First Name:
-          <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            className="border-solid p-2  border-2 border-darkBlue  w-64"
-          />
-        </label>
-        <label className="mt-2 flex flex-col">
-          {" "}
-          Diver 1 Last Name:
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            className="border-solid p-2  border-2 border-darkBlue  w-64"
-          />
-        </label>
-        <label className="mt-2 flex flex-col">
-          {" "}
-          Diver 1 Email:
-          <input
-            className="border-solid p-2  border-2 border-darkBlue  w-64"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </label>
-        <label className="mt-2 flex flex-col">
-          {" "}
-          Diver 1 Certification Number:
-          <input
-            className="border-solid p-2  border-2 border-darkBlue  w-64"
-            type="text"
-            name="certificationNumber"
-            value={formData.certificationNumber}
-            onChange={handleChange}
-          />
-        </label>
-        <label className="mt-2 flex flex-col">
-          {" "}
-          Diver 1 DAN Insurance Number:
-          <input
-            className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
-            type="text"
-            name="danInsuranceNumber"
-            value={formData.danInsuranceNumber}
-            onChange={handleChange}
-          />
-        </label>
-        <label className="mt-2 flex flex-col">
-          {" "}
-          Diver 1 Emergency Contact Name:
-          <input
-            className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
-            type="text"
-            name="emergencyContactName"
-            value={formData.emergencyContactName}
-            onChange={handleChange}
-          />
-        </label>
-        <label className="mt-2 flex flex-col">
-          {" "}
-          Diver 1 Emergency Contact Phone Number:
-          <input
-            className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
-            type="text"
-            name="emergencyContactPhone"
-            value={formData.emergencyContactPhone}
-            onChange={handleChange}
-          />
-        </label>
-        <label className="mt-2 flex flex-col">
-          {" "}
-          Diving Date:
-          <input
-            className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
-            type="date"
-            name="divingDate"
-            value={formData.divingDate}
-            onChange={handleChange}
-          />
-        </label>
-        <button type="submit" className="border-solid p-2 bg-blue-500 text-white w-64 mt-4">
-          Submit
-        </button>
+        <div className=" m-2 flex justify-center flex-col lg:flex-row">
+          <div className="m-2 ">
+            <h2 className="text-xl">Diver 1</h2>
+            <label className=" mt-2 flex flex-col ">
+              Diver 1 First Name:
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                className="border-solid p-2  border-2 border-darkBlue  w-64"
+              />
+            </label>
+            <label className="mt-2 flex flex-col">
+              {" "}
+              Diver 1 Last Name:
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                className="border-solid p-2  border-2 border-darkBlue  w-64"
+              />
+            </label>
+            <label className="mt-2 flex flex-col">
+              {" "}
+              Diver 1 Email:
+              <input
+                className="border-solid p-2  border-2 border-darkBlue  w-64"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </label>
+            <label className="mt-2 flex flex-col">
+              {" "}
+              Diver 1 Certification Number:
+              <input
+                className="border-solid p-2  border-2 border-darkBlue  w-64"
+                type="text"
+                name="certificationNumber"
+                value={formData.certificationNumber}
+                onChange={handleChange}
+              />
+            </label>
+            <label className="mt-2 flex flex-col">
+              {" "}
+              Diver 1 DAN Insurance Number:
+              <input
+                className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
+                type="text"
+                name="danInsuranceNumber"
+                value={formData.danInsuranceNumber}
+                onChange={handleChange}
+              />
+            </label>
+            <label className="mt-2 flex flex-col">
+              {" "}
+              Diver 1 Emergency Contact Name:
+              <input
+                className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
+                type="text"
+                name="emergencyContactName"
+                value={formData.emergencyContactName}
+                onChange={handleChange}
+              />
+            </label>
+            <label className="mt-2 flex flex-col">
+              {" "}
+              Diver 1 Emergency Contact Phone:
+              <input
+                className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
+                type="text"
+                name="emergencyContactPhone"
+                value={formData.emergencyContactPhone}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+
+          <div className="m-2">
+            <h2 className="text-xl">Diver 2</h2>
+            <label className="mt-2 flex flex-col">
+              Diver 2 First Name:
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                className="border-solid p-2  border-2 border-darkBlue  w-64"
+              />
+            </label>
+            <label className="mt-2 flex flex-col">
+              {" "}
+              Diver 2 Last Name:
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                className="border-solid p-2  border-2 border-darkBlue  w-64"
+              />
+            </label>
+            <label className="mt-2 flex flex-col">
+              {" "}
+              Diver 2 Email:
+              <input
+                className="border-solid p-2  border-2 border-darkBlue  w-64"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </label>
+            <label className="mt-2 flex flex-col">
+              {" "}
+              Diver 2 Certification Number:
+              <input
+                className="border-solid p-2  border-2 border-darkBlue  w-64"
+                type="text"
+                name="certificationNumber"
+                value={formData.certificationNumber}
+                onChange={handleChange}
+              />
+            </label>
+            <label className="mt-2 flex flex-col">
+              {" "}
+              Diver 2 DAN Insurance Number:
+              <input
+                className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
+                type="text"
+                name="danInsuranceNumber"
+                value={formData.danInsuranceNumber}
+                onChange={handleChange}
+              />
+            </label>
+            <label className="mt-2 flex flex-col">
+              {" "}
+              Diver 2 Emergency Contact Name:
+              <input
+                className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
+                type="text"
+                name="emergencyContactName"
+                value={formData.emergencyContactName}
+                onChange={handleChange}
+              />
+            </label>
+            <label className="mt-2 flex flex-col">
+              {" "}
+              Diver 2 Emergency Contact Phone:
+              <input
+                className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
+                type="text"
+                name="emergencyContactPhone"
+                value={formData.emergencyContactPhone}
+                onChange={handleChange}
+              />
+            </label>
+            <label className="mt-2 flex flex-col">
+              {" "}
+              Diving Date:
+              <input
+                className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
+                type="date"
+                name="divingDate"
+                value={formData.divingDate}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+        </div>
+        <div className="flex flex-col">
+          <button className="m-4 border-solid p-2 border-2 border-sky-500 mt-1 w-20">
+            <Link href="/Calendar">Back</Link>
+          </button>
+          <button type="submit" className=" m-4 border-solid p-2 border-2 border-sky-500 mt-1 w-64">
+            Submit and Pay
+          </button>
+        </div>
       </form>
-      <button className="border-solid p-2 border-2 border-sky-500 mt-1 w-20">
-        <Link href="/Calendar">Back</Link>
-      </button>
-    </div>
+    </section>
   );
 };
 

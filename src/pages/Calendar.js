@@ -102,7 +102,10 @@ const Calendar = () => {
   return (
     <div className="max-w-[800px] mx-auto">
       <div className="m-4 flex justify-center flex-col ">
-        <p>Welcome! Select an available day and choose to pay below. Max 2 divers per day.</p>
+        <p>
+          Welcome! Select an <span className="font-extrabold">Available</span> day then click next
+          to complete the forms. Max 2 divers per day.
+        </p>
         <br />
         <FullCalendar
           plugins={[dayGridPlugin, googleCalendarPlugin, interactionPlugin]}
