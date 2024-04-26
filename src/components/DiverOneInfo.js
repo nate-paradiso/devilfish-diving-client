@@ -1,12 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
 import Image from "next/image";
 
-const DiverOneInfo = () => {
-  const router = useRouter();
-  const { date } = router.query;
+const DiverOneInfo = ({ date }) => {
   console.log("from calendar", date);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -352,8 +348,11 @@ const DiverOneInfo = () => {
     }
   }, [date]);
 
+  const handleGoBack = () => {
+    router.back(); // Go back to the previous page
+  };
   return (
-    <section className="max-w-[800px] mx-auto">
+    <section className="max-w-[1200px] w-full">
       {" "}
       <form
         className="gform "
@@ -365,16 +364,16 @@ const DiverOneInfo = () => {
           <p className="contact__success">Thank you for your submission!</p>
         ) : (
           <>
-            <div className=" m-2 flex justify-center flex-col md:flex-row">
-              <div className="m-2">
-                <h2 className="text-xl">Diver 1</h2>
+            <h2 className="text-xl">Diver 1</h2>
+            <div className="  flex justify-center flex-col  md:flex-row md:justify-evenly ">
+              <div>
                 <label className=" mt-2 flex flex-col  ">Diver 1 First Name:</label>
                 <input
                   type="text"
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleInputChange}
-                  className="border-solid p-2  border-2 border-darkBlue   w-full"
+                  className="border-solid p-2  border-2 border-darkBlue   md:w-64  w-full h-[46px] "
                 />
                 {validationErrors.firstName && (
                   <span className="text-red-500">{validationErrors.firstName}</span>
@@ -385,14 +384,14 @@ const DiverOneInfo = () => {
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleInputChange}
-                  className="border-solid p-2  border-2 border-darkBlue  w-full"
+                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
                 />
                 {validationErrors.lastName && (
                   <span className="text-red-500">{validationErrors.lastName}</span>
                 )}
                 <label className="mt-2 flex flex-col"> Diver 1 Email:</label>
                 <input
-                  className="border-solid p-2  border-2 border-darkBlue  w-full"
+                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
                   type="email"
                   name="email"
                   value={formData.email}
@@ -403,7 +402,7 @@ const DiverOneInfo = () => {
                 )}
                 <label className="mt-2 flex flex-col"> Diver 1 Birthday:</label>
                 <input
-                  className="border-solid p-2  border-2 border-darkBlue  w-full"
+                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
                   type="date"
                   name="birthday"
                   value={formData.birthday}
@@ -414,7 +413,7 @@ const DiverOneInfo = () => {
                 )}
                 <label className="mt-2 flex flex-col"> Diver 1 Address:</label>
                 <input
-                  className="border-solid p-2  border-2 border-darkBlue  w-full"
+                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
                   type="address"
                   name="address"
                   value={formData.address}
@@ -423,9 +422,12 @@ const DiverOneInfo = () => {
                 {validationErrors.address && (
                   <span className="text-red-500">{validationErrors.address}</span>
                 )}
+              </div>
+
+              <div>
                 <label className="mt-2 flex flex-col"> Diver 1 Certifying Agency:</label>
                 <input
-                  className="border-solid p-2  border-2 border-darkBlue  w-full"
+                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
                   type="text"
                   name="certifyingAgency"
                   value={formData.certifyingAgency}
@@ -436,7 +438,7 @@ const DiverOneInfo = () => {
                 )}
                 <label className="mt-2 flex flex-col"> Diver 1 Certification Number:</label>
                 <input
-                  className="border-solid p-2  border-2 border-darkBlue  w-full"
+                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
                   type="text"
                   name="certificationNumber"
                   value={formData.certificationNumber}
@@ -450,7 +452,7 @@ const DiverOneInfo = () => {
 
                 <label className="mt-2 flex flex-col"> Diver 1 DAN Insurance Number:</label>
                 <input
-                  className="border-solid p-2  border-2 border-darkBlue  w-full mb-2"
+                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
                   type="text"
                   name="danInsuranceNumber"
                   value={formData.danInsuranceNumber}
@@ -464,7 +466,7 @@ const DiverOneInfo = () => {
 
                 <label className="mt-2 flex flex-col"> Diver 1 Emergency Contact Name:</label>
                 <input
-                  className="border-solid p-2  border-2 border-darkBlue  w-full mb-2"
+                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]   "
                   type="text"
                   name="emergencyContactName"
                   value={formData.emergencyContactName}
@@ -478,7 +480,7 @@ const DiverOneInfo = () => {
 
                 <label className="mt-2 flex flex-col"> Diver 1 Emergency Contact Phone:</label>
                 <input
-                  className="border-solid p-2  border-2 border-darkBlue  w-full mb-2"
+                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]    "
                   type="text"
                   name="emergencyContactPhone"
                   value={formData.emergencyContactPhone}
@@ -492,7 +494,7 @@ const DiverOneInfo = () => {
 
                 <label className="mt-2 flex flex-col"> Diving Date:</label>
                 <input
-                  className="border-solid p-2  border-2 border-darkBlue  w-full mb-2"
+                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
                   type="date"
                   name="divingDate"
                   value={formData.divingDate}
@@ -504,7 +506,7 @@ const DiverOneInfo = () => {
               </div>
             </div>
 
-            <div className="m-4">
+            <div className="mt-4">
               <h2 className="text-xl">Liability Waiver</h2>
               <p>
                 By signing below, I acknowledge that I have read and understood the terms of the
@@ -525,15 +527,15 @@ const DiverOneInfo = () => {
             </div>
 
             <div className="flex flex-row justify-between">
-              <button className="m-4 border-solid p-2 border-2 border-sky-500 mt-1 w-20">
-                <Link href="/Calendar">Back</Link>
-              </button>
+              {/* <button
+                onClick={handleGoBack}
+                className="m-4 border-solid p-2 border-2 border-sky-500 mt-1 w-20"
+              >
+                Back
+              </button> */}
               <div>
                 {isButtonVisible ? (
-                  <button
-                    className="m-4 border-solid p-2 border-2 border-sky-500 mt-1"
-                    type="submit"
-                  >
+                  <button className="mt-4 border-solid p-2 border-2 border-sky-500 " type="submit">
                     Submit and Pay
                   </button>
                 ) : (
