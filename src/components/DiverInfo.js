@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-const DiverOneInfo = ({ date }) => {
+const DiverInfo = ({ date }) => {
   console.log("from calendar", date);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -102,6 +102,7 @@ const DiverOneInfo = ({ date }) => {
       form.setAttribute("data-submitting", "true"); // Mark the form as submitting
 
       let submitButton = form.querySelector("button[type=submit]");
+      console.log(submitButton);
       submitButton.disabled = true; // Disable the submit button
 
       let formData = getFormData(form);
@@ -115,10 +116,10 @@ const DiverOneInfo = ({ date }) => {
       }
 
       // Basic form validation
-      if (!validateFirstName(data.name)) {
+      if (!validateFirstName(data.firstName)) {
         setValidationErrors(prevErrors => ({
           ...prevErrors,
-          name: "Please enter a valid first name.",
+          firstName: "Please enter a valid first name.",
         }));
         form.removeAttribute("data-submitting"); // Release the form from submitting state
         submitButton.disabled = false; // Re-enable the submit button
@@ -147,7 +148,7 @@ const DiverOneInfo = ({ date }) => {
       if (!validateBirthday(data.birthday)) {
         setValidationErrors(prevErrors => ({
           ...prevErrors,
-          message: "Please enter a birthday.",
+          birthday: "Please enter a birthday.",
         }));
         form.removeAttribute("data-submitting"); // Release the form from submitting state
         submitButton.disabled = false; // Re-enable the submit button
@@ -156,7 +157,7 @@ const DiverOneInfo = ({ date }) => {
       if (!validateAddress(data.address)) {
         setValidationErrors(prevErrors => ({
           ...prevErrors,
-          message: "Please enter a address.",
+          address: "Please enter a address.",
         }));
         form.removeAttribute("data-submitting"); // Release the form from submitting state
         submitButton.disabled = false; // Re-enable the submit button
@@ -165,7 +166,7 @@ const DiverOneInfo = ({ date }) => {
       if (!validateCertifyingAgency(data.certifyingAgency)) {
         setValidationErrors(prevErrors => ({
           ...prevErrors,
-          message: "Please enter a certification agency.",
+          certifyingAgency: "Please enter a certification agency.",
         }));
         form.removeAttribute("data-submitting"); // Release the form from submitting state
         submitButton.disabled = false; // Re-enable the submit button
@@ -174,7 +175,7 @@ const DiverOneInfo = ({ date }) => {
       if (!validateCertificationNumber(data.certificationNumber)) {
         setValidationErrors(prevErrors => ({
           ...prevErrors,
-          message: "Please enter a certification number.",
+          certificationNumber: "Please enter a certification number.",
         }));
         form.removeAttribute("data-submitting"); // Release the form from submitting state
         submitButton.disabled = false; // Re-enable the submit button
@@ -183,7 +184,7 @@ const DiverOneInfo = ({ date }) => {
       if (!validateDanInsuranceNumber(data.danInsuranceNumber)) {
         setValidationErrors(prevErrors => ({
           ...prevErrors,
-          message: "Please enter a DAN insurance number.",
+          danInsuranceNumber: "Please enter a DAN insurance number.",
         }));
         form.removeAttribute("data-submitting"); // Release the form from submitting state
         submitButton.disabled = false; // Re-enable the submit button
@@ -192,7 +193,7 @@ const DiverOneInfo = ({ date }) => {
       if (!validateEmergencyContactName(data.emergencyContactName)) {
         setValidationErrors(prevErrors => ({
           ...prevErrors,
-          message: "Please enter an emergency contact name.",
+          emergencyContactName: "Please enter an emergency contact name.",
         }));
         form.removeAttribute("data-submitting"); // Release the form from submitting state
         submitButton.disabled = false; // Re-enable the submit button
@@ -201,7 +202,7 @@ const DiverOneInfo = ({ date }) => {
       if (!validateDivingDate(data.divingDate)) {
         setValidationErrors(prevErrors => ({
           ...prevErrors,
-          message: "Please enter the diving date.",
+          divingDate: "Please enter the diving date.",
         }));
         form.removeAttribute("data-submitting"); // Release the form from submitting state
         submitButton.disabled = false; // Re-enable the submit button
@@ -210,7 +211,7 @@ const DiverOneInfo = ({ date }) => {
       if (!validateEmergencyContactPhone(data.emergencyContactPhone)) {
         setValidationErrors(prevErrors => ({
           ...prevErrors,
-          message: "Please enter an emergency contact phone number.",
+          emergencyContactPhone: "Please enter an emergency contact phone number.",
         }));
         form.removeAttribute("data-submitting"); // Release the form from submitting state
         submitButton.disabled = false; // Re-enable the submit button
@@ -280,8 +281,8 @@ const DiverOneInfo = ({ date }) => {
       xhr.send(encoded);
     }
 
-    function validateFirstName(name) {
-      return (name ?? "").trim() !== ""; // Check if the name is not empty
+    function validateFirstName(firstName) {
+      return (firstName ?? "").trim() !== ""; // Check if the name is not empty
     }
 
     function validateLastName(lastName) {
@@ -295,7 +296,8 @@ const DiverOneInfo = ({ date }) => {
     }
 
     function validateBirthday(birthday) {
-      return birthday.trim() !== ""; // Check if the message is not empty
+      // Check if the birthday is a valid date
+      return !isNaN(Date.parse(birthday));
     }
     function validateAddress(address) {
       return address.trim() !== ""; // Check if the name is not empty
@@ -316,8 +318,10 @@ const DiverOneInfo = ({ date }) => {
       return emergencyContactPhone.trim() !== ""; // Check if the name is not empty
     }
     function validateDivingDate(divingDate) {
-      return divingDate.trim() !== ""; // Check if the name is not empty
+      // Check if the birthday is a valid date
+      return !isNaN(Date.parse(divingDate));
     }
+
     // bind to the submit event of our form
     let forms = document.querySelectorAll("form.gform");
     for (let i = 0; i < forms.length; i++) {
@@ -348,9 +352,6 @@ const DiverOneInfo = ({ date }) => {
     }
   }, [date]);
 
-  const handleGoBack = () => {
-    router.back(); // Go back to the previous page
-  };
   return (
     <section className="max-w-[1200px] w-full">
       {" "}
@@ -364,145 +365,164 @@ const DiverOneInfo = ({ date }) => {
           <p className="contact__success">Thank you for your submission!</p>
         ) : (
           <>
-            <h2 className="text-xl">Diver 1</h2>
+            <h2 className="text-xl">Diver</h2>
             <div className="  flex justify-center flex-col  md:flex-row md:justify-evenly ">
               <div>
-                <label className=" mt-2 flex flex-col  ">Diver 1 First Name:</label>
-                <input
-                  type="text"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                  className="border-solid p-2  border-2 border-darkBlue   md:w-64  w-full h-[46px] "
-                />
-                {validationErrors.firstName && (
-                  <span className="text-red-500">{validationErrors.firstName}</span>
-                )}
-                <label className="mt-2 flex flex-col">Diver 1 Last Name:</label>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                />
-                {validationErrors.lastName && (
-                  <span className="text-red-500">{validationErrors.lastName}</span>
-                )}
-                <label className="mt-2 flex flex-col"> Diver 1 Email:</label>
-                <input
-                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                />
-                {validationErrors.email && (
-                  <span className="text-red-500">{validationErrors.email}</span>
-                )}
-                <label className="mt-2 flex flex-col"> Diver 1 Birthday:</label>
-                <input
-                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                  type="date"
-                  name="birthday"
-                  value={formData.birthday}
-                  onChange={handleInputChange}
-                />
-                {validationErrors.birthday && (
-                  <span className="text-red-500">{validationErrors.birthday}</span>
-                )}
-                <label className="mt-2 flex flex-col"> Diver 1 Address:</label>
-                <input
-                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                  type="address"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                />
-                {validationErrors.address && (
-                  <span className="text-red-500">{validationErrors.address}</span>
-                )}
+                <div className="flex-col flex">
+                  {" "}
+                  <label>Diver First Name:</label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    className="border-solid p-2  border-2 border-darkBlue   md:w-64  w-full h-[46px] "
+                  />
+                  {validationErrors.firstName && (
+                    <span className="text-red-500 ">{validationErrors.firstName}</span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label className="mt-2 flex flex-col">Diver Last Name:</label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                  />
+                  {validationErrors.lastName && (
+                    <span className="text-red-500">{validationErrors.lastName}</span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label className="mt-2 flex flex-col"> Diver Email:</label>
+                  <input
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.email && (
+                    <span className="text-red-500">{validationErrors.email}</span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label className="mt-2 flex flex-col"> Diver Birthday:</label>
+                  <input
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                    type="date"
+                    name="birthday"
+                    value={formData.birthday}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.birthday && (
+                    <span className="text-red-500">{validationErrors.birthday}</span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label className="mt-2 flex flex-col"> Diver Address:</label>
+                  <input
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                    type="address"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.address && (
+                    <span className="text-red-500">{validationErrors.address}</span>
+                  )}
+                </div>
               </div>
 
               <div>
-                <label className="mt-2 flex flex-col"> Diver 1 Certifying Agency:</label>
-                <input
-                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                  type="text"
-                  name="certifyingAgency"
-                  value={formData.certifyingAgency}
-                  onChange={handleInputChange}
-                />
-                {validationErrors.certifyingAgency && (
-                  <span className="text-red-500">{validationErrors.certifyingAgency}</span>
-                )}
-                <label className="mt-2 flex flex-col"> Diver 1 Certification Number:</label>
-                <input
-                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                  type="text"
-                  name="certificationNumber"
-                  value={formData.certificationNumber}
-                  onChange={handleInputChange}
-                />
-                {validationErrors.certificationNumber && (
-                  <span className="contact__error-message">
-                    {validationErrors.certificationNumber}
-                  </span>
-                )}
-
-                <label className="mt-2 flex flex-col"> Diver 1 DAN Insurance Number:</label>
-                <input
-                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
-                  type="text"
-                  name="danInsuranceNumber"
-                  value={formData.danInsuranceNumber}
-                  onChange={handleInputChange}
-                />
-                {validationErrors.danInsuranceNumber && (
-                  <span className="contact__error-message">
-                    {validationErrors.danInsuranceNumber}
-                  </span>
-                )}
-
-                <label className="mt-2 flex flex-col"> Diver 1 Emergency Contact Name:</label>
-                <input
-                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]   "
-                  type="text"
-                  name="emergencyContactName"
-                  value={formData.emergencyContactName}
-                  onChange={handleInputChange}
-                />
-                {validationErrors.emergencyContactName && (
-                  <span className="contact__error-message">
-                    {validationErrors.emergencyContactName}
-                  </span>
-                )}
-
-                <label className="mt-2 flex flex-col"> Diver 1 Emergency Contact Phone:</label>
-                <input
-                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]    "
-                  type="text"
-                  name="emergencyContactPhone"
-                  value={formData.emergencyContactPhone}
-                  onChange={handleInputChange}
-                />
-                {validationErrors.emergencyContactPhone && (
-                  <span className="contact__error-message">
-                    {validationErrors.emergencyContactPhone}
-                  </span>
-                )}
-
-                <label className="mt-2 flex flex-col"> Diving Date:</label>
-                <input
-                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
-                  type="date"
-                  name="divingDate"
-                  value={formData.divingDate}
-                  onChange={handleInputChange}
-                />
-                {validationErrors.divingDate && (
-                  <span className="contact__error-message  ">{validationErrors.divingDate}</span>
-                )}
+                <div className="flex-col flex">
+                  <label className="mt-2 flex flex-col"> Diver Certifying Agency:</label>
+                  <input
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                    type="text"
+                    name="certifyingAgency"
+                    value={formData.certifyingAgency}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.certifyingAgency && (
+                    <span className="text-red-500">{validationErrors.certifyingAgency}</span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label className="mt-2 flex flex-col"> Diver Certification Number:</label>
+                  <input
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                    type="text"
+                    name="certificationNumber"
+                    value={formData.certificationNumber}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.certificationNumber && (
+                    <span className="contact__error-message">
+                      {validationErrors.certificationNumber}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label className="mt-2 flex flex-col"> Diver DAN Insurance Number:</label>
+                  <input
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                    type="text"
+                    name="danInsuranceNumber"
+                    value={formData.danInsuranceNumber}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.danInsuranceNumber && (
+                    <span className="contact__error-message">
+                      {validationErrors.danInsuranceNumber}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label className="mt-2 flex flex-col"> Diver Emergency Contact Name:</label>
+                  <input
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]   "
+                    type="text"
+                    name="emergencyContactName"
+                    value={formData.emergencyContactName}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.emergencyContactName && (
+                    <span className="contact__error-message">
+                      {validationErrors.emergencyContactName}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label className="mt-2 flex flex-col"> Diver Emergency Contact Phone:</label>
+                  <input
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]    "
+                    type="text"
+                    name="emergencyContactPhone"
+                    value={formData.emergencyContactPhone}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.emergencyContactPhone && (
+                    <span className="contact__error-message">
+                      {validationErrors.emergencyContactPhone}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label className="mt-2 flex flex-col"> Diving Date:</label>
+                  <input
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                    type="date"
+                    name="divingDate"
+                    value={formData.divingDate}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.divingDate && (
+                    <span className="contact__error-message  ">{validationErrors.divingDate}</span>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -515,7 +535,7 @@ const DiverOneInfo = ({ date }) => {
                 [Your liability waiver text goes here]
               </p>
               {/* <label className="mt-2 flex flex-col">
-                Diver 1 Signature:
+                Diver Signature:
                 <input
                   type="text"
                   name="signature"
@@ -556,4 +576,4 @@ const DiverOneInfo = ({ date }) => {
   );
 };
 
-export default DiverOneInfo;
+export default DiverInfo;

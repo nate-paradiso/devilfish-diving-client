@@ -3,14 +3,14 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import googleCalendarPlugin from "@fullcalendar/google-calendar";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useState, useEffect } from "react";
-import DiverOneInfo from "./DiverOneInfo";
+import DiverInfo from "./DiverInfo";
 
 const CalendarComponent = () => {
   const NEXT_PUBLIC_GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
   const NEXT_PUBLIC_YOUR_CALENDAR_ID = process.env.NEXT_PUBLIC_YOUR_CALENDAR_ID;
 
   // State to store the selected date
-  const [showDiverOneInfo, setShowDiverOneInfo] = useState(false);
+  const [showDiverInfo, setShowDiverInfo] = useState(false);
   const [selectedDateStr, setSelectedDateStr] = useState(""); // State variable to store the formatted date string
   const [selectedDate, setSelectedDate] = useState(null); // State variable to store the Date object
   const [isDateAvailable, setIsDateAvailable] = useState(true);
@@ -73,7 +73,7 @@ const CalendarComponent = () => {
   const clearSelectedDate = () => {
     setSelectedDate(null);
     setIsDateAvailable(true); // Reset the availability status when clearing the date
-    setShowDiverOneInfo(false);
+    setShowDiverInfo(false);
   };
 
   const selectAllow = info => {
@@ -106,7 +106,7 @@ const CalendarComponent = () => {
           to complete the forms. Max 2 divers per day.
         </p>
         <br />
-        {!showDiverOneInfo && (
+        {!showDiverInfo && (
           <FullCalendar
             plugins={[dayGridPlugin, googleCalendarPlugin, interactionPlugin]}
             initialView="dayGridMonth"
@@ -147,12 +147,12 @@ const CalendarComponent = () => {
                 </button>
               </div>
               <div className="flex max-w-[1200px] mx-auto ">
-                {showDiverOneInfo ? (
-                  <DiverOneInfo date={selectedDate} />
+                {showDiverInfo ? (
+                  <DiverInfo date={selectedDate} />
                 ) : (
                   <button
                     className="border-solid p-2 border-2 border-sky-500 mt-1 w-32"
-                    onClick={() => setShowDiverOneInfo(true)}
+                    onClick={() => setShowDiverInfo(true)}
                   >
                     Next
                   </button>
