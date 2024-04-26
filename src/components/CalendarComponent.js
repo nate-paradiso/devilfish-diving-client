@@ -103,7 +103,7 @@ const CalendarComponent = () => {
       <div className="m-4 flex justify-center flex-col ">
         <p>
           Welcome! Select an <span className="font-extrabold">Available</span> day then click next
-          to complete the forms. Max 2 divers per day.
+          to complete the forms. Min and max is 2 divers per day.
         </p>
         <br />
         {!showDiverInfo && (
@@ -137,13 +137,12 @@ const CalendarComponent = () => {
                 Date Selected: {getDayName(selectedDate)} - {selectedDateStr}
               </h3>{" "}
               <h3 className="mt-1">Price: $150 per diver</h3>
-              <h3 className="mt-1">Number of Divers: Max 2 </h3>
               <div className="flex justify-between mb-2 flex-row">
                 <button
                   className="border-solid p-2  border-2 border-sky-500 mt-1 w-32"
                   onClick={clearSelectedDate}
                 >
-                  Clear Date
+                  Cancel
                 </button>
               </div>
               <div className="flex max-w-[1200px] mx-auto ">

@@ -278,7 +278,7 @@ const DiverInfoTest = ({ date }) => {
                 )}
 
                 <label htmlFor="birthday" className="contact__label">
-                  Birthday: <span className="contact__required">(required)</span>
+                  Birthday: <span className="contact__required">(*)</span>
                 </label>
                 <input
                   className="contact__input contact__text-area contact__input--darken"
