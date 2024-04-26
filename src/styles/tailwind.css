@@ -9,6 +9,13 @@ body {
 .fc-day {
   cursor: pointer;
 }
+.contact__tube-spinner {
+  margin-top: 1rem;
+  height: 50px;
+}
+.contact__error-message {
+  color: red;
+}
 
 @layer utilities {
   .font-thin {
