@@ -8,8 +8,7 @@ function Message({ content }) {
 const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 console.log(serverUrl);
 
-export const PayPal = ({ selectedDate }) => {
-  console.log(selectedDate, "from paypal");
+export const PayPal = () => {
   const initialOptions = {
     intent: "capture",
     "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
@@ -74,7 +73,6 @@ export const PayPal = ({ selectedDate }) => {
                   "Content-Type": "application/json",
                 },
               });
-
               const orderData = await response.json();
               // Three cases to handle:
               //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
@@ -93,7 +91,6 @@ export const PayPal = ({ selectedDate }) => {
               } else {
                 // (3) Successful transaction -> Show confirmation or thank you message
                 // Or go to another URL:  actions.redirect('thank_you.html');
-                const transaction = orderData.purchase_units[0].payments.captures[0];
                 setMessage("Payment Successful. Thank you!");
                 console.log("Capture result", orderData, JSON.stringify(orderData, null, 2));
               }

@@ -5,9 +5,48 @@
 body {
   background-color: rgb(248, 248, 248);
 }
+/* CSS */
+.fc-day {
+  cursor: pointer;
+}
+.contact__tube-spinner {
+  margin-top: 1rem;
+  height: 50px;
+}
+.contact__error-message {
+  color: red;
+}
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .font-thin {
+    font-weight: 100;
+  }
+
+  .font-light {
+    font-weight: 300;
+  }
+
+  .font-normal {
+    font-weight: 400;
+  }
+
+  .font-medium {
+    font-weight: 500;
+  }
+
+  .font-semibold {
+    font-weight: 600;
+  }
+
+  .font-bold {
+    font-weight: 700;
+  }
+
+  .font-extrabold {
+    font-weight: 800;
+  }
+
+  .font-black {
+    font-weight: 900;
   }
 }

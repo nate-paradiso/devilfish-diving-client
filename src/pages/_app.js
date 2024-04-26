@@ -5,8 +5,6 @@ import Footer from "../components/Footer";
 import { Roboto } from "next/font/google";
 import "../styles/tailwind.css";
 
-require("dotenv").config();
-
 const metadata = {
   title: "Devilfish Diving LLC",
   description: "Devilfish Diving LLC is a scuba diving charter based in Seattle, Washington.",
@@ -28,7 +26,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="description" content={metadata.description} />
         <link rel="icon" href="/octocon.ico" sizes="any" />
       </Head>
-      <main className={`${roboto.variable} font-sans`}>
+      <main className={`${roboto.variable} font-sans font-normal`}>
         <Header />
         <Component {...pageProps} />
         <Footer />
