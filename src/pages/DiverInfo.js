@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-const ReleaseForm = () => {
+const DiverInfo = () => {
   const router = useRouter();
   const { date } = router.query;
   console.log("from calendar", date);
@@ -241,17 +241,17 @@ const ReleaseForm = () => {
         data-email="example@gmail.com"
         action="https://script.google.com/macros/s/AKfycbyKtArGioofU_EUBp2bfM8L9GxFv2TVhLCs27pCwzq9Pqz1hVZkSysoj8vRFP6YzUBOow/exec"
       >
-        <div className=" m-2 flex justify-center flex-col lg:flex-row">
-          <div className="m-2 ">
+        <div className=" m-2 flex justify-center flex-col md:flex-row">
+          <div className="m-2">
             <h2 className="text-xl">Diver 1</h2>
-            <label className=" mt-2 flex flex-col ">
+            <label className=" mt-2 flex flex-col  ">
               Diver 1 First Name:
               <input
                 type="text"
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
-                className="border-solid p-2  border-2 border-darkBlue  w-64"
+                className="border-solid p-2  border-2 border-darkBlue   w-full"
               />
             </label>
             <label className="mt-2 flex flex-col">
@@ -262,14 +262,14 @@ const ReleaseForm = () => {
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
-                className="border-solid p-2  border-2 border-darkBlue  w-64"
+                className="border-solid p-2  border-2 border-darkBlue  w-full"
               />
             </label>
             <label className="mt-2 flex flex-col">
               {" "}
               Diver 1 Email:
               <input
-                className="border-solid p-2  border-2 border-darkBlue  w-64"
+                className="border-solid p-2  border-2 border-darkBlue  w-full"
                 type="email"
                 name="email"
                 value={formData.email}
@@ -280,7 +280,7 @@ const ReleaseForm = () => {
               {" "}
               Diver 1 Certification Number:
               <input
-                className="border-solid p-2  border-2 border-darkBlue  w-64"
+                className="border-solid p-2  border-2 border-darkBlue  w-full"
                 type="text"
                 name="certificationNumber"
                 value={formData.certificationNumber}
@@ -291,7 +291,7 @@ const ReleaseForm = () => {
               {" "}
               Diver 1 DAN Insurance Number:
               <input
-                className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
+                className="border-solid p-2  border-2 border-darkBlue  w-full mb-2"
                 type="text"
                 name="danInsuranceNumber"
                 value={formData.danInsuranceNumber}
@@ -302,7 +302,7 @@ const ReleaseForm = () => {
               {" "}
               Diver 1 Emergency Contact Name:
               <input
-                className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
+                className="border-solid p-2  border-2 border-darkBlue  w-full mb-2"
                 type="text"
                 name="emergencyContactName"
                 value={formData.emergencyContactName}
@@ -313,7 +313,7 @@ const ReleaseForm = () => {
               {" "}
               Diver 1 Emergency Contact Phone:
               <input
-                className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
+                className="border-solid p-2  border-2 border-darkBlue  w-full mb-2"
                 type="text"
                 name="emergencyContactPhone"
                 value={formData.emergencyContactPhone}
@@ -331,7 +331,7 @@ const ReleaseForm = () => {
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
-                className="border-solid p-2  border-2 border-darkBlue  w-64"
+                className="border-solid p-2  border-2 border-darkBlue  w-full"
               />
             </label>
             <label className="mt-2 flex flex-col">
@@ -342,14 +342,14 @@ const ReleaseForm = () => {
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
-                className="border-solid p-2  border-2 border-darkBlue  w-64"
+                className="border-solid p-2  border-2 border-darkBlue  w-full"
               />
             </label>
             <label className="mt-2 flex flex-col">
               {" "}
               Diver 2 Email:
               <input
-                className="border-solid p-2  border-2 border-darkBlue  w-64"
+                className="border-solid p-2  border-2 border-darkBlue  w-full"
                 type="email"
                 name="email"
                 value={formData.email}
@@ -360,7 +360,7 @@ const ReleaseForm = () => {
               {" "}
               Diver 2 Certification Number:
               <input
-                className="border-solid p-2  border-2 border-darkBlue  w-64"
+                className="border-solid p-2  border-2 border-darkBlue  w-full"
                 type="text"
                 name="certificationNumber"
                 value={formData.certificationNumber}
@@ -371,7 +371,7 @@ const ReleaseForm = () => {
               {" "}
               Diver 2 DAN Insurance Number:
               <input
-                className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
+                className="border-solid p-2  border-2 border-darkBlue  w-full mb-2"
                 type="text"
                 name="danInsuranceNumber"
                 value={formData.danInsuranceNumber}
@@ -382,7 +382,7 @@ const ReleaseForm = () => {
               {" "}
               Diver 2 Emergency Contact Name:
               <input
-                className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
+                className="border-solid p-2  border-2 border-darkBlue  w-full mb-2"
                 type="text"
                 name="emergencyContactName"
                 value={formData.emergencyContactName}
@@ -393,7 +393,7 @@ const ReleaseForm = () => {
               {" "}
               Diver 2 Emergency Contact Phone:
               <input
-                className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
+                className="border-solid p-2  border-2 border-darkBlue  w-full mb-2"
                 type="text"
                 name="emergencyContactPhone"
                 value={formData.emergencyContactPhone}
@@ -404,7 +404,7 @@ const ReleaseForm = () => {
               {" "}
               Diving Date:
               <input
-                className="border-solid p-2  border-2 border-darkBlue  w-64 mb-2"
+                className="border-solid p-2  border-2 border-darkBlue  w-full mb-2"
                 type="date"
                 name="divingDate"
                 value={formData.divingDate}
@@ -413,17 +413,17 @@ const ReleaseForm = () => {
             </label>
           </div>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-row justify-between">
           <button className="m-4 border-solid p-2 border-2 border-sky-500 mt-1 w-20">
             <Link href="/Calendar">Back</Link>
           </button>
-          <button type="submit" className=" m-4 border-solid p-2 border-2 border-sky-500 mt-1 w-64">
-            Submit and Pay
-          </button>
+          <Link href="">
+            <button className="m-4 border-solid p-2 border-2 border-sky-500 mt-1 w-20">Next</button>
+          </Link>
         </div>
       </form>
     </section>
   );
 };
 
-export default ReleaseForm;
+export default DiverInfo;

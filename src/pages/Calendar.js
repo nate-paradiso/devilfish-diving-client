@@ -147,10 +147,10 @@ const Calendar = () => {
                 <button
                   className="border-solid p-2 border-2 border-sky-500 mt-1 w-20"
                   onClick={() =>
-                    router.push({ pathname: "/ReleaseForm", query: { date: selectedDate } })
+                    router.push({ pathname: "/DiverInfo", query: { date: selectedDate } })
                   }
                 >
-                  <Link href="/ReleaseForm">Next</Link>
+                  <Link href="/DiverInfo">Next</Link>
                 </button>
               </div>
             </div>
