@@ -1,11 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import SignatureCanvas from "react-signature-canvas";
 import LiabilityRelease from "./LiabilityRelease";
 
-const DiverInfo = ({ date }) => {
-  console.log("from calendar", date);
+const DiverInfo = ({ selectedDate, setShowDiverInfo, showDiverInfo }) => {
+  console.log("from calendar", selectedDate);
+  console.log(showDiverInfo);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -18,7 +18,7 @@ const DiverInfo = ({ date }) => {
     danInsuranceNumber: "",
     emergencyContactName: "",
     emergencyContactPhone: "",
-    divingDate: date,
+    divingDate: selectedDate,
     electronicSignature: "",
     electronicSignatureDate: "",
   });
@@ -399,13 +399,13 @@ const DiverInfo = ({ date }) => {
   };
 
   useEffect(() => {
-    if (date) {
+    if (selectedDate) {
       setFormData(prevState => ({
         ...prevState,
-        divingDate: date,
+        divingDate: selectedDate,
       }));
     }
-  }, [date]);
+  }, [selectedDate]);
 
   return (
     <section className="max-w-[1200px] w-full">
@@ -414,10 +414,10 @@ const DiverInfo = ({ date }) => {
         className="gform "
         method="POST"
         data-email="example@gmail.com"
-        action="https://script.google.com/macros/s/AKfycbyKtArGioofU_EUBp2bfM8L9GxFv2TVhLCs27pCwzq9Pqz1hVZkSysoj8vRFP6YzUBOow/exec"
+        action="https://script.google.com/macros/s/AKfycbz5sWYlgzKPZR-Z2O6ZIrRyH6aU5_tv4HGX3boN3Izo0ouwjq_1meeDvFe70pNY8Tjarg/exec"
       >
         {isSubmitted ? (
-          <p className="contact__success">Thank you for your submission!</p>
+          <p className="contact__success">Thank you! See ya on the boat!</p>
         ) : (
           <>
             <h2 className="text-xl">Diver</h2>
@@ -677,7 +677,11 @@ const DiverInfo = ({ date }) => {
             <div className="flex flex-row justify-between">
               <div>
                 {isButtonVisible ? (
-                  <button className="mt-4 border-solid p-2 border-2 border-sky-500 " type="submit">
+                  <button
+                    className="mt-4 border-solid p-2 border-2 border-sky-500 "
+                    type="submit"
+                    onChange={handleInputChange}
+                  >
                     Submit and Pay
                   </button>
                 ) : (

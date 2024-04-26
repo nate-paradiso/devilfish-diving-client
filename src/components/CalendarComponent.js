@@ -13,7 +13,7 @@ const CalendarComponent = () => {
   const [showDiverInfo, setShowDiverInfo] = useState(false);
   const [selectedDateStr, setSelectedDateStr] = useState(""); // State variable to store the formatted date string
   const [selectedDate, setSelectedDate] = useState(null); // State variable to store the Date object
-  const [isDateAvailable, setIsDateAvailable] = useState(true);
+  // const [isDateAvailable, setIsDateAvailable] = useState(true);
   const [googleEvents, setGoogleEvents] = useState([]);
   console.log(selectedDate);
 
@@ -66,13 +66,13 @@ const CalendarComponent = () => {
     const formattedDate = formatDate(selectedDate); // Format the selected date
     setSelectedDate(selectedDate); // Store the selected date in state
     setSelectedDateStr(formattedDate); // Store the formatted selected date string in state
-    setIsDateAvailable(true); // Set the selected date as available by default
+    // setIsDateAvailable(true); // Set the selected date as available by default
   };
 
   // Function to clear the selected date
   const clearSelectedDate = () => {
     setSelectedDate(null);
-    setIsDateAvailable(true); // Reset the availability status when clearing the date
+    // setIsDateAvailable(true); // Reset the availability status when clearing the date
     setShowDiverInfo(false);
   };
 
@@ -147,7 +147,11 @@ const CalendarComponent = () => {
               </div>
               <div className="flex max-w-[1200px] mx-auto ">
                 {showDiverInfo ? (
-                  <DiverInfo date={selectedDate} />
+                  <DiverInfo
+                    selectedDate={selectedDate}
+                    setShowDiverInfo={setShowDiverInfo}
+                    showDiverInfo={showDiverInfo}
+                  />
                 ) : (
                   <button
                     className="border-solid p-2 border-2 border-sky-500 mt-1 w-32"
