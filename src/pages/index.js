@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <Hero />
       <div className="flex justify-center m-8">
-        <Link href="mailto:devilfishdiving@gmail.com">
+        <Link href="/Calendar">
           <button className="border-solid p-2  border-2 border-darkBlue ">Book a Dive</button>
         </Link>
       </div>
