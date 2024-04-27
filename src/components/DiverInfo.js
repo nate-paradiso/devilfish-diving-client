@@ -407,6 +407,34 @@ const DiverInfo = ({ selectedDate, setShowDiverInfo, showDiverInfo }) => {
     }
   }, [selectedDate]);
 
+  // Function to format phone number as (123) 456-7890
+  const formatPhoneNumber = phoneNumber => {
+    const cleaned = ("" + phoneNumber).replace(/\D/g, "");
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return "(" + match[1] + ") " + match[2] + "-" + match[3];
+    }
+    return phoneNumber;
+  };
+
+  // Function to format address
+  const formatAddress = address => {
+    // Split the address into individual lines
+    const lines = address.split("\n");
+
+    // Capitalize the first letter of each word in each line
+    const formattedLines = lines.map(line =>
+      line
+        .toLowerCase()
+        .split(" ")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" "),
+    );
+
+    // Join the formatted lines back together with line breaks
+    return formattedLines.join("\n");
+  };
+
   return (
     <section className="max-w-[1200px] w-full">
       {" "}
@@ -414,7 +442,7 @@ const DiverInfo = ({ selectedDate, setShowDiverInfo, showDiverInfo }) => {
         className="gform "
         method="POST"
         data-email="example@gmail.com"
-        action="https://script.google.com/macros/s/AKfycbz5sWYlgzKPZR-Z2O6ZIrRyH6aU5_tv4HGX3boN3Izo0ouwjq_1meeDvFe70pNY8Tjarg/exec"
+        action="https://script.google.com/macros/s/AKfycbxn1unr4NE8TQ3_P9sD-rf_jNtqZEjxONZHV4qO_3ILU6iq5r88oFK5JZultmoeIgzUng/exec"
       >
         {isSubmitted ? (
           <p className="contact__success">Thank you! See ya on the boat!</p>
@@ -480,7 +508,7 @@ const DiverInfo = ({ selectedDate, setShowDiverInfo, showDiverInfo }) => {
                     className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
                     type="tel"
                     name="phone"
-                    value={formData.phone}
+                    value={formatPhoneNumber(formData.phone)}
                     onChange={handleInputChange}
                   />
                   {validationErrors.phone && (
@@ -512,7 +540,7 @@ const DiverInfo = ({ selectedDate, setShowDiverInfo, showDiverInfo }) => {
                     className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
                     type="address"
                     name="address"
-                    value={formData.address}
+                    value={formatAddress(formData.address)}
                     onChange={handleInputChange}
                   />
                   {validationErrors.address && (
@@ -600,7 +628,7 @@ const DiverInfo = ({ selectedDate, setShowDiverInfo, showDiverInfo }) => {
                     className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]    "
                     type="tel"
                     name="emergencyContactPhone"
-                    value={formData.emergencyContactPhone}
+                    value={formatPhoneNumber(formData.emergencyContactPhone)}
                     onChange={handleInputChange}
                   />
                   {validationErrors.emergencyContactPhone && (
@@ -629,12 +657,11 @@ const DiverInfo = ({ selectedDate, setShowDiverInfo, showDiverInfo }) => {
             </div>
 
             <div className="mt-4">
-              <h2 className="text-xl">Liability Waiver</h2>
-              <LiabilityRelease />
+              <LiabilityRelease formData={formData} />
               <div className="flex-col flex">
                 <p>
-                  By typing and electronically signing below, you acknowledge that you have read and
-                  understood the terms of the liability waiver.
+                  By typing your name below you are electronically signing, you acknowledge that you
+                  have read and understand the terms of the liability waiver.
                   <br />
                 </p>
                 <label htmlFor="electronicSignature" className="mt-2 flex flex-row">

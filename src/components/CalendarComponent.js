@@ -96,8 +96,9 @@ const CalendarComponent = () => {
         <div className="m-4 flex justify-center flex-col ">
           <p>
             Welcome! Select an <span className="font-extrabold">Available</span> day then click next
-            to complete the forms. Min and max is 2 divers per day.
+            to complete the form.
           </p>
+          <p>There is a 2 diver maximum and no solo divers.</p>
           <br />
           {!showDiverInfo && (
             <FullCalendar
