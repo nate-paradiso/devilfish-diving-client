@@ -4,11 +4,10 @@ import googleCalendarPlugin from "@fullcalendar/google-calendar";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useState, useEffect } from "react";
 import DiverInfo from "./DiverInfo";
+import axios from "axios";
 
 const CalendarComponent = () => {
-  const NEXT_PUBLIC_GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
-  const NEXT_PUBLIC_YOUR_CALENDAR_ID = process.env.NEXT_PUBLIC_YOUR_CALENDAR_ID;
-
+  const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   // State to store the selected date
   const [showDiverInfo, setShowDiverInfo] = useState(false);
   const [selectedDateStr, setSelectedDateStr] = useState(""); // State variable to store the formatted date string
@@ -19,29 +18,21 @@ const CalendarComponent = () => {
   console.log(selectedDate);
 
   useEffect(() => {
-    // Fetch events from Google Calendar
-    const fetchGoogleCalendarEvents = async () => {
+    // Fetch events from your backend endpoint using Axios
+    const fetchEventsFromBackend = async () => {
       try {
-        const response = await fetch(
-          `https://www.googleapis.com/calendar/v3/calendars/${NEXT_PUBLIC_YOUR_CALENDAR_ID}/events?key=${NEXT_PUBLIC_GOOGLE_API_KEY}`,
-        );
-        const data = await response.json();
-        const eventDates = data.items.map(item => ({
-          title: item.summary,
-          start: item.start.date,
-          end: item.end.date, // Optional: Add end date if available
-          allDay: true, // Set to true for all-day events
-        }));
-        setGoogleEvents(eventDates);
+        const response = await axios.get(`${serverUrl}/api/google-calendar-events`); // Endpoint on your backend
+        const data = response.data;
+        setGoogleEvents(data);
         setLoading(false);
       } catch (error) {
-        console.error("Failed to fetch events from Google Calendar:", error);
+        console.error("Failed to fetch events from backend:", error);
         setLoading(false); // Set loading state to false on error
       }
     };
 
-    fetchGoogleCalendarEvents();
-  }, [NEXT_PUBLIC_GOOGLE_API_KEY, NEXT_PUBLIC_YOUR_CALENDAR_ID]);
+    fetchEventsFromBackend();
+  }, []);
 
   useEffect(() => {
     console.log(googleEvents); // Log the updated state
@@ -119,11 +110,7 @@ const CalendarComponent = () => {
               selectable={true} // Enable day selection
               selectAllow={selectAllow} // Function to determine whether a day is selectable
               select={handleDateSelect} // Callback function for day selection
-              googleCalendarApiKey={NEXT_PUBLIC_GOOGLE_API_KEY} // Replace with your Google Calendar API key
               events={googleEvents}
-              // events={{
-              //   googleCalendarId: NEXT_PUBLIC_YOUR_CALENDAR_ID, // Replace with your Google Calendar ID
-              // }}
               titleFormat={{
                 month: "short", // Display the month in short form
                 year: "numeric",
