@@ -107,6 +107,7 @@ const CalendarComponent = () => {
               selectAllow={selectAllow} // Function to determine whether a day is selectable
               select={handleDateSelect} // Callback function for day selection
               events={googleEvents}
+              selectLongPressDelay={0}
               titleFormat={{
                 month: "short", // Display the month in short form
                 year: "numeric",
