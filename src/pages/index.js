@@ -16,7 +16,7 @@ export default function Home() {
         <div
           className="bg-cover bg-center w-full flex justify-center items-center"
           style={{
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/MA10-1.png')`,
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/MA10-1.jpg')`,
             height: "300px", // Adjust height as needed
           }}
         >

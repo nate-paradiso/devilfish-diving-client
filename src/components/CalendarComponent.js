@@ -15,6 +15,7 @@ const CalendarComponent = () => {
   const [selectedDate, setSelectedDate] = useState(null); // State variable to store the Date object
   // const [isDateAvailable, setIsDateAvailable] = useState(true);
   const [googleEvents, setGoogleEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
   console.log(selectedDate);
 
   useEffect(() => {
@@ -32,8 +33,10 @@ const CalendarComponent = () => {
           allDay: true, // Set to true for all-day events
         }));
         setGoogleEvents(eventDates);
+        setLoading(false);
       } catch (error) {
         console.error("Failed to fetch events from Google Calendar:", error);
+        setLoading(false); // Set loading state to false on error
       }
     };
 
@@ -100,71 +103,76 @@ const CalendarComponent = () => {
 
   return (
     <div className="max-w-[800px] mx-auto">
-      <div className="m-4 flex justify-center flex-col ">
-        <p>
-          Welcome! Select an <span className="font-extrabold">Available</span> day then click next
-          to complete the forms. Min and max is 2 divers per day.
-        </p>
-        <br />
-        {!showDiverInfo && (
-          <FullCalendar
-            plugins={[dayGridPlugin, googleCalendarPlugin, interactionPlugin]}
-            initialView="dayGridMonth"
-            selectable={true} // Enable day selection
-            selectAllow={selectAllow} // Function to determine whether a day is selectable
-            select={handleDateSelect} // Callback function for day selection
-            googleCalendarApiKey={NEXT_PUBLIC_GOOGLE_API_KEY} // Replace with your Google Calendar API key
-            events={googleEvents}
-            // events={{
-            //   googleCalendarId: NEXT_PUBLIC_YOUR_CALENDAR_ID, // Replace with your Google Calendar ID
-            // }}
-            titleFormat={{
-              month: "short", // Display the month in short form
-              year: "numeric",
-            }}
-            headerToolbar={{
-              left: "today",
-              center: "title",
-              right: "prev,next",
-            }}
-            eventClick={handleEventClick} // Callback function for clicking on events
-          />
-        )}
-        <div>
-          {selectedDate && (
-            <div>
-              <h3 className="mt-2">
-                Date Selected: {getDayName(selectedDate)} - {selectedDateStr}
-              </h3>{" "}
-              <h3 className="mt-1">Price: $150 per diver</h3>
-              <div className="flex justify-between mb-2 flex-row">
-                <button
-                  className="border-solid p-2  border-2 border-sky-500 mt-1 w-32"
-                  onClick={clearSelectedDate}
-                >
-                  Cancel
-                </button>
-              </div>
-              <div className="flex max-w-[1200px] mx-auto ">
-                {showDiverInfo ? (
-                  <DiverInfo
-                    selectedDate={selectedDate}
-                    setShowDiverInfo={setShowDiverInfo}
-                    showDiverInfo={showDiverInfo}
-                  />
-                ) : (
-                  <button
-                    className="border-solid p-2 border-2 border-sky-500 mt-1 w-32"
-                    onClick={() => setShowDiverInfo(true)}
-                  >
-                    Next
-                  </button>
-                )}
-              </div>
-            </div>
+      {loading ? (
+        <p className="m-4">Loading calendar...</p>
+      ) : (
+        <div className="m-4 flex justify-center flex-col ">
+          <p>
+            Welcome! Select an <span className="font-extrabold">Available</span> day then click next
+            to complete the forms. Min and max is 2 divers per day.
+          </p>
+          <br />
+          {!showDiverInfo && (
+            <FullCalendar
+              plugins={[dayGridPlugin, googleCalendarPlugin, interactionPlugin]}
+              initialView="dayGridMonth"
+              selectable={true} // Enable day selection
+              selectAllow={selectAllow} // Function to determine whether a day is selectable
+              select={handleDateSelect} // Callback function for day selection
+              googleCalendarApiKey={NEXT_PUBLIC_GOOGLE_API_KEY} // Replace with your Google Calendar API key
+              events={googleEvents}
+              // events={{
+              //   googleCalendarId: NEXT_PUBLIC_YOUR_CALENDAR_ID, // Replace with your Google Calendar ID
+              // }}
+              titleFormat={{
+                month: "short", // Display the month in short form
+                year: "numeric",
+              }}
+              headerToolbar={{
+                left: "today",
+                center: "title",
+                right: "prev,next",
+              }}
+              eventClick={handleEventClick} // Callback function for clicking on events
+            />
           )}
+
+          <div>
+            {selectedDate && (
+              <div>
+                <h3 className="mt-2">
+                  Date Selected: {getDayName(selectedDate)} - {selectedDateStr}
+                </h3>{" "}
+                <h3 className="mt-1">Price: $150 per diver</h3>
+                <div className="flex justify-between mb-2 flex-row">
+                  <button
+                    className="border-solid p-2  border-2 border-sky-500 mt-1 w-32"
+                    onClick={clearSelectedDate}
+                  >
+                    Cancel
+                  </button>
+                </div>
+                <div className="flex max-w-[1200px] mx-auto ">
+                  {showDiverInfo ? (
+                    <DiverInfo
+                      selectedDate={selectedDate}
+                      setShowDiverInfo={setShowDiverInfo}
+                      showDiverInfo={showDiverInfo}
+                    />
+                  ) : (
+                    <button
+                      className="border-solid p-2 border-2 border-sky-500 mt-1 w-32"
+                      onClick={() => setShowDiverInfo(true)}
+                    >
+                      Next
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
