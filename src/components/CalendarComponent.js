@@ -38,8 +38,7 @@ const CalendarComponent = () => {
     };
 
     fetchGoogleCalendarEvents();
-  }, []);
-  // }, [NEXT_PUBLIC_GOOGLE_API_KEY, NEXT_PUBLIC_YOUR_CALENDAR_ID]);
+  }, [NEXT_PUBLIC_GOOGLE_API_KEY, NEXT_PUBLIC_YOUR_CALENDAR_ID]);
 
   useEffect(() => {
     console.log(googleEvents); // Log the updated state
