@@ -80,10 +80,6 @@ const CalendarComponent = () => {
     // Allow selection only if the date has an event with the title "Available"
     return isAvailable;
   };
-  // Function to handle clicking on Google Calendar events
-  const handleEventClick = arg => {
-    arg.jsEvent.preventDefault(); // Prevent the default behavior
-  };
 
   // Function to get the name of the day corresponding to the selected date
   const getDayName = date => {
@@ -120,7 +116,6 @@ const CalendarComponent = () => {
                 center: "title",
                 right: "prev,next",
               }}
-              eventClick={handleEventClick} // Callback function for clicking on events
             />
           )}
 
