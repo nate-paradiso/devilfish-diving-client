@@ -96,8 +96,9 @@ const CalendarComponent = () => {
         <div className="m-4 flex justify-center flex-col ">
           <p>
             Welcome! Select an <span className="font-extrabold">Available</span> day then click next
-            to complete the forms. Min and max is 2 divers per day.
+            to complete the form. Only single day selection allowed.
           </p>
+          <p>There is a 2 diver maximum 2 diver minimum, no solo divers.</p>
           <br />
           {!showDiverInfo && (
             <FullCalendar
@@ -108,6 +109,8 @@ const CalendarComponent = () => {
               select={handleDateSelect} // Callback function for day selection
               events={googleEvents}
               selectLongPressDelay={0}
+              fixedWeekCount={false}
+              showNonCurrentDates={false}
               titleFormat={{
                 month: "short", // Display the month in short form
                 year: "numeric",
@@ -117,6 +120,28 @@ const CalendarComponent = () => {
                 center: "title",
                 right: "prev,next",
               }}
+              height="auto"
+              eventContent={arg => {
+                // Customize the rendering of each event based on its title
+                let eventClasses = ""; // Initialize event classes
+
+                // Apply Tailwind classes based on event title
+                if (arg.event.title === "Available") {
+                  eventClasses = "bg-green-500"; // Blue background for "Available" events
+                } else if (arg.event.title === "Booked") {
+                  eventClasses = "bg-red-500"; // Green background for "Booked" events
+                }
+
+                // Apply additional Tailwind classes or inline styles as needed
+                // For example, you can add padding, margin, etc.
+
+                return (
+                  <div className={`p-0.5  ${eventClasses}`}>
+                    {arg.event.title} {/* Render event title */}
+                  </div>
+                );
+              }}
+              unselectAuto={false}
             />
           )}
 
@@ -124,9 +149,14 @@ const CalendarComponent = () => {
             {selectedDate && (
               <div>
                 <h3 className="mt-2">
-                  Date Selected: {getDayName(selectedDate)} - {selectedDateStr}
+                  Single Date Selected:{" "}
+                  <span className="font-extrabold ">
+                    {getDayName(selectedDate)} - {selectedDateStr}
+                  </span>
                 </h3>{" "}
-                <h3 className="mt-1">Price: $150 per diver</h3>
+                <h3 className="mt-1">
+                  Price: <span className="font-extrabold">$150 per diver</span>
+                </h3>
                 <div className="flex justify-between mb-2 flex-row">
                   <button
                     className="border-solid p-2  border-2 border-sky-500 mt-1 w-32"
