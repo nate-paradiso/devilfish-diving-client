@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import LiabilityRelease from "./LiabilityRelease";
+import axios from "axios";
 
 const DiverInfo = ({ selectedDate, setShowDiverInfo, showDiverInfo }) => {
   console.log("from calendar", selectedDate);
@@ -301,7 +302,7 @@ const DiverInfo = ({ selectedDate, setShowDiverInfo, showDiverInfo }) => {
               electronicSignatureDate: "",
             });
 
-            //Reset validation erros
+            //Reset validation errors
             setIsSubmitted(true); //set submitted state to true
             form.reset(); //reset form
             let formElements = form.querySelector(".form-elements");
@@ -435,12 +436,33 @@ const DiverInfo = ({ selectedDate, setShowDiverInfo, showDiverInfo }) => {
     return formattedLines.join("\n");
   };
 
+  // endpoint to send form data to the back end
+  const sendFormData = async formData => {
+    try {
+      const response = await axios.post(`${serverUrl}/api/send-email`, { formData });
+      console.log(response.data); // Log the response from the backend
+      return response.data; // Return the response data if needed
+    } catch (error) {
+      console.error("Error sending form data:", error);
+      throw error; // Throw the error to handle it in the calling code
+    }
+  };
+  const handleSubmit = async event => {
+    event.preventDefault();
+    try {
+      await sendFormData(formData);
+      // Handle success, e.g., show a success message to the user
+    } catch (error) {
+      // Handle error, e.g., show an error message to the user
+    }
+  };
   return (
     <section className="max-w-[1200px] w-full">
       {" "}
       <form
         className="gform "
         method="POST"
+        onSubmit={handleSubmit}
         data-email="example@gmail.com"
         action="https://script.google.com/macros/s/AKfycbxn1unr4NE8TQ3_P9sD-rf_jNtqZEjxONZHV4qO_3ILU6iq5r88oFK5JZultmoeIgzUng/exec"
       >
