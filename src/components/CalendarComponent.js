@@ -12,11 +12,9 @@ const CalendarComponent = () => {
   const [showDiverInfo, setShowDiverInfo] = useState(false);
   const [selectedDateStr, setSelectedDateStr] = useState(""); // State variable to store the formatted date string
   const [selectedDate, setSelectedDate] = useState(null); // State variable to store the Date object
-  // const [isDateAvailable, setIsDateAvailable] = useState(true);
   const [googleEvents, setGoogleEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  console.log(selectedDate);
 
   useEffect(() => {
     // Fetch events from your backend endpoint using Axios
@@ -55,32 +53,26 @@ const CalendarComponent = () => {
     return `${month}/${day}/${year}`;
   };
 
-  // Function to handle day selection
-  const handleDateSelect = arg => {
-    const selectedDate = arg.startStr; // Get the selected date
+  // Function to handle event click
+  const handleEventClick = arg => {
+    const clickedEvent = arg.event; // Get the clicked event object
+    const selectedDate = clickedEvent.start; // Get the selected event date
     const formattedDate = formatDate(selectedDate); // Format the selected date
     setSelectedDate(selectedDate); // Store the selected date in state
     setSelectedDateStr(formattedDate); // Store the formatted selected date string in state
     setShowDiverInfo(true);
-    // setIsDateAvailable(true); // Set the selected date as available by default
+
+    if (clickedEvent.title === "Booked") {
+      setShowDiverInfo(false);
+      setSelectedDate(null);
+      return; // Stop further execution
+    }
   };
 
   // Function to clear the selected date
   const clearSelectedDate = () => {
     setSelectedDate(null);
-    // setIsDateAvailable(true); // Reset the availability status when clearing the date
     setShowDiverInfo(false);
-  };
-
-  const selectAllow = info => {
-    const selectedDate = info.start.toISOString().slice(0, 10);
-    // Check if any event on the selected date has the title "Available"
-    const isAvailable = googleEvents.some(event => {
-      const eventDate = new Date(event.start).toISOString().slice(0, 10);
-      return eventDate === selectedDate && event.title === "Available";
-    });
-    // Allow selection only if the date has an event with the title "Available"
-    return isAvailable;
   };
 
   // Function to get the name of the day corresponding to the selected date
@@ -99,8 +91,8 @@ const CalendarComponent = () => {
           ) : (
             <div className="m-4 flex justify-center flex-col ">
               <p>
-                Welcome! Select the day with an <span className="font-extrabold">Available</span>{" "}
-                event then click next to complete the form. Only single day selection allowed.
+                Welcome! Select an <span className="font-extrabold">Available</span> event then
+                complete the form. Only single day selection allowed.
               </p>
               <br />
               <p>There is a 2 diver maximum and minimum, no solo divers.</p>
@@ -109,9 +101,7 @@ const CalendarComponent = () => {
                 <FullCalendar
                   plugins={[dayGridPlugin, googleCalendarPlugin, interactionPlugin]}
                   initialView="dayGridMonth"
-                  selectable={true} // Enable day selection
-                  selectAllow={selectAllow} // Function to determine whether a day is selectable
-                  select={handleDateSelect} // Callback function for day selection
+                  eventClick={handleEventClick}
                   events={googleEvents}
                   selectLongPressDelay={0}
                   fixedWeekCount={false}
@@ -134,6 +124,8 @@ const CalendarComponent = () => {
                     if (arg.event.title === "Available") {
                       eventClasses = "bg-green-500"; // Blue background for "Available" events
                     } else if (arg.event.title === "Booked") {
+                      eventClasses = "bg-red-500"; // Green background for "Booked" events
+                    } else if (arg.event.title === "1 Spot Left") {
                       eventClasses = "bg-red-500"; // Green background for "Booked" events
                     }
 
