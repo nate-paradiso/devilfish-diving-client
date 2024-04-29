@@ -134,7 +134,7 @@ const CalendarComponent = () => {
                     if (arg.event.title === "Available") {
                       eventClasses = "text-black "; // Blue background for "Available" events
                     } else if (arg.event.title === "Booked") {
-                      eventClasses = "bg-red-500"; // Green background for "Booked" events
+                      eventClasses = "bg-red-500 p-1"; // Green background for "Booked" events
                     } else if (arg.event.title === "1 Spot Left") {
                       eventClasses = "bg-red-500"; // Green background for "Booked" events
                     }
