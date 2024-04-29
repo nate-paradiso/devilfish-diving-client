@@ -469,7 +469,7 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
         className="gform "
         method="POST"
         data-email="example@gmail.com"
-        action="https://script.google.com/macros/s/AKfycbxn1unr4NE8TQ3_P9sD-rf_jNtqZEjxONZHV4qO_3ILU6iq5r88oFK5JZultmoeIgzUng/exec"
+        action="https://script.google.com/macros/s/AKfycbxy8OeqpLRSD9YJGRfvzWOtIWTS9LcEGsOgr6dIIBe6AHYD_i25ohhdjsPiy5QIL5e40w/exec"
       >
         <div className="  flex justify-center flex-col  md:flex-row md:justify-evenly ">
           <div>
