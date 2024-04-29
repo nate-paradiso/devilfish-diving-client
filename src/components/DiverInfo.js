@@ -14,6 +14,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted }) => {
     phone: "",
     birthday: "",
     address: "",
+    lastDive: "",
     certifyingAgency: "",
     certificationNumber: "",
     danInsuranceNumber: "",
@@ -31,6 +32,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted }) => {
     phone: "",
     birthday: "",
     address: "",
+    lastDive: "",
     certifyingAgency: "",
     certificationNumber: "",
     danInsuranceNumber: "",
@@ -195,6 +197,15 @@ const DiverInfo = ({ selectedDate, setIsSubmitted }) => {
         submitButton.disabled = false; // Re-enable the submit button
         return;
       }
+      if (!validateLastDive(data.lastDive)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          lastDive: "Please enter your last diving date.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
       if (!validateCertifyingAgency(data.certifyingAgency)) {
         setValidationErrors(prevErrors => ({
           ...prevErrors,
@@ -300,6 +311,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted }) => {
               phone: "",
               birthday: "",
               address: "",
+              lastDive: "",
               certifyingAgency: "",
               certificationNumber: "",
               danInsuranceNumber: "",
@@ -318,6 +330,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted }) => {
               phone: "",
               birthday: "",
               address: "",
+              lastDive: "",
               certifyingAgency: "",
               certificationNumber: "",
               danInsuranceNumber: "",
@@ -377,6 +390,10 @@ const DiverInfo = ({ selectedDate, setIsSubmitted }) => {
     function validateAddress(address) {
       return address.trim() !== ""; // Check if the name is not empty
     }
+    function validateLastDive(lastDive) {
+      // Check if the last dive is a valid date
+      return !isNaN(Date.parse(lastDive));
+    }
     function validateCertifyingAgency(certifyingAgency) {
       return certifyingAgency.trim() !== ""; // Check if the name is not empty
     }
@@ -393,7 +410,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted }) => {
       return emergencyContactPhone.trim() !== ""; // Check if the name is not empty
     }
     function validateDivingDate(divingDate) {
-      // Check if the birthday is a valid date
+      // Check if the diving date is a valid date
       return !isNaN(Date.parse(divingDate));
     }
     function validateElectronicSignature(electronicSignature) {
@@ -599,6 +616,25 @@ const DiverInfo = ({ selectedDate, setIsSubmitted }) => {
             </div>
           </div>
           <div>
+            <div className="flex-col flex">
+              <label htmlFor="lastDive" className="mt-2 flex flex-row">
+                Date of Last Dive: <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="lastDive"
+                className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                type="date"
+                name="lastDive"
+                value={formData.lastDive}
+                onChange={handleInputChange}
+              />
+              {validationErrors.lastDive && (
+                <span ref={el => (errorRefs.current.lastDive = el)} className="text-red-500">
+                  {validationErrors.lastDive}
+                </span>
+              )}
+            </div>
+
             <div className="flex-col flex">
               <label htmlFor="certifyingAgency" className="mt-2 flex flex-row">
                 Diver Certifying Agency: <span className="text-red-500">*</span>
