@@ -7,8 +7,6 @@ import axios from "axios";
 const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-  console.log("from calendar", selectedDate);
-  console.log(showDiverInfo);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -42,7 +40,6 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
     electronicSignature: "",
     electronicSignatureDate: "",
   });
-  // const [isSubmitted, setIsSubmitted] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(true); // State to control button visibility
 
   // Function to handle form submission
@@ -100,7 +97,7 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
       return { data: formData, honeypot: honeypot };
     }
 
-    function handleFormSubmit(event) {
+    const handleFormSubmit = event => {
       event.preventDefault();
 
       let form = event.target;
@@ -113,7 +110,6 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
       form.setAttribute("data-submitting", "true"); // Mark the form as submitting
 
       let submitButton = form.querySelector("button[type=submit]");
-      console.log(submitButton);
       submitButton.disabled = true; // Disable the submit button
 
       let formData = getFormData(form);
@@ -258,6 +254,19 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
 
       setIsButtonVisible(false);
 
+      // endpoint to send form data to the back end
+      const sendEmail = async formData => {
+        try {
+          const response = await axios.post(`${serverUrl}/api/send-email`, { formData });
+          console.log("Form data sent to the backend for email", response.data); // Log the response from the backend
+          return response.data; // Return the response data if needed
+        } catch (error) {
+          console.error("Error sending form data to backend for email:", error);
+          throw error; // Throw the error to handle it in the calling code
+        }
+      };
+      sendEmail(formData);
+
       let url = form.action;
       let xhr = new XMLHttpRequest();
       xhr.open("POST", url);
@@ -327,7 +336,7 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
         })
         .join("&");
       xhr.send(encoded);
-    }
+    };
 
     function validateFirstName(firstName) {
       return (firstName ?? "").trim() !== ""; // Check if the name is not empty
@@ -438,71 +447,16 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
     return formattedLines.join("\n");
   };
 
-  // endpoint to send form data to the back end
-  const sendFormData = async formData => {
-    try {
-      const response = await axios.post(`${serverUrl}/api/send-email`, { formData });
-      console.log(response.data); // Log the response from the backend
-      return response.data; // Return the response data if needed
-    } catch (error) {
-      console.error("Error sending form data:", error);
-      throw error; // Throw the error to handle it in the calling code
-    }
-  };
-  const handleSubmit = async event => {
-    event.preventDefault();
-    try {
-      await sendFormData(formData);
-      // Handle success, e.g., show a success message to the user
-      console.log("Form data sent successfully");
-    } catch (error) {
-      // Handle error, e.g., show an error message to the user
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.error("Request failed with status:", error.response.status);
-        console.error("Error message:", error.response.data.error);
-        // Show an error message to the user
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error("No response received from server:", error.request);
-        // Show an error message to the user
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error("Error setting up the request:", error.message);
-        // Show an error message to the user
-      }
-    }
-  };
-
   return (
     <section className="max-w-[1200px] w-full">
       {" "}
       <form
         className="gform "
-        onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
         method="POST"
         data-email="example@gmail.com"
         action="https://script.google.com/macros/s/AKfycbxn1unr4NE8TQ3_P9sD-rf_jNtqZEjxONZHV4qO_3ILU6iq5r88oFK5JZultmoeIgzUng/exec"
       >
-        {/* {isSubmitted ? (
-          <></>
-        ) : (
-          <p className="contact__success">
-            Thank you! We will see you at the{" "}
-            <a
-              className="text-blue-500 font-extrabold"
-              target="blank"
-              href="https://www.google.com/maps/place/Don+Armeni+Boat+Ramp/@47.592697,-122.3848731,17z/data=!4m14!1m7!3m6!1s0x5490407498e64f5f:0x7ab08bdb66039a82!2sDon+Armeni+Boat+Ramp!8m2!3d47.592697!4d-122.3822982!16s%2Fg%2F11c3tqkqhz!3m5!1s0x5490407498e64f5f:0x7ab08bdb66039a82!8m2!3d47.592697!4d-122.3822982!16s%2Fg%2F11c3tqkqhz?entry=ttu"
-            >
-              Don Armeni Boat Ramp
-            </a>{" "}
-            at Alki at 8:00 AM on{" "}
-            <span className="font-extrabold ">
-              {getDayName(selectedDate)} - {selectedDateStr}
-            </span>
-          </p>
-          <> */}
         <div className="  flex justify-center flex-col  md:flex-row md:justify-evenly ">
           <div>
             <div className="flex-col flex">
@@ -776,8 +730,6 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
             )}
           </div>
         </div>
-        {/* </>
-        )} */}
       </form>
     </section>
   );

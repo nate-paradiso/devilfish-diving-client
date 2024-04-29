@@ -178,6 +178,8 @@ const CalendarComponent = () => {
                           setShowDiverInfo={setShowDiverInfo}
                           showDiverInfo={showDiverInfo}
                           setIsSubmitted={setIsSubmitted}
+                          selectedDate={selectedDate}
+                          clearSelectedDate={clearSelectedDate}
                         />
                       ) : (
                         <button
@@ -211,6 +213,17 @@ const CalendarComponent = () => {
             <span className="font-extrabold ">
               {getDayName(selectedDate)} - {selectedDateStr}
             </span>
+            <br />
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+              onClick={() => {
+                setIsSubmitted(false);
+                setShowDiverInfo(false);
+                setSelectedDate(null);
+              }}
+            >
+              Select another date
+            </button>
           </div>
         </div>
       )}
