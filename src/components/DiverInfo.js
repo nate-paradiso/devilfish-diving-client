@@ -742,7 +742,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted }) => {
             <input
               id="electronicSignature"
               className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
-              type="text"
+              type="name"
               name="electronicSignature"
               value={formData.electronicSignature}
               onChange={handleInputChange}
