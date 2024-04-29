@@ -81,6 +81,25 @@ const CalendarComponent = () => {
     const dayIndex = new Date(date).getDay();
     return days[dayIndex];
   };
+  const eventContent = arg => {
+    // Customize the rendering of each event based on its title
+    let eventClasses = ""; // Initialize event classes
+
+    // Apply Tailwind classes based on event title
+    if (arg.event.title === "Available") {
+      eventClasses = "bg-green-500"; // Blue background for "Available" events
+    } else if (arg.event.title === "Booked") {
+      eventClasses = "bg-red-500"; // Green background for "Booked" events
+    } else if (arg.event.title === "1 Spot Left") {
+      eventClasses = "bg-red-500"; // Green background for "Booked" events
+    }
+
+    return (
+      <div className={`p-0.5  ${eventClasses}`}>
+        {arg.event.title} {/* Render event title */}
+      </div>
+    );
+  };
 
   return (
     <div className="max-w-[800px] mx-auto">
@@ -105,7 +124,7 @@ const CalendarComponent = () => {
                   events={googleEvents}
                   selectLongPressDelay={0}
                   fixedWeekCount={false}
-                  showNonCurrentDates={false}
+                  showNonCurrentDates={true}
                   titleFormat={{
                     month: "short", // Display the month in short form
                     year: "numeric",
@@ -116,26 +135,12 @@ const CalendarComponent = () => {
                     right: "prev,next",
                   }}
                   height="auto"
-                  eventContent={arg => {
-                    // Customize the rendering of each event based on its title
-                    let eventClasses = ""; // Initialize event classes
-
-                    // Apply Tailwind classes based on event title
-                    if (arg.event.title === "Available") {
-                      eventClasses = "bg-green-500"; // Blue background for "Available" events
-                    } else if (arg.event.title === "Booked") {
-                      eventClasses = "bg-red-500"; // Green background for "Booked" events
-                    } else if (arg.event.title === "1 Spot Left") {
-                      eventClasses = "bg-red-500"; // Green background for "Booked" events
-                    }
-
-                    return (
-                      <div className={`p-0.5  ${eventClasses}`}>
-                        {arg.event.title} {/* Render event title */}
-                      </div>
-                    );
-                  }}
+                  eventContent={eventContent}
                   unselectAuto={false}
+                  validRange={{
+                    start: new Date(), // Today's date
+                    end: "9999-12-31", // Far into the future
+                  }}
                 />
               )}
 
