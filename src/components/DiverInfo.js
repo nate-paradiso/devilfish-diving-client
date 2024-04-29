@@ -1,12 +1,12 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import LiabilityRelease from "./LiabilityRelease";
 import axios from "axios";
 
 const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-
+  const errorRefs = useRef({});
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -253,7 +253,6 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
       }
 
       setIsButtonVisible(false);
-
       // endpoint to send form data to the back end
       const sendEmail = async formData => {
         try {
@@ -447,12 +446,27 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
     return formattedLines.join("\n");
   };
 
+  useEffect(() => {
+    const scrollToError = () => {
+      // Find the first field with a validation error
+      const firstError = Object.keys(validationErrors).find(field => validationErrors[field]);
+
+      // If there's a field with an error, scroll its error message into view
+      if (firstError) {
+        const errorRef = errorRefs.current[firstError];
+        if (errorRef) {
+          errorRef.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+    };
+
+    scrollToError();
+  }, [validationErrors]);
   return (
     <section className="max-w-[1200px] w-full">
       {" "}
       <form
         className="gform "
-        // onSubmit={handleSubmit}
         method="POST"
         data-email="example@gmail.com"
         action="https://script.google.com/macros/s/AKfycbxn1unr4NE8TQ3_P9sD-rf_jNtqZEjxONZHV4qO_3ILU6iq5r88oFK5JZultmoeIgzUng/exec"
@@ -472,7 +486,9 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
                 className="border-solid p-2  border-2 border-darkBlue   md:w-64  w-full h-[46px] "
               />
               {validationErrors.firstName && (
-                <span className="text-red-500 ">{validationErrors.firstName}</span>
+                <span ref={el => (errorRefs.current.firstName = el)} className="text-red-500">
+                  {validationErrors.firstName}
+                </span>
               )}
             </div>
             <div className="flex-col flex">
@@ -488,7 +504,9 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
                 className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
               />
               {validationErrors.lastName && (
-                <span className="text-red-500">{validationErrors.lastName}</span>
+                <span ref={el => (errorRefs.current.lastName = el)} className="text-red-500">
+                  {validationErrors.lastName}
+                </span>
               )}
             </div>
             <div className="flex-col flex">
@@ -504,7 +522,9 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
                 onChange={handleInputChange}
               />
               {validationErrors.email && (
-                <span className="text-red-500">{validationErrors.email}</span>
+                <span ref={el => (errorRefs.current.email = el)} className="text-red-500">
+                  {validationErrors.email}
+                </span>
               )}
             </div>
             <div className="flex-col flex">
@@ -520,7 +540,9 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
                 onChange={handleInputChange}
               />
               {validationErrors.phone && (
-                <span className="text-red-500">{validationErrors.phone}</span>
+                <span ref={el => (errorRefs.current.phone = el)} className="text-red-500">
+                  {validationErrors.phone}
+                </span>
               )}
             </div>
             <div className="flex-col flex">
@@ -536,7 +558,9 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
                 onChange={handleInputChange}
               />
               {validationErrors.birthday && (
-                <span className="text-red-500">{validationErrors.birthday}</span>
+                <span ref={el => (errorRefs.current.birthday = el)} className="text-red-500">
+                  {validationErrors.birthday}
+                </span>
               )}
             </div>
             <div className="flex-col flex">
@@ -552,7 +576,9 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
                 onChange={handleInputChange}
               />
               {validationErrors.address && (
-                <span className="text-red-500">{validationErrors.address}</span>
+                <span ref={el => (errorRefs.current.address = el)} className="text-red-500">
+                  {validationErrors.address}
+                </span>
               )}
             </div>
           </div>
@@ -570,7 +596,12 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
                 onChange={handleInputChange}
               />
               {validationErrors.certifyingAgency && (
-                <span className="text-red-500">{validationErrors.certifyingAgency}</span>
+                <span
+                  ref={el => (errorRefs.current.certifyingAgency = el)}
+                  className="text-red-500"
+                >
+                  {validationErrors.certifyingAgency}
+                </span>
               )}
             </div>
             <div className="flex-col flex">
@@ -586,7 +617,10 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
                 onChange={handleInputChange}
               />
               {validationErrors.certificationNumber && (
-                <span className="contact__error-message">
+                <span
+                  ref={el => (errorRefs.current.certificationNumber = el)}
+                  className="contact__error-message"
+                >
                   {validationErrors.certificationNumber}
                 </span>
               )}
@@ -604,7 +638,10 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
                 onChange={handleInputChange}
               />
               {validationErrors.danInsuranceNumber && (
-                <span className="contact__error-message">
+                <span
+                  ref={el => (errorRefs.current.danInsuranceNumber = el)}
+                  className="contact__error-message"
+                >
                   {validationErrors.danInsuranceNumber}
                 </span>
               )}
@@ -622,7 +659,10 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
                 onChange={handleInputChange}
               />
               {validationErrors.emergencyContactName && (
-                <span className="contact__error-message">
+                <span
+                  ref={el => (errorRefs.current.emergencyContactName = el)}
+                  className="contact__error-message"
+                >
                   {validationErrors.emergencyContactName}
                 </span>
               )}
@@ -640,7 +680,10 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
                 onChange={handleInputChange}
               />
               {validationErrors.emergencyContactPhone && (
-                <span className="contact__error-message">
+                <span
+                  ref={el => (errorRefs.current.emergencyContactPhone = el)}
+                  className="contact__error-message"
+                >
                   {validationErrors.emergencyContactPhone}
                 </span>
               )}
@@ -658,7 +701,12 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
                 onChange={handleInputChange}
               />
               {validationErrors.divingDate && (
-                <span className="contact__error-message  ">{validationErrors.divingDate}</span>
+                <span
+                  ref={el => (errorRefs.current.divingDate = el)}
+                  className="contact__error-message"
+                >
+                  {validationErrors.divingDate}
+                </span>
               )}
             </div>
           </div>
@@ -684,7 +732,10 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
               onChange={handleInputChange}
             />
             {validationErrors.electronicSignature && (
-              <span className="contact__error-message  ">
+              <span
+                ref={el => (errorRefs.current.electronicSignature = el)}
+                className="contact__error-message"
+              >
                 {validationErrors.electronicSignature}
               </span>
             )}
@@ -702,7 +753,10 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
               onChange={handleInputChange}
             />
             {validationErrors.electronicSignatureDate && (
-              <span className="contact__error-message  ">
+              <span
+                ref={el => (errorRefs.current.electronicSignatureDate = el)}
+                className="contact__error-message"
+              >
                 {validationErrors.electronicSignatureDate}
               </span>
             )}

@@ -137,9 +137,6 @@ const CalendarComponent = () => {
                       eventClasses = "bg-red-500"; // Green background for "Booked" events
                     }
 
-                    // Apply additional Tailwind classes or inline styles as needed
-                    // For example, you can add padding, margin, etc.
-
                     return (
                       <div className={`p-0.5  ${eventClasses}`}>
                         {arg.event.title} {/* Render event title */}
@@ -215,14 +212,14 @@ const CalendarComponent = () => {
             </span>
             <br />
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+              className="border-solid p-2 border-2 border-sky-500 mt-6 w-50"
               onClick={() => {
                 setIsSubmitted(false);
                 setShowDiverInfo(false);
                 setSelectedDate(null);
               }}
             >
-              Select another date
+              Back to Calendar
             </button>
           </div>
         </div>
