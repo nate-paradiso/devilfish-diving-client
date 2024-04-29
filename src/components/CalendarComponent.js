@@ -15,6 +15,7 @@ const CalendarComponent = () => {
   // const [isDateAvailable, setIsDateAvailable] = useState(true);
   const [googleEvents, setGoogleEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   console.log(selectedDate);
 
   useEffect(() => {
@@ -60,6 +61,7 @@ const CalendarComponent = () => {
     const formattedDate = formatDate(selectedDate); // Format the selected date
     setSelectedDate(selectedDate); // Store the selected date in state
     setSelectedDateStr(formattedDate); // Store the formatted selected date string in state
+    setShowDiverInfo(true);
     // setIsDateAvailable(true); // Set the selected date as available by default
   };
 
@@ -90,99 +92,135 @@ const CalendarComponent = () => {
 
   return (
     <div className="max-w-[800px] mx-auto">
-      {loading ? (
-        <p className="m-4">Loading calendar...</p>
-      ) : (
-        <div className="m-4 flex justify-center flex-col ">
-          <p>
-            Welcome! Select an <span className="font-extrabold">Available</span> day then click next
-            to complete the form. Only single day selection allowed.
-          </p>
-          <p>There is a 2 diver maximum 2 diver minimum, no solo divers.</p>
-          <br />
-          {!showDiverInfo && (
-            <FullCalendar
-              plugins={[dayGridPlugin, googleCalendarPlugin, interactionPlugin]}
-              initialView="dayGridMonth"
-              selectable={true} // Enable day selection
-              selectAllow={selectAllow} // Function to determine whether a day is selectable
-              select={handleDateSelect} // Callback function for day selection
-              events={googleEvents}
-              selectLongPressDelay={0}
-              fixedWeekCount={false}
-              showNonCurrentDates={false}
-              titleFormat={{
-                month: "short", // Display the month in short form
-                year: "numeric",
-              }}
-              headerToolbar={{
-                left: "today",
-                center: "title",
-                right: "prev,next",
-              }}
-              height="auto"
-              eventContent={arg => {
-                // Customize the rendering of each event based on its title
-                let eventClasses = ""; // Initialize event classes
+      {!isSubmitted ? (
+        <div>
+          {loading ? (
+            <p className="m-4">Loading calendar...</p>
+          ) : (
+            <div className="m-4 flex justify-center flex-col ">
+              <p>
+                Welcome! Select the day with an <span className="font-extrabold">Available</span>{" "}
+                event then click next to complete the form. Only single day selection allowed.
+              </p>
+              <br />
+              <p>There is a 2 diver maximum and minimum, no solo divers.</p>
+              <br />
+              {!showDiverInfo && (
+                <FullCalendar
+                  plugins={[dayGridPlugin, googleCalendarPlugin, interactionPlugin]}
+                  initialView="dayGridMonth"
+                  selectable={true} // Enable day selection
+                  selectAllow={selectAllow} // Function to determine whether a day is selectable
+                  select={handleDateSelect} // Callback function for day selection
+                  events={googleEvents}
+                  selectLongPressDelay={0}
+                  fixedWeekCount={false}
+                  showNonCurrentDates={false}
+                  titleFormat={{
+                    month: "short", // Display the month in short form
+                    year: "numeric",
+                  }}
+                  headerToolbar={{
+                    left: "today",
+                    center: "title",
+                    right: "prev,next",
+                  }}
+                  height="auto"
+                  eventContent={arg => {
+                    // Customize the rendering of each event based on its title
+                    let eventClasses = ""; // Initialize event classes
 
-                // Apply Tailwind classes based on event title
-                if (arg.event.title === "Available") {
-                  eventClasses = "bg-green-500"; // Blue background for "Available" events
-                } else if (arg.event.title === "Booked") {
-                  eventClasses = "bg-red-500"; // Green background for "Booked" events
-                }
+                    // Apply Tailwind classes based on event title
+                    if (arg.event.title === "Available") {
+                      eventClasses = "bg-green-500"; // Blue background for "Available" events
+                    } else if (arg.event.title === "Booked") {
+                      eventClasses = "bg-red-500"; // Green background for "Booked" events
+                    }
 
-                // Apply additional Tailwind classes or inline styles as needed
-                // For example, you can add padding, margin, etc.
+                    return (
+                      <div className={`p-0.5  ${eventClasses}`}>
+                        {arg.event.title} {/* Render event title */}
+                      </div>
+                    );
+                  }}
+                  unselectAuto={false}
+                />
+              )}
 
-                return (
-                  <div className={`p-0.5  ${eventClasses}`}>
-                    {arg.event.title} {/* Render event title */}
-                  </div>
-                );
-              }}
-              unselectAuto={false}
-            />
-          )}
-
-          <div>
-            {selectedDate && (
               <div>
-                <h3 className="mt-2">
-                  Single Date Selected:{" "}
-                  <span className="font-extrabold ">
-                    {getDayName(selectedDate)} - {selectedDateStr}
-                  </span>
-                </h3>{" "}
-                <h3 className="mt-1">
-                  Price: <span className="font-extrabold">$150 per diver</span>
-                </h3>
-                <div className="flex justify-between mb-2 flex-row">
-                  <button
-                    className="border-solid p-2  border-2 border-sky-500 mt-1 w-32"
-                    onClick={clearSelectedDate}
-                  >
-                    Cancel
-                  </button>
-                </div>
-                <div className="flex max-w-[1200px] mx-auto ">
-                  {showDiverInfo ? (
-                    <DiverInfo
-                      selectedDate={selectedDate}
-                      setShowDiverInfo={setShowDiverInfo}
-                      showDiverInfo={showDiverInfo}
-                    />
-                  ) : (
-                    <button
-                      className="border-solid p-2 border-2 border-sky-500 mt-1 w-32"
-                      onClick={() => setShowDiverInfo(true)}
-                    >
-                      Next
-                    </button>
-                  )}
-                </div>
+                {selectedDate && (
+                  <div>
+                    <h1 className="text-xl">Diver Information</h1>
+                    <h3 className="mt-2">
+                      Date Selected:{" "}
+                      <span className="font-extrabold ">
+                        {getDayName(selectedDate)} - {selectedDateStr}
+                      </span>
+                    </h3>{" "}
+                    <h3 className="mt-1">
+                      Price: <span className="font-extrabold">$140 per diver.</span>
+                    </h3>
+                    <div className="flex justify-between mb-2 flex-row">
+                      <button
+                        className="border-solid p-2  border-2 border-sky-500 mt-1 w-32"
+                        onClick={clearSelectedDate}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                    <div className="flex max-w-[1200px] mx-auto ">
+                      {showDiverInfo ? (
+                        <DiverInfo
+                          setSelectedDate={setSelectedDate}
+                          setShowDiverInfo={setShowDiverInfo}
+                          showDiverInfo={showDiverInfo}
+                          setIsSubmitted={setIsSubmitted}
+                          selectedDate={selectedDate}
+                          clearSelectedDate={clearSelectedDate}
+                        />
+                      ) : (
+                        <button
+                          className="border-solid p-2 border-2 border-sky-500 mt-1 w-32"
+                          onClick={() => setShowDiverInfo(true)}
+                        >
+                          Next
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="m-8 flex justify-center ">
+          <div className="contact__success text-center">
+            <h1 className="text-xl font-bold">Thank you!</h1>
+            <br />
+            We will see you at the{" "}
+            <a
+              className="text-blue-500 font-extrabold"
+              target="blank"
+              href="https://www.google.com/maps/place/Don+Armeni+Boat+Ramp/@47.592697,-122.3848731,17z/data=!4m14!1m7!3m6!1s0x5490407498e64f5f:0x7ab08bdb66039a82!2sDon+Armeni+Boat+Ramp!8m2!3d47.592697!4d-122.3822982!16s%2Fg%2F11c3tqkqhz!3m5!1s0x5490407498e64f5f:0x7ab08bdb66039a82!8m2!3d47.592697!4d-122.3822982!16s%2Fg%2F11c3tqkqhz?entry=ttu"
+            >
+              Don Armeni Boat Ramp
+            </a>{" "}
+            in Alki at <span className="font-extrabold">8:00 AM </span>
+            <span className="font-extrabold ">
+              {getDayName(selectedDate)} - {selectedDateStr}
+            </span>
+            <br />
+            <button
+              className="border-solid p-2 border-2 border-sky-500 mt-6 w-50"
+              onClick={() => {
+                setIsSubmitted(false);
+                setShowDiverInfo(false);
+                setSelectedDate(null);
+              }}
+            >
+              Back to Calendar
+            </button>
           </div>
         </div>
       )}
