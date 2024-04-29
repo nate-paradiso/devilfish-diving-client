@@ -7,17 +7,12 @@ body {
 }
 /* CSS */
 .full-calendar-container {
-  user-select: none; /* Disable click and hold effect on the FullCalendar container */
-}
-.fc-day {
-  cursor: pointer;
-}
-.fc-day-selected {
-  background-color: transparent !important; /* Set background color to transparent */
+  /* user-select: none; Disable click and hold effect on the FullCalendar container */
 }
 .fc-event {
   font-size: 0.8rem;
-  border: none;
+  cursor: pointer;
+  overflow: hidden; /* Hide overflow text */
 }
 .contact__tube-spinner {
   margin-top: 1rem;

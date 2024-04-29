@@ -4,7 +4,7 @@ import Image from "next/image";
 import LiabilityRelease from "./LiabilityRelease";
 import axios from "axios";
 
-const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
+const DiverInfo = ({ selectedDate, setIsSubmitted }) => {
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const errorRefs = useRef({});
   const [formData, setFormData] = useState({
@@ -41,6 +41,22 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
     electronicSignatureDate: "",
   });
   const [isButtonVisible, setIsButtonVisible] = useState(true); // State to control button visibility
+
+  // Format the selectedDate to type=date for the form
+  const formatDateForHTMLInput = selectedDate => {
+    // Create a new Date object from the selectedDate
+    const dateObj = new Date(selectedDate);
+
+    // Extract year, month, and day
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const day = String(dateObj.getDate()).padStart(2, "0");
+
+    // Format the date as yyyy-mm-dd
+    const formattedDate = `${year}-${month}-${day}`;
+
+    return formattedDate;
+  };
 
   // Function to handle form submission
   useEffect(() => {
@@ -697,7 +713,7 @@ const DiverInfo = ({ selectedDate, showDiverInfo, setIsSubmitted }) => {
                 className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
                 type="date"
                 name="divingDate"
-                value={formData.divingDate}
+                value={formatDateForHTMLInput(formData.divingDate)}
                 onChange={handleInputChange}
               />
               {validationErrors.divingDate && (
