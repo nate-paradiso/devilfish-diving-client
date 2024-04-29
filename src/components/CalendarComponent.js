@@ -132,18 +132,21 @@ const CalendarComponent = () => {
 
                     // Apply Tailwind classes based on event title
                     if (arg.event.title === "Available") {
-                      eventClasses = "bg-green-500"; // Blue background for "Available" events
+                      eventClasses = "text-black "; // Blue background for "Available" events
                     } else if (arg.event.title === "Booked") {
+                      eventClasses = "bg-red-500"; // Green background for "Booked" events
+                    } else if (arg.event.title === "1 Spot Left") {
                       eventClasses = "bg-red-500"; // Green background for "Booked" events
                     }
 
                     return (
-                      <div className={`p-0.5  ${eventClasses}`}>
+                      <div className={`  ${eventClasses}`}>
                         {arg.event.title} {/* Render event title */}
                       </div>
                     );
                   }}
                   unselectAuto={false}
+                  eventBackgroundColor="transparent"
                 />
               )}
 

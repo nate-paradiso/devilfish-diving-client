@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  background-color: rgb(248, 248, 248);
+  background-color: #f8fafc;
 }
 /* CSS */
 .full-calendar-container {
@@ -17,6 +17,7 @@ body {
 }
 .fc-event {
   font-size: 0.8rem;
+  border: none;
 }
 .contact__tube-spinner {
   margin-top: 1rem;
