@@ -27,6 +27,11 @@ const Footer = () => {
             Refund Policy
           </Link>
         </p>
+        <p>
+          <Link className="hover:text-hoverColor" href="/PrivacyPolicy">
+            Privacy Policy
+          </Link>
+        </p>
         <p>Copyright Devilfish Diving LLC</p>
       </div>
       <div>

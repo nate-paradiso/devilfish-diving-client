@@ -292,6 +292,18 @@ const DiverInfo = ({ selectedDate, setIsSubmitted }) => {
         }
       };
       sendEmail(formData);
+      // endpoint to update Calendar
+      const upDateCalendar = async divingDate => {
+        try {
+          const response = await axios.post(`${serverUrl}/api/update-calendar`, { divingDate });
+          console.log("Diving date sent to the backend to update calendar", response.data); // Log the response from the backend
+          return response.data; // Return the response data if needed
+        } catch (error) {
+          console.error("Error sending diving date to backend update calendar:", error);
+          throw error; // Throw the error to handle it in the calling code
+        }
+      };
+      upDateCalendar(formData.data.divingDate); // Send only the divingDate to the backend
 
       let url = form.action;
       let xhr = new XMLHttpRequest();
