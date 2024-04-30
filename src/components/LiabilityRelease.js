@@ -4,7 +4,7 @@ const LiabilityRelease = ({ formData }) => {
   return (
     <section className="mb-2">
       {" "}
-      <h2 className="text-xl mb-2">Liability Waiver</h2>
+      <h2 className="text-xl mb-2">Liability Release and Assumption of Risk Agreement</h2>
       <h3>NON-AGENCY DISCLOSURE AND ACKNOWLEDGMENT AGREEMENT</h3>
       <p className="mb-2 ">
         I understand and agree that PADI Members (“Members”), including Devilfish Diving LLC, and/or

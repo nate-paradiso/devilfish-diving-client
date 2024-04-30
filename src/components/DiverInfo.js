@@ -769,7 +769,8 @@ const DiverInfo = ({ selectedDate, setIsSubmitted }) => {
           <div className="flex-col flex">
             <p>
               By typing your name below you are electronically signing, you acknowledge that you
-              have read and understand the terms of the liability waiver.
+              have read, understand, and agree to the terms of the Liability Release and Assumption
+              of Risk Agreement.
               <br />
             </p>
             <label htmlFor="electronicSignature" className="mt-2 flex flex-row">

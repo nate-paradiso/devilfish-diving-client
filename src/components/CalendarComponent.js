@@ -203,7 +203,7 @@ const CalendarComponent = () => {
             >
               Don Armeni Boat Ramp
             </a>{" "}
-            in Alki at <span className="font-extrabold">8:00 AM </span>
+            in Alki at <span className="font-extrabold">7:30 AM </span>
             <span className="font-extrabold ">
               {getDayName(selectedDate)} - {selectedDateStr}
             </span>
