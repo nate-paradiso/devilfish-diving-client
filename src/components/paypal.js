@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 // Renders errors or successfull transactions on the screen.
@@ -9,18 +9,35 @@ const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 console.log(serverUrl);
 
 export const PayPal = () => {
+  const [clientId, setClientId] = useState("");
+  const [message, setMessage] = useState("");
+  console.log(clientId);
+  useEffect(() => {
+    const fetchClientId = async () => {
+      try {
+        const response = await fetch(`${serverUrl}/api/paypal/client-id`);
+        const data = await response.json();
+        setClientId(data.clientId);
+      } catch (error) {
+        console.error(error);
+        setMessage("Error fetching PayPal client ID.");
+      }
+    };
+
+    fetchClientId();
+  }, []);
+
   const initialOptions = {
     intent: "capture",
-    "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
+    "client-id": clientId,
     "enable-funding": "venmo,card",
     "disable-funding": "paylater",
     "data-sdk-integration-source": "integrationbuilder_sc",
   };
 
-  const [message, setMessage] = useState("");
-
   return (
     <PayPalScriptProvider options={initialOptions}>
+      {" "}
       <div className="App">
         <PayPalButtons
           style={{
@@ -40,8 +57,8 @@ export const PayPal = () => {
 
                 body: JSON.stringify({
                   trip: {
-                    description: "Dive trip - 2 person on",
-                    cost: "300.00",
+                    description: "Dive trip booking",
+                    cost: "140.00",
                     diveDate: selectedDate,
                   },
                 }),
