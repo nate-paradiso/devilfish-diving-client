@@ -4,7 +4,7 @@ import Image from "next/image";
 import LiabilityRelease from "./LiabilityRelease";
 import axios from "axios";
 
-const DiverInfo = ({ selectedDate, setIsSubmitted }) => {
+const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const errorRefs = useRef({});
   const [formData, setFormData] = useState({
@@ -281,17 +281,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted }) => {
 
       setIsButtonVisible(false);
 
-      //hit backend point to authorize calender requests
-      const upDateCalender = async () => {
-        try {
-          await axios.post(`${serverUrl}/api/update-calendar`);
-        } catch (error) {
-          console.error("Error hitting endpoint on backend api calendar update", error);
-        }
-      };
-
-      upDateCalender();
-
       // endpoint to send form data to the back end
       const sendEmail = async formData => {
         try {
@@ -304,18 +293,49 @@ const DiverInfo = ({ selectedDate, setIsSubmitted }) => {
         }
       };
       sendEmail(formData);
+
       // endpoint to update Calendar
-      const upDateCalendar = async divingDate => {
-        try {
-          const response = await axios.post(`${serverUrl}/api/update-calendar`, { divingDate });
-          console.log("Diving date sent to the backend to update calendar", response.data); // Log the response from the backend
-          return response.data; // Return the response data if needed
-        } catch (error) {
-          console.error("Error sending diving date to backend update calendar:", error);
-          throw error; // Throw the error to handle it in the calling code
-        }
-      };
-      upDateCalendar(formData.data.divingDate); // Send only the divingDate to the backend
+      if (eventTitle === "1 Spot Available") {
+        const upDateCalendar1Spot = async divingDate => {
+          try {
+            const response = await axios.post(`${serverUrl}/api/update-calendar-booked`, {
+              divingDate,
+            });
+            console.log(
+              "Diving date sent to the backend to update calendar (1 spot)",
+              response.data,
+            );
+            return response.data;
+          } catch (error) {
+            console.error(
+              "Error sending diving date to backend to update calendar (1 spot):",
+              error,
+            );
+            throw error;
+          }
+        };
+        upDateCalendar1Spot(formData.data.divingDate);
+      } else {
+        const upDateCalendarBooked = async divingDate => {
+          try {
+            const response = await axios.post(`${serverUrl}/api/update-calendar-1spot`, {
+              divingDate,
+            });
+            console.log(
+              "Diving date sent to the backend to update calendar (booked)",
+              response.data,
+            );
+            return response.data;
+          } catch (error) {
+            console.error(
+              "Error sending diving date to backend to update calendar (booked):",
+              error,
+            );
+            throw error;
+          }
+        };
+        upDateCalendarBooked(formData.data.divingDate);
+      }
 
       let url = form.action;
       let xhr = new XMLHttpRequest();

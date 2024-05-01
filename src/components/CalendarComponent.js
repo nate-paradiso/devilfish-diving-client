@@ -15,21 +15,21 @@ const CalendarComponent = () => {
   const [googleEvents, setGoogleEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [eventTitle, setEventTitle] = useState(null);
 
+  // Fetch events from your backend endpoint using Axios
+  const fetchEventsFromBackend = async () => {
+    try {
+      const response = await axios.get(`${serverUrl}/api/google-calendar-events`); // Endpoint on your backend
+      const data = response.data;
+      setGoogleEvents(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Failed to fetch events from backend:", error);
+      setLoading(false); // Set loading state to false on error
+    }
+  };
   useEffect(() => {
-    // Fetch events from your backend endpoint using Axios
-    const fetchEventsFromBackend = async () => {
-      try {
-        const response = await axios.get(`${serverUrl}/api/google-calendar-events`); // Endpoint on your backend
-        const data = response.data;
-        setGoogleEvents(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Failed to fetch events from backend:", error);
-        setLoading(false); // Set loading state to false on error
-      }
-    };
-
     fetchEventsFromBackend();
   }, []);
 
@@ -67,6 +67,12 @@ const CalendarComponent = () => {
       setSelectedDate(null);
       return; // Stop further execution
     }
+    if (clickedEvent.title === "1 Spot Available") {
+      setSelectedDate(selectedDate); // Store the selected date in state
+      setSelectedDateStr(formattedDate); // Store the formatted selected date string in state
+      setShowDiverInfo(true);
+      setEventTitle(clickedEvent.title);
+    }
   };
 
   // Function to clear the selected date
@@ -90,8 +96,8 @@ const CalendarComponent = () => {
       eventClasses = "bg-green-500"; // Blue background for "Available" events
     } else if (arg.event.title === "Booked") {
       eventClasses = "bg-red-500"; // Green background for "Booked" events
-    } else if (arg.event.title === "1 Spot Left") {
-      eventClasses = "bg-red-500"; // Green background for "Booked" events
+    } else if (arg.event.title === "1 Spot Available") {
+      eventClasses = "bg-green-500"; // Green background for "Booked" events
     }
 
     return (
@@ -110,8 +116,9 @@ const CalendarComponent = () => {
           ) : (
             <div className="m-4 flex justify-center flex-col ">
               <p>
-                Welcome! Select an <span className="font-extrabold">Available</span> event then
-                complete the form. Only single day selection allowed.
+                Welcome! Select an <span className="font-extrabold">Available</span> or{" "}
+                <span className="font-extrabold"> 1 Spot Available</span> event then complete the
+                form. The Available events have 2 spots open. Only single day selection allowed.
               </p>
               <br />
               <p>There is a 2 diver maximum and minimum, no solo divers.</p>
@@ -174,6 +181,7 @@ const CalendarComponent = () => {
                           setIsSubmitted={setIsSubmitted}
                           selectedDate={selectedDate}
                           clearSelectedDate={clearSelectedDate}
+                          eventTitle={eventTitle}
                         />
                       ) : (
                         <button
@@ -214,6 +222,7 @@ const CalendarComponent = () => {
                 setIsSubmitted(false);
                 setShowDiverInfo(false);
                 setSelectedDate(null);
+                fetchEventsFromBackend();
               }}
             >
               Back to Calendar
