@@ -296,10 +296,10 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
       // endpoint to update Calendar
       if (eventTitle === "1 Spot Available") {
-        const upDateCalendar1Spot = async divingDate => {
+        const upDateCalendar1Spot = async formData => {
           try {
-            const response = await axios.post(`${serverUrl}/api/update-calendar-booked`, {
-              divingDate,
+            const response = await axios.patch(`${serverUrl}/api/update-calendar-booked`, {
+              formData,
             });
             console.log(
               "Diving date sent to the backend to update calendar (1 spot)",
@@ -314,12 +314,12 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
             throw error;
           }
         };
-        upDateCalendar1Spot(formData.data.divingDate);
+        upDateCalendar1Spot(formData);
       } else {
-        const upDateCalendarBooked = async divingDate => {
+        const upDateCalendarBooked = async formData => {
           try {
-            const response = await axios.post(`${serverUrl}/api/update-calendar-1spot`, {
-              divingDate,
+            const response = await axios.patch(`${serverUrl}/api/update-calendar-1spot`, {
+              formData,
             });
             console.log(
               "Diving date sent to the backend to update calendar (booked)",
@@ -334,7 +334,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
             throw error;
           }
         };
-        upDateCalendarBooked(formData.data.divingDate);
+        upDateCalendarBooked(formData);
       }
 
       let url = form.action;
