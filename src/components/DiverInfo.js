@@ -280,6 +280,18 @@ const DiverInfo = ({ selectedDate, setIsSubmitted }) => {
       }
 
       setIsButtonVisible(false);
+
+      //hit backend point to authorize calender requests
+      const upDateCalender = async () => {
+        try {
+          await axios.post(`${serverUrl}/api/update-calendar`);
+        } catch (error) {
+          console.error("Error hitting endpoint on backend api calendar update", error);
+        }
+      };
+
+      upDateCalender();
+
       // endpoint to send form data to the back end
       const sendEmail = async formData => {
         try {
