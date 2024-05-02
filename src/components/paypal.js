@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
-// Renders errors or successfull transactions on the screen.
+// Renders errors or successful transactions on the screen.
 function Message({ content }) {
   return <p>{content}</p>;
 }
@@ -29,7 +29,7 @@ export const PayPal = () => {
 
   const initialOptions = {
     intent: "capture",
-    "client-id": clientId,
+    "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT,
     "enable-funding": "venmo,card",
     "disable-funding": "paylater",
     "data-sdk-integration-source": "integrationbuilder_sc",
@@ -54,13 +54,13 @@ export const PayPal = () => {
 
                 // use the "body" param to optionally pass additional order information
                 // like product ids and quantities
-
                 body: JSON.stringify({
-                  trip: {
-                    description: "Dive trip booking",
-                    cost: "140.00",
-                    diveDate: selectedDate,
-                  },
+                  cart: [
+                    {
+                      id: "Dive Trip",
+                      quantity: "1",
+                    },
+                  ],
                 }),
               });
 
