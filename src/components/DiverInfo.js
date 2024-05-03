@@ -407,31 +407,31 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     }
   }, [isPayPalSuccessful]);
 
-  // Define function to update Calendar from 1 Spot Available to Booked
+  // Define function to update Calendar from Available to 1 Spot Available
   const upDateCalendar1Spot = async formData => {
-    try {
-      const response = await axios.patch(`${serverUrl}/api/update-calendar-booked`, {
-        formData,
-      });
-      console.log("Diving date sent to the backend to update calendar (1 spot)", response.data);
-      return response.data;
-    } catch (error) {
-      console.error("Error sending diving date to backend to update calendar (1 spot):", error);
-      throw error;
-    }
-  };
-
-  // Define function to update Calendar from Booked to 1 Spot Available
-  const upDateCalendarBooked = async formData => {
     try {
       const response = await axios.patch(`${serverUrl}/api/update-calendar-1spot`, {
         formData,
       });
-      console.log(formData);
-      console.log("Diving date sent to the backend to update calendar (booked)", response.data);
+      console.log("Diving date sent to the backend to update calendar to (1 spot)", response.data);
       return response.data;
     } catch (error) {
-      console.error("Error sending diving date to backend to update calendar (booked):", error);
+      console.error("Error sending diving date to backend to update calendar to (1 spot):", error);
+      throw error;
+    }
+  };
+
+  // Define function to update Calendar from 1 Spot Available to Booked
+  const upDateCalendarBooked = async formData => {
+    try {
+      const response = await axios.patch(`${serverUrl}/api/update-calendar-booked`, {
+        formData,
+      });
+      console.log(formData);
+      console.log("Diving date sent to the backend to update calendar to (booked)", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error sending diving date to backend to update calendar to (booked):", error);
       throw error;
     }
   };
@@ -481,13 +481,15 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
         // Update Calendar
         if (eventTitle === "1 Spot Available") {
-          await upDateCalendarBooked(formData);
+          console.log("from 1 spot", eventTitle);
+          upDateCalendarBooked(formData);
         } else {
-          await upDateCalendar1Spot(formData);
+          console.log("from booked function");
+          upDateCalendar1Spot(formData);
         }
 
         // Send email
-        await sendEmail(formData);
+        sendEmail(formData);
 
         // Set submitted state to true
         setIsSubmitted(true);
