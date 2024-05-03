@@ -15,6 +15,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const errorRefs = useRef({});
   const [isPayPalSuccessful, setIsPayPalSuccessful] = useState(false);
+  console.log("isPayPalSuccessful from top", isPayPalSuccessful);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -55,7 +56,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   // Format the selectedDate to type=date for the form
   const formatDateForHTMLInput = selectedDate => {
     // Create a new Date object from the selectedDate
-    console.log(selectedDate);
     const dateObj = new Date(selectedDate);
 
     // Extract year, month, and day
@@ -66,7 +66,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     // Format the date as yyyy-mm-dd
     const formattedDate = `${year}-${month}-${day}`;
 
-    console.log(formattedDate);
     return formattedDate;
   };
 
@@ -117,237 +116,48 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     return { data: formData };
   }
 
-  //Handle Paypal approval
+  // Handle Paypal approval
+  const handlePayPalApproval = async (data, actions) => {
+    try {
+      const response = await fetch(`${serverUrl}/api/orders/${data.orderID}/capture`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const orderData = await response.json();
+      // Three cases to handle:
+      //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+      //   (2) Other non-recoverable errors -> Show a failure message
+      //   (3) Successful transaction -> Show confirmation or thank you message
 
-  // Function to handle form submission
-  const handleFormSubmit = event => {
-    event.preventDefault();
+      const errorDetail = orderData?.details?.[0];
 
-    let form = event.target;
+      if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
+        // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+        // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
+        return actions.restart();
+      } else if (errorDetail) {
+        // (2) Other non-recoverable errors -> Show a failure message
+        throw new Error(`${errorDetail.description} (${orderData.debug_id})`);
+      } else {
+        // (3) Successful transaction -> Show confirmation or thank you message
+        // Or go to another URL:  actions.redirect('thank_you.html');
 
-    // Check if the form is already submitting
-    if (form.getAttribute("data-submitting") === "true") {
-      return;
-    }
-
-    form.setAttribute("data-submitting", "true"); // Mark the form as submitting
-
-    let submitButton = form.querySelector("button[type=submit]");
-    submitButton.disabled = true; // Disable the submit button
-
-    let formData = getFormData(form);
-    let data = formData.data;
-
-    // Basic form field validation
-    if (!validateFirstName(data.firstName)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        firstName: "Please enter a valid first name.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateLastName(data.lastName)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        lastName: "Please enter a valid last name.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateEmail(data.email)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        email: "Please enter a valid email address.",
-      }));
-      form.removeAttribute("data-submitting");
-      submitButton.disabled = false;
-      return;
-    }
-    if (!validatePhone(data.phone)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        phone: "Please enter a valid phone number.",
-      }));
-      form.removeAttribute("data-submitting");
-      submitButton.disabled = false;
-      return;
-    }
-    if (!validateBirthday(data.birthday)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        birthday: "Please enter a birthday.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateAddress(data.address)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        address: "Please enter a address.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateLastDive(data.lastDive)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        lastDive: "Please enter your last diving date.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateCertifyingAgency(data.certifyingAgency)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        certifyingAgency: "Please enter a certification agency.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateCertificationNumber(data.certificationNumber)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        certificationNumber: "Please enter a certification number.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateDanInsuranceNumber(data.danInsuranceNumber)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        danInsuranceNumber: "Please enter a DAN insurance number.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateEmergencyContactName(data.emergencyContactName)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        emergencyContactName: "Please enter an emergency contact name.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateDivingDate(data.divingDate)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        divingDate: "Please enter the diving date.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateEmergencyContactPhone(data.emergencyContactPhone)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        emergencyContactPhone: "Please enter an emergency contact phone number.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateElectronicSignature(data.electronicSignature)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        electronicSignature: "Please enter a electronic signature name.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateElectronicSignatureDate(data.electronicSignatureDate)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        electronicSignatureDate: "Please a valid date.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-
-      return;
-    }
-    setIsButtonVisible(false);
-
-    // Handle form submission via XMLHttpRequest
-    let url = form.action;
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        form.removeAttribute("data-submitting"); // Release the form from submitting state
-        submitButton.disabled = false; // Re-enable the submit button
-
-        if (xhr.status === 200) {
-          console.log("Form submission successful.");
-          // setFormData({
-          //   firstName: "",
-          //   lastName: "",
-          //   email: "",
-          //   phone: "",
-          //   birthday: "",
-          //   address: "",
-          //   lastDive: "",
-          //   certifyingAgency: "",
-          //   certificationNumber: "",
-          //   danInsuranceNumber: "",
-          //   emergencyContactName: "",
-          //   emergencyContactPhone: "",
-          //   divingDate: "",
-          //   electronicSignature: "",
-          //   electronicSignatureDate: "",
-          // });
-
-          // Reset form data
-          setValidationErrors({
-            firstName: "",
-            lastName: "",
-            email: "",
-            phone: "",
-            birthday: "",
-            address: "",
-            lastDive: "",
-            certifyingAgency: "",
-            certificationNumber: "",
-            danInsuranceNumber: "",
-            emergencyContactName: "",
-            emergencyContactPhone: "",
-            divingDate: "",
-            electronicSignature: "",
-            electronicSignatureDate: "",
-          });
-
-          //Reset validation errors
-          form.reset(); //reset form
-          let formElements = form.querySelector(".form-elements");
-          if (formElements) {
-            formElements.style.display = "none";
-          }
-          let thankYouMessage = form.querySelector(".thankyou_message");
-          if (thankYouMessage) {
-            thankYouMessage.style.display = "block";
-          }
-        } else {
-          console.error("Form submission failed.");
-        }
+        setIsPayPalSuccessful(true);
+        setMessage("Payment Successful. Thank you!");
+        console.log("Capture result", orderData, JSON.stringify(orderData, null, 2));
       }
-    };
-    let encoded = Object.keys(data)
-      .map(function (k) {
-        return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
-      })
-      .join("&");
-    xhr.send(encoded);
+    } catch (error) {
+      console.error(error);
+      setMessage(`Sorry, your transaction could not be processed...${error}`);
+    }
+  };
+
+  // Function to validate form fields
+  const validateForm = formData => {
+    // Your validation logic here
+    // Update validationErrors state accordingly
 
     function validateFirstName(firstName) {
       return (firstName ?? "").trim() !== ""; // Check if the name is not empty
@@ -398,110 +208,83 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     function validateElectronicSignatureDate(electronicSignatureDate) {
       return !isNaN(Date.parse(electronicSignatureDate)); // Check if the signature date is a valid date
     }
-  };
-  useEffect(() => {
-    // Send to google sheet - bind to the submit event of our form
-    let forms = document.querySelectorAll("form.gform");
-    for (let i = 0; i < forms.length; i++) {
-      forms[i].addEventListener("submit", handleFormSubmit, false);
-    }
-  }, [isPayPalSuccessful]);
 
-  // Define function to update Calendar from 1 Spot Available to Booked
-  const upDateCalendar1Spot = async formData => {
-    try {
-      const response = await axios.patch(`${serverUrl}/api/update-calendar-booked`, {
-        formData,
-      });
-      console.log("Diving date sent to the backend to update calendar (1 spot)", response.data);
-      return response.data;
-    } catch (error) {
-      console.error("Error sending diving date to backend to update calendar (1 spot):", error);
-      throw error;
-    }
+    return {
+      firstName: validateFirstName(formData.firstName),
+      lastName: validateLastName(formData.lastName),
+      email: validateEmail(formData.email),
+      phone: validatePhone(formData.phone),
+      birthday: validateBirthday(formData.birthday),
+      address: validateAddress(formData.address),
+      lastDive: validateLastDive(formData.lastDive),
+      certifyingAgency: validateCertifyingAgency(formData.certifyingAgency),
+      certificationNumber: validateCertificationNumber(formData.certificationNumber),
+      danInsuranceNumber: validateDanInsuranceNumber(formData.danInsuranceNumber),
+      emergencyContactName: validateEmergencyContactName(formData.emergencyContactName),
+      emergencyContactPhone: validateEmergencyContactPhone(formData.emergencyContactPhone),
+      divingDate: validateDivingDate(formData.divingDate),
+      electronicSignature: validateElectronicSignature(formData.electronicSignature),
+      electronicSignatureDate: validateElectronicSignatureDate(formData.electronicSignatureDate),
+    };
   };
 
-  // Define function to update Calendar from Booked to 1 Spot Available
-  const upDateCalendarBooked = async formData => {
-    try {
-      const response = await axios.patch(`${serverUrl}/api/update-calendar-1spot`, {
-        formData,
-      });
-      console.log(formData);
-      console.log("Diving date sent to the backend to update calendar (booked)", response.data);
-      return response.data;
-    } catch (error) {
-      console.error("Error sending diving date to backend to update calendar (booked):", error);
-      throw error;
-    }
-  };
+  // Handle form submission
+  const handleFormSubmit = async event => {
+    event.preventDefault();
 
-  // Define function to send email
-  const sendEmail = async formData => {
-    try {
-      const response = await axios.post(`${serverUrl}/api/send-email`, { formData });
-      console.log("Form data sent to the backend for email", response.data); // Log the response from the backend
-      return response.data; // Return the response data if needed
-    } catch (error) {
-      console.error("Error sending form data to backend for email:", error);
-      throw error; // Throw the error to handle it in the calling code
-    }
-  };
+    const form = event.target;
+    const formData = getFormData(form);
 
-  // Define function to handle PayPal approval
-  const handlePayPalOnApprove = async (data, actions) => {
-    console.log("above inside handlePayApproval", isPayPalSuccessful);
-    try {
-      const response = await fetch(`${serverUrl}/api/orders/${data.orderID}/capture`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const orderData = await response.json();
-      // Three cases to handle:
-      //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-      //   (2) Other non-recoverable errors -> Show a failure message
-      //   (3) Successful transaction -> Show confirmation or thank you message
+    // Validate form data
+    const validationResults = validateForm(formData);
 
-      const errorDetail = orderData?.details?.[0];
-
-      if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
-        // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-        // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
-        actions.restart();
-      } else if (errorDetail) {
-        // (2) Other non-recoverable errors -> Show a failure message
-        throw new Error(`${errorDetail.description} (${orderData.debug_id})`);
-      } else {
-        // (3) Successful transaction -> Show confirmation or thank you message
-        // Or go to another URL:  actions.redirect('thank_you.html');
-
-        setIsPayPalSuccessful(true);
-
-        // Update Calendar
-        if (eventTitle === "1 Spot Available") {
-          await upDateCalendarBooked(formData);
-        } else {
-          await upDateCalendar1Spot(formData);
+    // Check if all fields are valid
+    const isFormValid = Object.values(validationResults).every(result => result);
+    if (isFormValid) {
+      const upDateCalendar1Spot = async formData => {
+        try {
+          const response = await axios.patch(`${serverUrl}/api/update-calendar-booked`, {
+            formData,
+          });
+          console.log("Diving date sent to the backend to update calendar (1 spot)", response.data);
+          return response.data;
+        } catch (error) {
+          console.error("Error sending diving date to backend to update calendar (1 spot):", error);
+          throw error;
         }
+      };
+      upDateCalendar1Spot(formData);
+    } else {
+      // Endpoint to update Calendar from Available to 1 Spot Available
+      const upDateCalendarBooked = async formData => {
+        try {
+          const response = await axios.patch(`${serverUrl}/api/update-calendar-1spot`, {
+            formData,
+          });
+          console.log("Diving date sent to the backend to update calendar (booked)", response.data);
+          return response.data;
+        } catch (error) {
+          console.error("Error sending diving date to backend to update calendar (booked):", error);
+          throw error;
+        }
+      };
+      upDateCalendarBooked(formData);
 
-        // Send email
-        await sendEmail(formData);
-
-        // Set submitted state to true
-        setIsSubmitted(true);
-
-        setMessage("Payment Successful. Thank you!");
-        console.log("below inside handlePayApproval", isPayPalSuccessful);
-
-        console.log("Capture result", orderData, JSON.stringify(orderData, null, 2));
-      }
-    } catch (error) {
-      console.error(error);
-      setMessage(`Sorry, your transaction could not be processed...${error}`);
+      // Endpoint to send form data to the back end and email user
+      const sendEmail = async formData => {
+        try {
+          const response = await axios.post(`${serverUrl}/api/send-email`, { formData });
+          console.log("Form data sent to the backend for email", response.data); // Log the response from the backend
+          return response.data; // Return the response data if needed
+        } catch (error) {
+          console.error("Error sending form data to backend for email:", error);
+          throw error; // Throw the error to handle it in the calling code
+        }
+      };
+      sendEmail(formData);
     }
   };
+
   // Function to handle input changes in the form fields
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -574,20 +357,17 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   }, [validationErrors]);
 
   // Paypal get client id for payment
-  useEffect(() => {
-    const fetchClientId = async () => {
-      try {
-        const response = await fetch(`${serverUrl}/api/paypal/client-id`);
-        const data = await response.json();
-        setClientId(data.clientId);
-      } catch (error) {
-        console.error(error);
-        setMessage("Error fetching PayPal client ID.");
-      }
-    };
-
-    fetchClientId();
-  }, []);
+  const fetchClientId = async () => {
+    try {
+      const response = await fetch(`${serverUrl}/api/paypal/client-id`);
+      const data = await response.json();
+      setClientId(data.clientId);
+    } catch (error) {
+      console.error(error);
+      setMessage("Error fetching PayPal client ID.");
+    }
+  };
+  fetchClientId();
 
   return (
     <section className="max-w-[1200px] w-full">
@@ -973,7 +753,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                         setMessage(`Could not initiate PayPal Checkout...${error}`);
                       }
                     }}
-                    onApprove={handlePayPalOnApprove}
+                    onApprove={handlePayPalApproval}
                   />
                   <Message content={message} />
                 </div>
@@ -981,7 +761,91 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
             )}
           </div>
         </div>
+
+        <div className="flex flex-row justify-between">
+          <div>
+            {isPayPalSuccessful ? (
+              <button
+                className="mt-4 border-solid p-2 border-2 border-sky-500 "
+                type="submit"
+                onChange={handleInputChange}
+              >
+                Submit Form
+              </button>
+            ) : (
+              <Image
+                className="contact__tube-spinner"
+                src="/images/Animation - arrow.gif"
+                alt="loading icon"
+                width={50}
+                height={50}
+              />
+            )}
+          </div>
+        </div>
       </form>
+      {/* {!isButtonVisible ? (
+        <PayPalScriptProvider
+          options={{
+            intent: "capture",
+            "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT,
+            "enable-funding": "venmo,card",
+            "disable-funding": "paylater",
+            "data-sdk-integration-source": "integrationbuilder_sc",
+          }}
+        >
+          <div className="App max-w-[750px] flex flex-col md:max-w-[256px] ">
+            <PayPalButtons
+              style={{
+                shape: "rect",
+                layout: "vertical",
+              }}
+              createOrder={async () => {
+                try {
+                  const response = await fetch(`${serverUrl}/api/orders`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+
+                    // use the "body" param to optionally pass additional order information
+                    // like product ids and quantities
+                    body: JSON.stringify({
+                      cart: [
+                        {
+                          id: "Dive Trip",
+                          quantity: "1",
+                        },
+                      ],
+                    }),
+                  });
+
+                  const orderData = await response.json();
+                  // console.log(orderData);
+
+                  if (orderData.id) {
+                    return orderData.id;
+                  } else {
+                    const errorDetail = orderData?.details?.[0];
+                    const errorMessage = errorDetail
+                      ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
+                      : JSON.stringify(orderData);
+
+                    throw new Error(errorMessage);
+                  }
+                } catch (error) {
+                  console.error(error);
+                  setMessage(`Could not initiate PayPal Checkout...${error}`);
+                }
+              }}
+              onApprove={handlePayPalApproval}
+            />
+            <Message content={message} />
+          </div>
+        </PayPalScriptProvider>
+      ) : (
+        ""
+      )} */}
     </section>
   );
 };

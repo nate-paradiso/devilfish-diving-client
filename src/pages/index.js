@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import Hero from "../components/Hero";
 import Link from "next/link";
-import { PayPal } from "../components/paypal";
 
 export default function Home() {
   return (
@@ -13,7 +12,6 @@ export default function Home() {
           <button className="border-solid p-2  border-2 border-darkBlue ">Book a Dive</button>
         </Link>
       </div>
-      <PayPal />
       <section className="flex justify-center items-center flex-col">
         <div
           className="bg-cover bg-center w-full flex justify-center items-center"

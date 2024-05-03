@@ -4,6 +4,7 @@ import googleCalendarPlugin from "@fullcalendar/google-calendar";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useState, useEffect } from "react";
 import DiverInfo from "./DiverInfo";
+// import DiverInfoTest from "./DiverInfoTest";
 import axios from "axios";
 
 const CalendarComponent = () => {
@@ -175,6 +176,7 @@ const CalendarComponent = () => {
                     <div className="flex max-w-[1200px] mx-auto ">
                       {showDiverInfo ? (
                         <DiverInfo
+                          // <DiverInfoTest
                           setSelectedDate={setSelectedDate}
                           setShowDiverInfo={setShowDiverInfo}
                           showDiverInfo={showDiverInfo}
