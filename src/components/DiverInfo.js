@@ -51,11 +51,13 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     electronicSignatureDate: "",
   });
   const [isButtonVisible, setIsButtonVisible] = useState(true); // State to control button visibility
+  const [isFormVisible, setIsFormVisible] = useState(true); // State to control button visibility
+  const [formDataOutside, setFormDataOutside] = useState({}); // State to control button visibility
+  const [formOutside, setFormOutside] = useState({}); // State to control button visibility
 
   // Format the selectedDate to type=date for the form
   const formatDateForHTMLInput = selectedDate => {
     // Create a new Date object from the selectedDate
-    console.log(selectedDate);
     const dateObj = new Date(selectedDate);
 
     // Extract year, month, and day
@@ -66,7 +68,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     // Format the date as yyyy-mm-dd
     const formattedDate = `${year}-${month}-${day}`;
 
-    console.log(formattedDate);
     return formattedDate;
   };
 
@@ -117,8 +118,14 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     return { data: formData };
   }
 
-  //Handle Paypal approval
+  // Function to handle form data outside of handleFormSubmit
+  const handleFormSubmitData = (formData, form) => {
+    // Store or process the form data as needed
+    setFormDataOutside(formData);
+    setFormOutside(form);
+  };
 
+  //Handle Paypal approval
   // Function to handle form submission
   const handleFormSubmit = event => {
     event.preventDefault();
@@ -137,6 +144,9 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
     let formData = getFormData(form);
     let data = formData.data;
+
+    // Pass data to another function
+    handleFormSubmitData(formData, form);
 
     // Basic form field validation
     if (!validateFirstName(data.firstName)) {
@@ -162,8 +172,8 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         ...prevErrors,
         email: "Please enter a valid email address.",
       }));
-      form.removeAttribute("data-submitting");
-      submitButton.disabled = false;
+      form.removeAttribute("data-submitting"); // Release the form from submitting state
+      submitButton.disabled = false; // Re-enable the submit button
       return;
     }
     if (!validatePhone(data.phone)) {
@@ -171,8 +181,8 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         ...prevErrors,
         phone: "Please enter a valid phone number.",
       }));
-      form.removeAttribute("data-submitting");
-      submitButton.disabled = false;
+      form.removeAttribute("data-submitting"); // Release the form from submitting state
+      submitButton.disabled = false; // Re-enable the submit button
       return;
     }
     if (!validateBirthday(data.birthday)) {
@@ -272,91 +282,91 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       }));
       form.removeAttribute("data-submitting"); // Release the form from submitting state
       submitButton.disabled = false; // Re-enable the submit button
-
       return;
     }
     setIsButtonVisible(false);
+    setIsFormVisible(false);
 
-    // Handle form submission via XMLHttpRequest
-    let url = form.action;
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    // // Handle form submission via XMLHttpRequest
+    // const handleGoogleSheetSubmit = () => {
+    //   let url = form.action;
+    //   let xhr = new XMLHttpRequest();
+    //   xhr.open("POST", url);
+    //   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        form.removeAttribute("data-submitting"); // Release the form from submitting state
-        submitButton.disabled = false; // Re-enable the submit button
+    //   xhr.onreadystatechange = function () {
+    //     if (xhr.readyState === 4) {
+    //       form.removeAttribute("data-submitting"); // Release the form from submitting state
+    //       submitButton.disabled = false; // Re-enable the submit button
 
-        if (xhr.status === 200) {
-          console.log("Form submission successful.");
-          // setFormData({
-          //   firstName: "",
-          //   lastName: "",
-          //   email: "",
-          //   phone: "",
-          //   birthday: "",
-          //   address: "",
-          //   lastDive: "",
-          //   certifyingAgency: "",
-          //   certificationNumber: "",
-          //   danInsuranceNumber: "",
-          //   emergencyContactName: "",
-          //   emergencyContactPhone: "",
-          //   divingDate: "",
-          //   electronicSignature: "",
-          //   electronicSignatureDate: "",
-          // });
+    //       if (xhr.status === 200) {
+    //         console.log("Form submission successful.");
+    //         // Reset form
+    //         // setFormData({
+    //         //   firstName: "",
+    //         //   lastName: "",
+    //         //   email: "",
+    //         //   phone: "",
+    //         //   birthday: "",
+    //         //   address: "",
+    //         //   lastDive: "",
+    //         //   certifyingAgency: "",
+    //         //   certificationNumber: "",
+    //         //   danInsuranceNumber: "",
+    //         //   emergencyContactName: "",
+    //         //   emergencyContactPhone: "",
+    //         //   divingDate: "",
+    //         //   electronicSignature: "",
+    //         //   electronicSignatureDate: "",
+    //         // });
+    //         // Reset form validation data
+    //         setValidationErrors({
+    //           firstName: "",
+    //           lastName: "",
+    //           email: "",
+    //           phone: "",
+    //           birthday: "",
+    //           address: "",
+    //           lastDive: "",
+    //           certifyingAgency: "",
+    //           certificationNumber: "",
+    //           danInsuranceNumber: "",
+    //           emergencyContactName: "",
+    //           emergencyContactPhone: "",
+    //           divingDate: "",
+    //           electronicSignature: "",
+    //           electronicSignatureDate: "",
+    //         });
 
-          // Reset form data
-          setValidationErrors({
-            firstName: "",
-            lastName: "",
-            email: "",
-            phone: "",
-            birthday: "",
-            address: "",
-            lastDive: "",
-            certifyingAgency: "",
-            certificationNumber: "",
-            danInsuranceNumber: "",
-            emergencyContactName: "",
-            emergencyContactPhone: "",
-            divingDate: "",
-            electronicSignature: "",
-            electronicSignatureDate: "",
-          });
-
-          //Reset validation errors
-          form.reset(); //reset form
-          let formElements = form.querySelector(".form-elements");
-          if (formElements) {
-            formElements.style.display = "none";
-          }
-          let thankYouMessage = form.querySelector(".thankyou_message");
-          if (thankYouMessage) {
-            thankYouMessage.style.display = "block";
-          }
-        } else {
-          console.error("Form submission failed.");
-        }
-      }
-    };
-    let encoded = Object.keys(data)
-      .map(function (k) {
-        return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
-      })
-      .join("&");
-    xhr.send(encoded);
+    //         // Reset form
+    //         form.reset();
+    //         let formElements = form.querySelector(".form-elements");
+    //         if (formElements) {
+    //           formElements.style.display = "none";
+    //         }
+    //         let thankYouMessage = form.querySelector(".thankyou_message");
+    //         if (thankYouMessage) {
+    //           thankYouMessage.style.display = "block";
+    //         }
+    //       } else {
+    //         console.error("Form submission failed.");
+    //       }
+    //     }
+    //   };
+    //   let encoded = Object.keys(data)
+    //     .map(function (k) {
+    //       return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
+    //     })
+    //     .join("&");
+    //   xhr.send(encoded);
+    // };
 
     function validateFirstName(firstName) {
       return (firstName ?? "").trim() !== ""; // Check if the name is not empty
     }
-
     function validateLastName(lastName) {
       return lastName.trim() !== ""; // Check if the name is not empty
     }
-
     function validateEmail(email) {
       let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailRegex.test(email); // Check if the email has a valid format
@@ -364,7 +374,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     function validatePhone(phone) {
       return phone.trim() !== ""; // Check if the name is not empty
     }
-
     function validateBirthday(birthday) {
       return !isNaN(Date.parse(birthday)); // Check if the birthday is a valid date
     }
@@ -399,6 +408,85 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       return !isNaN(Date.parse(electronicSignatureDate)); // Check if the signature date is a valid date
     }
   };
+  // Handle form submission via XMLHttpRequest
+  const handleGoogleSheetSubmit = () => {
+    console.log("formDataOutside inside googlesheetsubmit", formDataOutside);
+    let data = formDataOutside.data;
+    console.log(data);
+    let form = formOutside;
+    console.log(form);
+
+    let url = form.action;
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+
+        if (xhr.status === 200) {
+          console.log("Form submission successful.");
+          // Reset form
+          // setFormData({
+          //   firstName: "",
+          //   lastName: "",
+          //   email: "",
+          //   phone: "",
+          //   birthday: "",
+          //   address: "",
+          //   lastDive: "",
+          //   certifyingAgency: "",
+          //   certificationNumber: "",
+          //   danInsuranceNumber: "",
+          //   emergencyContactName: "",
+          //   emergencyContactPhone: "",
+          //   divingDate: "",
+          //   electronicSignature: "",
+          //   electronicSignatureDate: "",
+          // });
+          // Reset form validation data
+          setValidationErrors({
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: "",
+            birthday: "",
+            address: "",
+            lastDive: "",
+            certifyingAgency: "",
+            certificationNumber: "",
+            danInsuranceNumber: "",
+            emergencyContactName: "",
+            emergencyContactPhone: "",
+            divingDate: "",
+            electronicSignature: "",
+            electronicSignatureDate: "",
+          });
+
+          // Reset form
+          form.reset();
+          let formElements = form.querySelector(".form-elements");
+          if (formElements) {
+            formElements.style.display = "none";
+          }
+          let thankYouMessage = form.querySelector(".thankyou_message");
+          if (thankYouMessage) {
+            thankYouMessage.style.display = "block";
+          }
+        } else {
+          console.error("Form submission failed.");
+        }
+      }
+    };
+    let encoded = Object.keys(data)
+      .map(function (k) {
+        return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
+      })
+      .join("&");
+    xhr.send(encoded);
+  };
+
   useEffect(() => {
     // Send to google sheet - bind to the submit event of our form
     let forms = document.querySelectorAll("form.gform");
@@ -408,6 +496,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   }, [isPayPalSuccessful]);
 
   // Define function to update Calendar from Available to 1 Spot Available
+
   const upDateCalendar1Spot = async formData => {
     try {
       const response = await axios.patch(`${serverUrl}/api/update-calendar-1spot`, {
@@ -477,7 +566,11 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         // (3) Successful transaction -> Show confirmation or thank you message
         // Or go to another URL:  actions.redirect('thank_you.html');
 
+        // Submit form data to google sheet
         setIsPayPalSuccessful(true);
+
+        // Send form data to googlesheet
+        handleGoogleSheetSubmit();
 
         // Update Calendar
         if (eventTitle === "1 Spot Available") {
@@ -599,318 +692,323 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         data-email="example@gmail.com"
         action="https://script.google.com/macros/s/AKfycbxy8OeqpLRSD9YJGRfvzWOtIWTS9LcEGsOgr6dIIBe6AHYD_i25ohhdjsPiy5QIL5e40w/exec"
       >
-        <div className="  flex justify-center flex-col  md:flex-row md:justify-evenly ">
+        {isFormVisible ? (
           <div>
-            <div className="flex-col flex">
-              <label htmlFor="firstName " className="mt-2 flex flex-row">
-                Diver First Name: <span className="text-red-500 ">*</span>
-              </label>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleInputChange}
-                className="border-solid p-2  border-2 border-darkBlue   md:w-64  w-full h-[46px] "
-              />
-              {validationErrors.firstName && (
-                <span ref={el => (errorRefs.current.firstName = el)} className="text-red-500">
-                  {validationErrors.firstName}
-                </span>
-              )}
-            </div>
-            <div className="flex-col flex">
-              <label htmlFor="lastName " className="mt-2 flex flex-row">
-                Diver Last Name: <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleInputChange}
-                className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-              />
-              {validationErrors.lastName && (
-                <span ref={el => (errorRefs.current.lastName = el)} className="text-red-500">
-                  {validationErrors.lastName}
-                </span>
-              )}
-            </div>
-            <div className="flex-col flex">
-              <label htmlFor="email" className="mt-2 flex flex-row">
-                Diver Email: <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="email"
-                className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-              />
-              {validationErrors.email && (
-                <span ref={el => (errorRefs.current.email = el)} className="text-red-500">
-                  {validationErrors.email}
-                </span>
-              )}
-            </div>
-            <div className="flex-col flex">
-              <label htmlFor="phone" className="mt-2 flex flex-row">
-                Diver Phone: <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="phone"
-                className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                type="tel"
-                name="phone"
-                value={formatPhoneNumber(formData.phone)}
-                onChange={handleInputChange}
-              />
-              {validationErrors.phone && (
-                <span ref={el => (errorRefs.current.phone = el)} className="text-red-500">
-                  {validationErrors.phone}
-                </span>
-              )}
-            </div>
-            <div className="flex-col flex">
-              <label htmlFor="birthday" className="mt-2 flex flex-row">
-                Diver Birthday: <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="birthday"
-                className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                type="date"
-                name="birthday"
-                value={formData.birthday}
-                onChange={handleInputChange}
-              />
-              {validationErrors.birthday && (
-                <span ref={el => (errorRefs.current.birthday = el)} className="text-red-500">
-                  {validationErrors.birthday}
-                </span>
-              )}
-            </div>
-            <div className="flex-col flex">
-              <label htmlFor="address" className="mt-2 flex flex-row">
-                Diver Address: <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="address"
-                className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                type="address"
-                name="address"
-                value={formatAddress(formData.address)}
-                onChange={handleInputChange}
-              />
-              {validationErrors.address && (
-                <span ref={el => (errorRefs.current.address = el)} className="text-red-500">
-                  {validationErrors.address}
-                </span>
-              )}
-            </div>
-          </div>
-          <div>
-            <div className="flex-col flex">
-              <label htmlFor="lastDive" className="mt-2 flex flex-row">
-                Date of Last Dive: <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="lastDive"
-                className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                type="date"
-                name="lastDive"
-                value={formData.lastDive}
-                onChange={handleInputChange}
-              />
-              {validationErrors.lastDive && (
-                <span ref={el => (errorRefs.current.lastDive = el)} className="text-red-500">
-                  {validationErrors.lastDive}
-                </span>
-              )}
+            <div className="  flex justify-center flex-col  md:flex-row md:justify-evenly ">
+              <div>
+                <div className="flex-col flex">
+                  <label htmlFor="firstName " className="mt-2 flex flex-row">
+                    Diver First Name: <span className="text-red-500 ">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    className="border-solid p-2  border-2 border-darkBlue   md:w-64  w-full h-[46px] "
+                  />
+                  {validationErrors.firstName && (
+                    <span ref={el => (errorRefs.current.firstName = el)} className="text-red-500">
+                      {validationErrors.firstName}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label htmlFor="lastName " className="mt-2 flex flex-row">
+                    Diver Last Name: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                  />
+                  {validationErrors.lastName && (
+                    <span ref={el => (errorRefs.current.lastName = el)} className="text-red-500">
+                      {validationErrors.lastName}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label htmlFor="email" className="mt-2 flex flex-row">
+                    Diver Email: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="email"
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.email && (
+                    <span ref={el => (errorRefs.current.email = el)} className="text-red-500">
+                      {validationErrors.email}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label htmlFor="phone" className="mt-2 flex flex-row">
+                    Diver Phone: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="phone"
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                    type="tel"
+                    name="phone"
+                    value={formatPhoneNumber(formData.phone)}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.phone && (
+                    <span ref={el => (errorRefs.current.phone = el)} className="text-red-500">
+                      {validationErrors.phone}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label htmlFor="birthday" className="mt-2 flex flex-row">
+                    Diver Birthday: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="birthday"
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                    type="date"
+                    name="birthday"
+                    value={formData.birthday}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.birthday && (
+                    <span ref={el => (errorRefs.current.birthday = el)} className="text-red-500">
+                      {validationErrors.birthday}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label htmlFor="address" className="mt-2 flex flex-row">
+                    Diver Address: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="address"
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                    type="address"
+                    name="address"
+                    value={formatAddress(formData.address)}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.address && (
+                    <span ref={el => (errorRefs.current.address = el)} className="text-red-500">
+                      {validationErrors.address}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div>
+                <div className="flex-col flex">
+                  <label htmlFor="lastDive" className="mt-2 flex flex-row">
+                    Date of Last Dive: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="lastDive"
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                    type="date"
+                    name="lastDive"
+                    value={formData.lastDive}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.lastDive && (
+                    <span ref={el => (errorRefs.current.lastDive = el)} className="text-red-500">
+                      {validationErrors.lastDive}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex-col flex">
+                  <label htmlFor="certifyingAgency" className="mt-2 flex flex-row">
+                    Diver Certifying Agency: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="certifyingAgency"
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                    type="text"
+                    name="certifyingAgency"
+                    value={formData.certifyingAgency}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.certifyingAgency && (
+                    <span
+                      ref={el => (errorRefs.current.certifyingAgency = el)}
+                      className="text-red-500"
+                    >
+                      {validationErrors.certifyingAgency}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label htmlFor="certificationNumber" className="mt-2 flex flex-row">
+                    Diver Certification Number: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="certificationNumber"
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                    type="text"
+                    name="certificationNumber"
+                    value={formData.certificationNumber}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.certificationNumber && (
+                    <span
+                      ref={el => (errorRefs.current.certificationNumber = el)}
+                      className="contact__error-message"
+                    >
+                      {validationErrors.certificationNumber}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label htmlFor="danInsuranceNumber" className="mt-2 flex flex-row">
+                    Diver DAN Insurance Number: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="danInsuranceNumber"
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                    type="text"
+                    name="danInsuranceNumber"
+                    value={formData.danInsuranceNumber}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.danInsuranceNumber && (
+                    <span
+                      ref={el => (errorRefs.current.danInsuranceNumber = el)}
+                      className="contact__error-message"
+                    >
+                      {validationErrors.danInsuranceNumber}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label htmlFor="emergencyContactName" className="mt-2 flex flex-row">
+                    Diver Emergency Contact Name: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="emergencyContactName"
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]   "
+                    type="text"
+                    name="emergencyContactName"
+                    value={formData.emergencyContactName}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.emergencyContactName && (
+                    <span
+                      ref={el => (errorRefs.current.emergencyContactName = el)}
+                      className="contact__error-message"
+                    >
+                      {validationErrors.emergencyContactName}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label htmlFor="emergencyContactPhone" className="mt-2 flex flex-row">
+                    Diver Emergency Contact Phone: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="emergencyContactPhone"
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]    "
+                    type="tel"
+                    name="emergencyContactPhone"
+                    value={formatPhoneNumber(formData.emergencyContactPhone)}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.emergencyContactPhone && (
+                    <span
+                      ref={el => (errorRefs.current.emergencyContactPhone = el)}
+                      className="contact__error-message"
+                    >
+                      {validationErrors.emergencyContactPhone}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-col flex">
+                  <label htmlFor="divingDate" className="mt-2 flex flex-row">
+                    Diving Date: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="divingDate"
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                    type="date"
+                    name="divingDate"
+                    value={formatDateForHTMLInput(formData.divingDate)}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.divingDate && (
+                    <span
+                      ref={el => (errorRefs.current.divingDate = el)}
+                      className="contact__error-message"
+                    >
+                      {validationErrors.divingDate}
+                    </span>
+                  )}
+                </div>
+              </div>
             </div>
 
-            <div className="flex-col flex">
-              <label htmlFor="certifyingAgency" className="mt-2 flex flex-row">
-                Diver Certifying Agency: <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="certifyingAgency"
-                className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                type="text"
-                name="certifyingAgency"
-                value={formData.certifyingAgency}
-                onChange={handleInputChange}
-              />
-              {validationErrors.certifyingAgency && (
-                <span
-                  ref={el => (errorRefs.current.certifyingAgency = el)}
-                  className="text-red-500"
-                >
-                  {validationErrors.certifyingAgency}
-                </span>
-              )}
-            </div>
-            <div className="flex-col flex">
-              <label htmlFor="certificationNumber" className="mt-2 flex flex-row">
-                Diver Certification Number: <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="certificationNumber"
-                className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                type="text"
-                name="certificationNumber"
-                value={formData.certificationNumber}
-                onChange={handleInputChange}
-              />
-              {validationErrors.certificationNumber && (
-                <span
-                  ref={el => (errorRefs.current.certificationNumber = el)}
-                  className="contact__error-message"
-                >
-                  {validationErrors.certificationNumber}
-                </span>
-              )}
-            </div>
-            <div className="flex-col flex">
-              <label htmlFor="danInsuranceNumber" className="mt-2 flex flex-row">
-                Diver DAN Insurance Number: <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="danInsuranceNumber"
-                className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
-                type="text"
-                name="danInsuranceNumber"
-                value={formData.danInsuranceNumber}
-                onChange={handleInputChange}
-              />
-              {validationErrors.danInsuranceNumber && (
-                <span
-                  ref={el => (errorRefs.current.danInsuranceNumber = el)}
-                  className="contact__error-message"
-                >
-                  {validationErrors.danInsuranceNumber}
-                </span>
-              )}
-            </div>
-            <div className="flex-col flex">
-              <label htmlFor="emergencyContactName" className="mt-2 flex flex-row">
-                Diver Emergency Contact Name: <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="emergencyContactName"
-                className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]   "
-                type="text"
-                name="emergencyContactName"
-                value={formData.emergencyContactName}
-                onChange={handleInputChange}
-              />
-              {validationErrors.emergencyContactName && (
-                <span
-                  ref={el => (errorRefs.current.emergencyContactName = el)}
-                  className="contact__error-message"
-                >
-                  {validationErrors.emergencyContactName}
-                </span>
-              )}
-            </div>
-            <div className="flex-col flex">
-              <label htmlFor="emergencyContactPhone" className="mt-2 flex flex-row">
-                Diver Emergency Contact Phone: <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="emergencyContactPhone"
-                className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]    "
-                type="tel"
-                name="emergencyContactPhone"
-                value={formatPhoneNumber(formData.emergencyContactPhone)}
-                onChange={handleInputChange}
-              />
-              {validationErrors.emergencyContactPhone && (
-                <span
-                  ref={el => (errorRefs.current.emergencyContactPhone = el)}
-                  className="contact__error-message"
-                >
-                  {validationErrors.emergencyContactPhone}
-                </span>
-              )}
-            </div>
-            <div className="flex-col flex">
-              <label htmlFor="divingDate" className="mt-2 flex flex-row">
-                Diving Date: <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="divingDate"
-                className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
-                type="date"
-                name="divingDate"
-                value={formatDateForHTMLInput(formData.divingDate)}
-                onChange={handleInputChange}
-              />
-              {validationErrors.divingDate && (
-                <span
-                  ref={el => (errorRefs.current.divingDate = el)}
-                  className="contact__error-message"
-                >
-                  {validationErrors.divingDate}
-                </span>
-              )}
+            <div className="mt-4">
+              <LiabilityRelease formData={formData} />
+              <div className="flex-col flex">
+                <p>
+                  By typing your name below you are electronically signing, you acknowledge that you
+                  have read, understand, and agree to the terms of the Liability Release and
+                  Assumption of Risk Agreement.
+                  <br />
+                </p>
+                <label htmlFor="electronicSignature" className="mt-2 flex flex-row">
+                  Electronic Signature: <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="electronicSignature"
+                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                  type="name"
+                  name="electronicSignature"
+                  value={formData.electronicSignature}
+                  onChange={handleInputChange}
+                />
+                {validationErrors.electronicSignature && (
+                  <span
+                    ref={el => (errorRefs.current.electronicSignature = el)}
+                    className="contact__error-message"
+                  >
+                    {validationErrors.electronicSignature}
+                  </span>
+                )}
+              </div>
+              <div className="flex-col flex">
+                <label htmlFor="electronicSignatureDate" className="mt-2 flex flex-row">
+                  Signature Date: <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="electronicSignatureDate"
+                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                  type="date"
+                  name="electronicSignatureDate"
+                  value={formData.electronicSignatureDate}
+                  onChange={handleInputChange}
+                />
+                {validationErrors.electronicSignatureDate && (
+                  <span
+                    ref={el => (errorRefs.current.electronicSignatureDate = el)}
+                    className="contact__error-message"
+                  >
+                    {validationErrors.electronicSignatureDate}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className="mt-4">
-          <LiabilityRelease formData={formData} />
-          <div className="flex-col flex">
-            <p>
-              By typing your name below you are electronically signing, you acknowledge that you
-              have read, understand, and agree to the terms of the Liability Release and Assumption
-              of Risk Agreement.
-              <br />
-            </p>
-            <label htmlFor="electronicSignature" className="mt-2 flex flex-row">
-              Electronic Signature: <span className="text-red-500">*</span>
-            </label>
-            <input
-              id="electronicSignature"
-              className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
-              type="name"
-              name="electronicSignature"
-              value={formData.electronicSignature}
-              onChange={handleInputChange}
-            />
-            {validationErrors.electronicSignature && (
-              <span
-                ref={el => (errorRefs.current.electronicSignature = el)}
-                className="contact__error-message"
-              >
-                {validationErrors.electronicSignature}
-              </span>
-            )}
-          </div>
-          <div className="flex-col flex">
-            <label htmlFor="electronicSignatureDate" className="mt-2 flex flex-row">
-              Signature Date: <span className="text-red-500">*</span>
-            </label>
-            <input
-              id="electronicSignatureDate"
-              className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
-              type="date"
-              name="electronicSignatureDate"
-              value={formData.electronicSignatureDate}
-              onChange={handleInputChange}
-            />
-            {validationErrors.electronicSignatureDate && (
-              <span
-                ref={el => (errorRefs.current.electronicSignatureDate = el)}
-                className="contact__error-message"
-              >
-                {validationErrors.electronicSignatureDate}
-              </span>
-            )}
-          </div>
-        </div>
-
+        ) : (
+          ""
+        )}
         <div className="flex flex-row justify-between">
           <div>
             {isButtonVisible ? (
