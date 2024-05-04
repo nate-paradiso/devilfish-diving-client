@@ -410,11 +410,11 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   };
   // Handle form submission via XMLHttpRequest
   const handleGoogleSheetSubmit = () => {
-    console.log("formDataOutside inside googlesheetsubmit", formDataOutside);
+    // console.log("formDataOutside inside googlesheetsubmit", formDataOutside);
     let data = formDataOutside.data;
-    console.log(data);
+    // console.log(data);
     let form = formOutside;
-    console.log(form);
+    // console.log(form);
 
     let url = form.action;
     let xhr = new XMLHttpRequest();
@@ -516,7 +516,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       const response = await axios.patch(`${serverUrl}/api/update-calendar-booked`, {
         formData,
       });
-      console.log(formData);
+      // console.log(formData);
       console.log("Diving date sent to the backend to update calendar to (booked)", response.data);
       return response.data;
     } catch (error) {
@@ -539,7 +539,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
   // Define function to handle PayPal approval
   const handlePayPalOnApprove = async (data, actions) => {
-    console.log("above inside handlePayApproval", isPayPalSuccessful);
     try {
       const response = await fetch(`${serverUrl}/api/orders/${data.orderID}/capture`, {
         method: "POST",
@@ -574,10 +573,8 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
         // Update Calendar
         if (eventTitle === "1 Spot Available") {
-          console.log("from 1 spot", eventTitle);
           upDateCalendarBooked(formData);
         } else {
-          console.log("from booked function");
           upDateCalendar1Spot(formData);
         }
 
@@ -588,9 +585,8 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         setIsSubmitted(true);
 
         setMessage("Payment Successful. Thank you!");
-        console.log("below inside handlePayApproval", isPayPalSuccessful);
 
-        console.log("Capture result", orderData, JSON.stringify(orderData, null, 2));
+        // console.log("Capture result", orderData, JSON.stringify(orderData, null, 2));
       }
     } catch (error) {
       console.error(error);
@@ -1009,7 +1005,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         ) : (
           ""
         )}
-        <div className="flex flex-row justify-between">
+        <div className="mt-4">
           <div>
             {isButtonVisible ? (
               <button

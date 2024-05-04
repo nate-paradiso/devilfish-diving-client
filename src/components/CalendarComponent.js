@@ -35,7 +35,7 @@ const CalendarComponent = () => {
   }, []);
 
   useEffect(() => {
-    console.log(googleEvents); // Log the updated state
+    // console.log(googleEvents); // Log the updated state
   }, [googleEvents]); // Run this effect whenever googleDates changes
 
   // Function to format the date string to "MM/DD/YYYY"
@@ -119,7 +119,8 @@ const CalendarComponent = () => {
               <p>
                 Welcome! Select an <span className="font-extrabold">Available</span> or{" "}
                 <span className="font-extrabold"> 1 Spot Available</span> event then complete the
-                form. The Available events have 2 spots open. Only single day selection allowed.
+                form and pay. The Available events have 2 spots open. Only single day selection
+                allowed.
               </p>
               <br />
               <p>There is a 2 diver maximum and minimum, no solo divers.</p>
