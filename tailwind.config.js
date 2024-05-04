@@ -23,6 +23,7 @@ export const theme = {
       darkBlue: "#5682c2",
       lightBlue: "#416394",
       hoverColor: "rgb(209 213 219)",
+      nav: "#094898",
     },
   },
   variants: {
