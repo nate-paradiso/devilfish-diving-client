@@ -30,6 +30,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     emergencyContactName: "",
     emergencyContactPhone: "",
     divingDate: selectedDate,
+    message: "",
     electronicSignature: "",
     electronicSignatureDate: "",
   });
@@ -48,6 +49,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     emergencyContactName: "",
     emergencyContactPhone: "",
     divingDate: "",
+    message: "",
     electronicSignature: "",
     electronicSignatureDate: "",
   });
@@ -276,6 +278,15 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       submitButton.disabled = false; // Re-enable the submit button
       return;
     }
+    if (!validateMessage(data.message)) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        message: "Please enter a message.",
+      }));
+      form.removeAttribute("data-submitting"); // Release the form from submitting state
+      submitButton.disabled = false; // Re-enable the submit button
+      return;
+    }
     if (!validateElectronicSignatureDate(data.electronicSignatureDate)) {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
@@ -397,6 +408,9 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     function validateEmergencyContactName(emergencyContactName) {
       return emergencyContactName.trim() !== ""; // Check if the name is not empty
     }
+    function validateMessage(message) {
+      return message.trim() !== ""; // Check if the message is not empty
+    }
     function validateEmergencyContactPhone(emergencyContactPhone) {
       return emergencyContactPhone.trim() !== ""; // Check if the name is not empty
     }
@@ -444,6 +458,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
           //   emergencyContactName: "",
           //   emergencyContactPhone: "",
           //   divingDate: "",
+          // message: "",
           //   electronicSignature: "",
           //   electronicSignatureDate: "",
           // });
@@ -462,6 +477,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
             emergencyContactName: "",
             emergencyContactPhone: "",
             divingDate: "",
+            message: "",
             electronicSignature: "",
             electronicSignatureDate: "",
           });
@@ -489,8 +505,8 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     xhr.send(encoded);
   };
 
+  // Send to google sheet - bind to the submit event of our form
   useEffect(() => {
-    // Send to google sheet - bind to the submit event of our form
     let forms = document.querySelectorAll("form.gform");
     for (let i = 0; i < forms.length; i++) {
       forms[i].addEventListener("submit", handleFormSubmit, false);
@@ -498,7 +514,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   }, [isPayPalSuccessful]);
 
   // Define function to update Calendar from Available to 1 Spot Available
-
   const upDateCalendar1Spot = async formData => {
     try {
       const response = await axios.patch(`${serverUrl}/api/update-calendar-1spot`, {
@@ -695,8 +710,29 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
             <div className="  flex justify-center flex-col  md:flex-row md:justify-evenly ">
               <div>
                 <div className="flex-col flex">
+                  <label htmlFor="divingDate" className="mt-2 flex flex-row">
+                    Diving Date: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="divingDate"
+                    className="border-solid p-2 font-extrabold border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                    type="date"
+                    name="divingDate"
+                    value={formatDateForHTMLInput(formData.divingDate)}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.divingDate && (
+                    <span
+                      ref={el => (errorRefs.current.divingDate = el)}
+                      className="contact__error-message"
+                    >
+                      {validationErrors.divingDate}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-col flex">
                   <label htmlFor="firstName " className="mt-2 flex flex-row">
-                    Diver First Name: <span className="text-red-500 ">*</span>
+                    First Name: <span className="text-red-500 ">*</span>
                   </label>
                   <input
                     type="text"
@@ -714,7 +750,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="lastName " className="mt-2 flex flex-row">
-                    Diver Last Name: <span className="text-red-500">*</span>
+                    Last Name: <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -732,7 +768,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="email" className="mt-2 flex flex-row">
-                    Diver Email: <span className="text-red-500">*</span>
+                    Email: <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="email"
@@ -750,7 +786,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="phone" className="mt-2 flex flex-row">
-                    Diver Phone: <span className="text-red-500">*</span>
+                    Phone: <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="phone"
@@ -768,7 +804,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="birthday" className="mt-2 flex flex-row">
-                    Diver Birthday: <span className="text-red-500">*</span>
+                    Birthday: <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="birthday"
@@ -786,7 +822,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="address" className="mt-2 flex flex-row">
-                    Diver Address: <span className="text-red-500">*</span>
+                    Address: <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="address"
@@ -825,7 +861,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
                 <div className="flex-col flex">
                   <label htmlFor="certifyingAgency" className="mt-2 flex flex-row">
-                    Diver Certifying Agency: <span className="text-red-500">*</span>
+                    Certifying Agency: <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="certifyingAgency"
@@ -846,7 +882,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="certificationNumber" className="mt-2 flex flex-row">
-                    Diver Certification Number: <span className="text-red-500">*</span>
+                    Certification Number: <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="certificationNumber"
@@ -867,12 +903,13 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="danInsuranceNumber" className="mt-2 flex flex-row">
-                    Diver DAN Insurance Number: <span className="text-red-500">*</span>
+                    DAN Insurance Number: <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="danInsuranceNumber"
                     className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
                     type="text"
+                    placeholder="Enter n/a if none"
                     name="danInsuranceNumber"
                     value={formData.danInsuranceNumber}
                     onChange={handleInputChange}
@@ -888,7 +925,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="emergencyContactName" className="mt-2 flex flex-row">
-                    Diver Emergency Contact Name: <span className="text-red-500">*</span>
+                    Emergency Contact Name: <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="emergencyContactName"
@@ -909,7 +946,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="emergencyContactPhone" className="mt-2 flex flex-row">
-                    Diver Emergency Contact Phone: <span className="text-red-500">*</span>
+                    Emergency Contact Phone: <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="emergencyContactPhone"
@@ -928,24 +965,26 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     </span>
                   )}
                 </div>
+
                 <div className="flex-col flex">
-                  <label htmlFor="divingDate" className="mt-2 flex flex-row">
-                    Diving Date: <span className="text-red-500">*</span>
+                  <label htmlFor="message" className="mt-2 flex flex-row">
+                    Send a Message: <span className="text-red-500">*</span>
                   </label>
-                  <input
-                    id="divingDate"
-                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
-                    type="date"
-                    name="divingDate"
-                    value={formatDateForHTMLInput(formData.divingDate)}
+                  <textarea
+                    id="message"
+                    className="border-solid p-2 pb-[100px] border-2 border-darkBlue md:w-64 min-h-[150px]"
+                    type="text"
+                    name="message"
+                    placeholder="Type here..."
+                    value={formData.message}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.divingDate && (
+                  {validationErrors.message && (
                     <span
-                      ref={el => (errorRefs.current.divingDate = el)}
+                      ref={el => (errorRefs.current.message = el)}
                       className="contact__error-message"
                     >
-                      {validationErrors.divingDate}
+                      {validationErrors.message}
                     </span>
                   )}
                 </div>
@@ -1011,11 +1050,11 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
           <div>
             {isButtonVisible ? (
               <button
-                className="mt-4 border-solid p-2 border-2 border-sky-500 "
+                className="mt-4 border-solid p-2 border-2 border-sky-500 w-[150px]"
                 type="submit"
                 onChange={handleInputChange}
               >
-                Next
+                Next to Payment
               </button>
             ) : (
               <div>
