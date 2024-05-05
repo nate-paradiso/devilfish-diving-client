@@ -9,7 +9,9 @@ export default function Home() {
       <Hero />
       <div className="flex justify-center m-8">
         <Link href="/Calendar">
-          <button className="border-solid p-2  border-2 border-darkBlue ">Book a Dive</button>
+          <button className="border-solid p-2 transition-colors duration-200 hover:text-zinc-700 font-bold border-2 border-darkBlue ">
+            Book a Dive
+          </button>
         </Link>
       </div>
       <section className="flex justify-center items-center flex-col">
@@ -20,49 +22,49 @@ export default function Home() {
             height: "300px", // Adjust height as needed
           }}
         >
-          <div className="justify-evenly flex flex-wrap items-center m-4">
-            <div className="flex justify-evenly flex-col">
+          <div className="justify-evenly flex flex-wrap items-center m-4 ">
+            <div className="flex justify-evenly flex-col md:flex-row">
               <Image
-                className="w-16 m-2"
+                className="md:m-4 m-2"
                 src="/images/scuba.png"
                 alt="Mask"
                 width={64}
                 height={64}
               />
               <Image
-                className="w-16 m-2"
+                className="md:m-4 m-2"
                 src="/images/tank.png"
                 alt="Scuba Tanks"
                 width={64}
                 height={64}
               />
             </div>
-            <div className="flex justify-evenly flex-col">
+            <div className="flex justify-evenly flex-col md:flex-row">
               <Image
-                className="w-16 m-2"
+                className=" md:m-4 m-2"
                 src="/images/boat.png"
                 alt="Boat"
                 width={64}
                 height={64}
               />
               <Image
-                className="w-16 m-2"
+                className="md:m-4 m-2"
                 src="/images/life.png"
                 alt="Life Ring"
                 width={64}
                 height={64}
               />
             </div>
-            <div className="flex justify-evenly flex-col">
+            <div className="flex justify-evenly flex-col md:flex-row">
               <Image
-                className="w-16 m-2"
+                className="md:m-4 m-2"
                 src="/images/camera.png"
                 alt="Camera"
                 width={64}
                 height={64}
               />
               <Image
-                className="w-16 m-2"
+                className="md:m-4 m-2"
                 src="/images/fins.png"
                 alt="Fins"
                 width={64}
