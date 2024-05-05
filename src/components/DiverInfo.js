@@ -15,6 +15,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const errorRefs = useRef({});
   const [isPayPalSuccessful, setIsPayPalSuccessful] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -286,6 +287,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     }
     setIsButtonVisible(false);
     setIsFormVisible(false);
+    setLoading(false);
 
     // // Handle form submission via XMLHttpRequest
     // const handleGoogleSheetSubmit = () => {
@@ -686,7 +688,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         className="gform "
         method="POST"
         data-email="example@gmail.com"
-        action="https://script.google.com/macros/s/AKfycbxy8OeqpLRSD9YJGRfvzWOtIWTS9LcEGsOgr6dIIBe6AHYD_i25ohhdjsPiy5QIL5e40w/exec"
+        action="https://script.google.com/macros/s/AKfycbx8TRKTZ22mPpYJ0sNgBEmM-NLEwnvIAHn3clbkiztEyR0sg5UXZmM7R3YME9k3MT7_7w/exec"
       >
         {isFormVisible ? (
           <div>
@@ -1016,64 +1018,79 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 Next
               </button>
             ) : (
-              <PayPalScriptProvider
-                options={{
-                  intent: "capture",
-                  "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT,
-                  "enable-funding": "venmo,card",
-                  "disable-funding": "paylater",
-                  "data-sdk-integration-source": "integrationbuilder_sc",
-                }}
-              >
-                <div className="App max-w-[750px] flex flex-col md:max-w-[256px] ">
-                  <PayPalButtons
-                    style={{
-                      shape: "rect",
-                      layout: "vertical",
+              <div>
+                {loading ? (
+                  // <p className="m-4">Loading...</p>
+                  <div>
+                    <Image
+                      className=""
+                      src="/images/tube-spinner.svg"
+                      alt="loading"
+                      width={50}
+                      height={50}
+                    />
+                  </div>
+                ) : (
+                  <PayPalScriptProvider
+                    options={{
+                      intent: "capture",
+                      "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT,
+                      "enable-funding": "venmo,card",
+                      "disable-funding": "paylater",
+                      "data-sdk-integration-source": "integrationbuilder_sc",
                     }}
-                    createOrder={async () => {
-                      try {
-                        const response = await fetch(`${serverUrl}/api/orders`, {
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                          },
-
-                          // use the "body" param to optionally pass additional order information
-                          // like product ids and quantities
-                          body: JSON.stringify({
-                            cart: [
-                              {
-                                id: "Dive Trip",
-                                quantity: "1",
+                  >
+                    <div className="App max-w-[750px] flex flex-col md:max-w-[256px] ">
+                      <PayPalButtons
+                        style={{
+                          shape: "rect",
+                          layout: "vertical",
+                        }}
+                        createOrder={async () => {
+                          try {
+                            const response = await fetch(`${serverUrl}/api/orders`, {
+                              method: "POST",
+                              headers: {
+                                "Content-Type": "application/json",
                               },
-                            ],
-                          }),
-                        });
 
-                        const orderData = await response.json();
-                        // console.log(orderData);
+                              // use the "body" param to optionally pass additional order information
+                              // like product ids and quantities
+                              body: JSON.stringify({
+                                cart: [
+                                  {
+                                    id: "Dive Trip",
+                                    quantity: "1",
+                                  },
+                                ],
+                              }),
+                            });
 
-                        if (orderData.id) {
-                          return orderData.id;
-                        } else {
-                          const errorDetail = orderData?.details?.[0];
-                          const errorMessage = errorDetail
-                            ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
-                            : JSON.stringify(orderData);
+                            const orderData = await response.json();
+                            // console.log(orderData);
 
-                          throw new Error(errorMessage);
-                        }
-                      } catch (error) {
-                        console.error(error);
-                        setMessage(`Could not initiate PayPal Checkout...${error}`);
-                      }
-                    }}
-                    onApprove={handlePayPalOnApprove}
-                  />
-                  <Message content={message} />
-                </div>
-              </PayPalScriptProvider>
+                            if (orderData.id) {
+                              return orderData.id;
+                            } else {
+                              const errorDetail = orderData?.details?.[0];
+                              const errorMessage = errorDetail
+                                ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
+                                : JSON.stringify(orderData);
+
+                              throw new Error(errorMessage);
+                            }
+                          } catch (error) {
+                            console.error(error);
+                            setMessage(`Could not initiate PayPal Checkout...${error}`);
+                          }
+                        }}
+                        onApprove={handlePayPalOnApprove}
+                      />
+                      <Message content={message} />
+                    </div>
+                  </PayPalScriptProvider>
+                )}
+              </div>
             )}
           </div>
         </div>
