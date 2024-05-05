@@ -9,7 +9,7 @@ export default function Home() {
       <Hero />
       <div className="flex justify-center m-8">
         <Link href="/Calendar">
-          <button className="border-solid p-2 transition-colors duration-200 hover:text-zinc-700 font-bold border-2 border-darkBlue ">
+          <button className="border-solid p-2 font-bold border-2 border-darkBlue ">
             Book a Dive
           </button>
         </Link>
