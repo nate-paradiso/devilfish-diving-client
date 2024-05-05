@@ -11,7 +11,7 @@ const Footer = () => {
       w-full
       border-none p-4 "
     >
-      <div>
+      <div className="md:ml-6">
         <p>
           <a
             className="transition-colors duration-200 hover:text-hoverColor"
@@ -39,7 +39,7 @@ const Footer = () => {
         {/* Replace <img> with <Image> */}
         <a href="https://www.instagram.com/" target="blank">
           <Image
-            className="w-8"
+            className="w-8 mr-2 md:mr-6"
             src="/images/icons8-instagram.svg"
             alt="Instagram Icon"
             width={32}

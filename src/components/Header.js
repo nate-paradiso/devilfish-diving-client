@@ -8,7 +8,7 @@ export const Header = () => {
       <header className="flex flex-col  ">
         <Nav />
 
-        <div className="m-4 flex justify-center ">
+        <div className="md:m-6 m-4 mr-6 ml-6 flex justify-center ">
           <Link href="/">
             <Image
               className="-auto"

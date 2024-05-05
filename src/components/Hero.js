@@ -4,8 +4,8 @@ const Hero = () => {
   return (
     <section className="relative">
       {/* Container for the text */}
-      <div className="absolute top-[5px] right-[10px] z-10 p-4 text-white text-end max-w-[300px] md:max-w-[800px] md:top-[20px] md:right-[50px] xl:max-w-[1000px] xl:top-[50px]  ">
-        <h1 className="text-3xl md:text-7xl xl:text-9xl font-bold font-serif">
+      <div className="absolute top-[5px] right-[10px] z-10 pr-6 md:p-4 text-white text-end max-w-[350px] md:max-w-[800px] md:top-[20px] md:right-[50px] xl:max-w-[1000px] xl:top-[50px]  ">
+        <h1 className="text-[2.1em] md:text-7xl xl:text-9xl font-bold font-serif">
           A Seattle Dive Charter
         </h1>
       </div>
