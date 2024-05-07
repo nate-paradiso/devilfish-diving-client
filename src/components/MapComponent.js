@@ -14,7 +14,7 @@ const MapComponent = () => {
           [47.59222, -122.48403], // Top-left corner
           [47.59809, -122.47479], // Bottom-right corner
         ],
-        opacity: 0.8, // Opacity value (0 to 1)
+        opacity: 0.9, // Opacity value (0 to 1)
       },
       {
         url: "/images/tiles/alki-rock-reef.png",
@@ -22,7 +22,7 @@ const MapComponent = () => {
           [47.55537, -122.41015],
           [47.55827, -122.40546],
         ],
-        opacity: 0.7,
+        opacity: 0.8,
       },
       {
         url: "/images/tiles/4mile-rock-barges.png",
@@ -30,7 +30,15 @@ const MapComponent = () => {
           [47.63892, -122.42866], // Top-left corner
           [47.64147, -122.42537],
         ],
-        opacity: 0.7,
+        opacity: 0.85,
+      },
+      {
+        url: "/images/tiles/shilshole-wrecks.png",
+        bounds: [
+          [47.67186, -122.42414], // Top-left corner
+          [47.67464, -122.42029],
+        ],
+        opacity: 0.9,
       },
       // Add more PNG images as needed
     ];
