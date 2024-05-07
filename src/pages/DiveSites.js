@@ -1,6 +1,22 @@
-import React from "react";
+// src/pages/MyPage.tsx
+import dynamic from "next/dynamic";
+import { useMemo } from "react";
 
 const DiveSites = () => {
-  return <div>here are the sites</div>;
+  const MapComponent = useMemo(
+    () =>
+      dynamic(() => import("../components/MapComponent"), {
+        loading: () => <p>A map is loading</p>,
+        ssr: false,
+      }),
+    [],
+  );
+
+  return (
+    <div className=" m-4">
+      <MapComponent />
+    </div>
+  );
 };
+
 export default DiveSites;
