@@ -63,7 +63,7 @@ const MapComponent = () => {
               attribution="&copy; Marine Traffic"
             />
           </BaseLayer>
-          <BaseLayer checked name="Esri Ocean Basemap">
+          <BaseLayer name="Esri Ocean Basemap">
             <TileLayer
               attribution="Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri"
               url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}"
