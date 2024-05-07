@@ -49,6 +49,20 @@ const MapComponent = () => {
       >
         {loadPNGImages()}
         <LayersControl position="topright">
+          <BaseLayer checked name="Esri World Imagery">
+            <TileLayer
+              url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+              attribution="Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
+            />
+          </BaseLayer>{" "}
+          <BaseLayer name="Nautical Chart">
+            <TileLayer
+              url="https://www.marinetraffic.com/TMS/1.0.0/TX97/{z}/{x}/{y}.png?v=3"
+              minZoom={0}
+              maxZoom={20}
+              attribution="&copy; Marine Traffic"
+            />
+          </BaseLayer>
           <BaseLayer checked name="Esri Ocean Basemap">
             <TileLayer
               attribution="Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri"
@@ -60,23 +74,6 @@ const MapComponent = () => {
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-          </BaseLayer>
-          <BaseLayer name="Stadia.AlidadeSatellite">
-            <TileLayer
-              url="https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.{ext}"
-              minZoom={0}
-              maxZoom={20}
-              attribution='&copy; CNES, Distribution Airbus DS, © Airbus DS, © PlanetObserver (Contains Copernicus Data) | &copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              ext="jpg"
-            />
-          </BaseLayer>
-          <BaseLayer name="Nautical Chart">
-            <TileLayer
-              url="https://www.marinetraffic.com/TMS/1.0.0/TX97/{z}/{x}/{y}.png?v=3"
-              minZoom={0}
-              maxZoom={20}
-              attribution="&copy; Marine Traffic"
             />
           </BaseLayer>
         </LayersControl>
