@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, LayersControl, ImageOverlay, Marker, Popup } f
 import "leaflet/dist/leaflet.css";
 import Script from "next/script";
 import { Icon } from "leaflet"; // Importing L from Leaflet
+import ChinaWall from "./ChinaWall";
 
 const { BaseLayer } = LayersControl;
 
@@ -148,13 +149,13 @@ const MapComponent = () => {
     setSelectedComponent(componentName);
   };
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center items-center flex-col ">
       <Script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></Script>
       <Script src="https://unpkg.com/Leaflet.TileLayer.MBTiles@1.0.0/Leaflet.TileLayer.MBTiles.js"></Script>
       <MapContainer
         className="h-[400px] w-full md:w-[1000px] md:h-[600px] "
         center={[47.605932, -122.448144]}
-        zoom={10}
+        zoom={11}
       >
         <LayersControl position="topright">
           {loadPNGImages()}
@@ -167,7 +168,7 @@ const MapComponent = () => {
               </Popup>{" "}
             </Marker>
           ))}
-          <BaseLayer checked name="Esri World Imagery">
+          <BaseLayer name="Esri World Imagery">
             <TileLayer
               url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
               attribution="Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
@@ -188,7 +189,7 @@ const MapComponent = () => {
               maxZoom={16}
             />
           </BaseLayer>
-          <BaseLayer name="OpenStreetMap">
+          <BaseLayer checked name="OpenStreetMap">
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -196,6 +197,7 @@ const MapComponent = () => {
           </BaseLayer>
         </LayersControl>
       </MapContainer>
+      <div>{selectedComponent === "China Wall" && <ChinaWall />}</div>
     </div>
   );
 };
