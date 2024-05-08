@@ -4,6 +4,7 @@
   <Metadata>
     <MDI key="AREA_OR_POINT">Area</MDI>
     <MDI key="DataType">Generic</MDI>
+    <MDI key="NODATA_VALUES">0 0 0</MDI>
   </Metadata>
   <Metadata domain="IMAGE_STRUCTURE">
     <MDI key="INTERLEAVE">PIXEL</MDI>
@@ -11,16 +12,31 @@
   <PAMRasterBand band="1">
     <Metadata>
       <MDI key="SourceBandIndex">0</MDI>
+      <MDI key="STATISTICS_MAXIMUM">119</MDI>
+      <MDI key="STATISTICS_MEAN">91.172807229069</MDI>
+      <MDI key="STATISTICS_MINIMUM">12</MDI>
+      <MDI key="STATISTICS_STDDEV">13.228775770259</MDI>
+      <MDI key="STATISTICS_VALID_PERCENT">100</MDI>
     </Metadata>
   </PAMRasterBand>
   <PAMRasterBand band="2">
     <Metadata>
       <MDI key="SourceBandIndex">1</MDI>
+      <MDI key="STATISTICS_MAXIMUM">178</MDI>
+      <MDI key="STATISTICS_MEAN">143.97589887427</MDI>
+      <MDI key="STATISTICS_MINIMUM">36</MDI>
+      <MDI key="STATISTICS_STDDEV">16.80783173236</MDI>
+      <MDI key="STATISTICS_VALID_PERCENT">100</MDI>
     </Metadata>
   </PAMRasterBand>
   <PAMRasterBand band="3">
     <Metadata>
       <MDI key="SourceBandIndex">2</MDI>
+      <MDI key="STATISTICS_MAXIMUM">190</MDI>
+      <MDI key="STATISTICS_MEAN">156.77188328912</MDI>
+      <MDI key="STATISTICS_MINIMUM">42</MDI>
+      <MDI key="STATISTICS_STDDEV">15.802190859997</MDI>
+      <MDI key="STATISTICS_VALID_PERCENT">100</MDI>
     </Metadata>
   </PAMRasterBand>
 </PAMDataset>
