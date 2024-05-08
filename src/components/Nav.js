@@ -3,7 +3,7 @@ import Link from "next/link";
 export const Nav = () => {
   return (
     <nav
-      className="flex justify-start items-center text-white  md:text-[1rem] text-sm md:p-6
+      className="flex justify-start items-center text-white  md:text-[1rem] text-[.85rem] md:p-6
       bg-nav
       opacity-95
       h-6
