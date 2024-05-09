@@ -1,7 +1,5 @@
 {
-    "cSpell.words": [
-        "lusitana"
-    ],
-    "tailwindCSS.emmetCompletions": true,
-    "tailwindCSS.suggestions": true
+  "cSpell.words": ["Blakely", "lusitana"],
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.suggestions": true
 }
