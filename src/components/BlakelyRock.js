@@ -7,7 +7,7 @@ const BlakelyRock = () => {
       <div className="m-4 flex flex-col">
         <div className="mb-4">
           <h1 className="text-xl">Blakely Rock - Shangri-La</h1>
-          <h3 className="text-lg">Depth: 20 to 100&plus; ft</h3>
+          <h3 className="text-lg">Depth: 20 to 100+; ft</h3>
           <p>
             A premiere dive site. Blakely Rock is a submerged pinnacle or reef rising from the
             depths of Puget Sound. It&rsquo;s known for its diverse marine life, including various
