@@ -7,13 +7,13 @@ const BlakelyRock = () => {
       <div className="m-4 flex flex-col">
         <div className="mb-4">
           <h1 className="text-xl">Blakely Rock - Shangri-La</h1>
-          <h3 className="text-lg">Depth: 20 to 100+ ft</h3>
+          <h3 className="text-lg">Depth: 20 to 100&plus; ft</h3>
           <p>
             A premiere dive site. Blakely Rock is a submerged pinnacle or reef rising from the
-            depths of Puget Sound. It's known for its diverse marine life, including various species
-            of fish, invertebrates, and colorful underwater flora. Divers often encounter rockfish,
-            lingcod, wolf eels, nudibranchs, anemones, and giant pacific octopus while exploring the
-            site. Nitrox is recommended
+            depths of Puget Sound. It&rsquo;s known for its diverse marine life, including various
+            species of fish, invertebrates, and colorful underwater flora. Divers often encounter
+            rockfish, lingcod, wolf eels, nudibranchs, anemones, and giant pacific octopus while
+            exploring the site. Nitrox is recommended
           </p>
           <p>
             The depth of Blakely Rock varies, with shallow areas around the pinnacle and deeper
