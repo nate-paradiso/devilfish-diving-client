@@ -950,7 +950,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
               </div>
               <div className="flex-col flex">
                 <label htmlFor="electronicSignatureDate" className="mt-2 flex flex-row">
-                  Today's Signature Date: <span className="text-red-500">&ast</span>
+                  Today&rsquo;s Signature Date: <span className="text-red-500">&ast</span>
                 </label>
                 <input
                   id="electronicSignatureDate"
