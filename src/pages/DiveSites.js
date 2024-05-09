@@ -13,7 +13,7 @@ const DiveSites = () => {
   );
 
   return (
-    <div className=" m-4">
+    <div className=" ">
       <MapComponent />
     </div>
   );

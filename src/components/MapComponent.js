@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
-// import MarkerClusterGroup from "react-leaflet-cluster";
+// import MarkerClusterGroup from "react-leaflet-markercluster";
 import { MapContainer, TileLayer, LayersControl, ImageOverlay, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import Script from "next/script";
+// import "~react-leaflet-markercluster/dist/styles.min.css";
+// import Script from "next/script";
 import { Icon } from "leaflet"; // Importing L from Leaflet
 import ChinaWall from "./ChinaWall";
+import BlakelyRock from "./BlakelyRock";
+import DecaturReef from "./DecaturReef";
+import TheBoss from "./TheBoss";
+import LikersReef from "./LikersReef";
+import MetridiumWall from "./MetridiumWall";
+import NorandersReef from "./NorandersReef";
 
 const { BaseLayer } = LayersControl;
 
@@ -122,7 +129,7 @@ const MapComponent = () => {
   //dive site pins
   const markers = [
     { name: "China Wall", position: [47.5941, -122.4823], popUp: "hello" },
-    { name: "Blakely Rock - Shangra-La", position: [47.5947, -122.477] },
+    { name: "Blakely Rock - Shangri-La", position: [47.5947, -122.477] },
     { name: "The Boss", position: [47.5912, -122.496] },
     { name: "Decatur Reef", position: [47.582, -122.4755] },
     { name: "Noranders Reef", position: [47.5997, -122.4965] },
@@ -138,7 +145,7 @@ const MapComponent = () => {
     // Add more pins as needed
   ];
 
-  const customIcon = new Icon({ iconUrl: "/images/diving.png", iconSize: [15, 15] });
+  const customIcon = new Icon({ iconUrl: "/images/diving.png", iconSize: [20, 20] });
 
   // State to manage which component to render under the map
   const [selectedComponent, setSelectedComponent] = useState(null);
@@ -149,55 +156,80 @@ const MapComponent = () => {
     setSelectedComponent(componentName);
   };
   return (
-    <div className="flex justify-center items-center flex-col ">
-      <Script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></Script>
-      <Script src="https://unpkg.com/Leaflet.TileLayer.MBTiles@1.0.0/Leaflet.TileLayer.MBTiles.js"></Script>
-      <MapContainer
-        className="h-[400px] w-full md:w-[1000px] md:h-[600px] "
-        center={[47.605932, -122.448144]}
-        zoom={11}
-      >
-        <LayersControl position="topright">
-          {loadPNGImages()}
-          {markers.map((marker, index) => (
-            <Marker key={index} position={marker.position} icon={customIcon}>
-              <Popup>
-                <a href="#" onClick={() => handlePopupLinkClick(marker.name)}>
-                  {marker.name}
-                </a>
-              </Popup>{" "}
-            </Marker>
-          ))}
-          <BaseLayer name="Esri World Imagery">
-            <TileLayer
-              url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-              attribution="Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
-            />
-          </BaseLayer>{" "}
-          <BaseLayer name="Nautical Chart - Depth in Meters">
-            <TileLayer
-              url="https://www.marinetraffic.com/TMS/1.0.0/TX97/{z}/{x}/{y}.png?v=3"
-              minZoom={0}
-              maxZoom={20}
-              attribution="&copy; Marine Traffic"
-            />
-          </BaseLayer>
-          <BaseLayer name="Esri Ocean Basemap">
-            <TileLayer
-              attribution="Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri"
-              url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}"
-              maxZoom={16}
-            />
-          </BaseLayer>
-          <BaseLayer checked name="OpenStreetMap">
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-          </BaseLayer>
-        </LayersControl>
-      </MapContainer>
-      <div>{selectedComponent === "China Wall" && <ChinaWall />}</div>
+    <div className="mb-8 ">
+      <div className="flex pb-3 max-w-[1000px] justify-center align-middle m-auto  ">
+        <p className="m-4">
+          Explore Devilfish Diving's current dive sites. Dive site visits depend on weather, tides,
+          and currents. They are subject to change by the captain at any moment. Zoom in and click
+          on a dive flag for more information, and use the layers button to switch background map.
+          The Nautical Chart reveals depths, while the bathymetry overlay unveils the underwater
+          topography.
+        </p>
+      </div>
+      <div className="flex justify-center items-center flex-col ">
+        {/* <Script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></Script>
+      <Script src="https://unpkg.com/Leaflet.TileLayer.MBTiles@1.0.0/Leaflet.TileLayer.MBTiles.js"></Script> */}
+        <MapContainer
+          className="h-[400px] w-full md:h-[500px] "
+          center={[47.605932, -122.448144]}
+          zoom={9}
+        >
+          <LayersControl position="topright">
+            {loadPNGImages()}
+            {/* <MarkerClusterGroup> */}
+            {markers.map((marker, index) => (
+              <Marker key={index} position={marker.position} icon={customIcon}>
+                <Popup>
+                  <button
+                    className="text-blue-700 hover:text-blue-900"
+                    onClick={() => handlePopupLinkClick(marker.name)}
+                  >
+                    {marker.name}
+                  </button>
+                </Popup>{" "}
+              </Marker>
+            ))}
+            {/* </MarkerClusterGroup>{" "} */}
+            <BaseLayer name="Esri World Imagery">
+              <TileLayer
+                url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                attribution="Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
+              />
+            </BaseLayer>{" "}
+            <BaseLayer name="Nautical Chart - Depth in Meters">
+              <TileLayer
+                url="https://www.marinetraffic.com/TMS/1.0.0/TX97/{z}/{x}/{y}.png?v=3"
+                minZoom={0}
+                maxZoom={20}
+                attribution="&copy; Marine Traffic"
+              />
+            </BaseLayer>
+            <BaseLayer name="Esri Ocean Basemap">
+              <TileLayer
+                attribution="Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri"
+                url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}"
+                maxZoom={16}
+              />
+            </BaseLayer>
+            <BaseLayer checked name="OpenStreetMap">
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+            </BaseLayer>
+          </LayersControl>
+        </MapContainer>
+        <div className="">
+          {" "}
+          {selectedComponent === "Blakely Rock - Shangri-La" && <BlakelyRock />}
+          {selectedComponent === "China Wall" && <ChinaWall />}
+          {selectedComponent === "Decatur Reef" && <DecaturReef />}
+          {selectedComponent === "The Boss" && <TheBoss />}
+          {selectedComponent === "Likers Reef" && <LikersReef />}
+          {selectedComponent === "Metridium Wall" && <MetridiumWall />}
+          {selectedComponent === "Noranders Reef" && <NorandersReef />}
+        </div>
+      </div>
     </div>
   );
 };

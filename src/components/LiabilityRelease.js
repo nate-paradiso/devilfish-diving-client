@@ -5,24 +5,6 @@ const LiabilityRelease = ({ formData }) => {
     <section className="mb-2">
       {" "}
       <h2 className="text-xl mb-2">Liability Release and Assumption of Risk Agreement</h2>
-      <h3>NON-AGENCY DISCLOSURE AND ACKNOWLEDGMENT AGREEMENT</h3>
-      <p className="mb-2 ">
-        I understand and agree that PADI Members (“Members”), including Devilfish Diving LLC, and/or
-        any individual PADI Instructors and Divemasters associated with the program in which I am
-        participating, are licensed to use various PADI Trademarks and to conduct PADI training, but
-        are not agents, employees, or franchisees of PADI Americas, Inc., or its parent, subsidiary,
-        and affiliated corporations (“PADI”). I further understand that Member business activities
-        are independent, and are neither owned nor operated by PADI, and that while PADI establishes
-        the standards for PADI diver training programs, it is not responsible for, nor does it have
-        the right to control, the operation of the Members’ business activities and the day-to-day
-        conduct of PADI programs and supervision of divers by the Members or their associated staff.
-        I further understand and agree on behalf of myself, my heirs, and my estate that in the
-        event of an injury or death during this activity, neither I nor my estate shall seek to hold
-        PADI liable for the actions, inactions, or negligence of Devilfish Diving LLC, and/or the
-        instructors and divemasters associated with the activity.
-      </p>
-      <br />
-      <h3>LIABILITY RELEASE AND ASSUMPTION OF RISK AGREEMENT</h3>
       <p>
         I,{" "}
         <span className="font-bold text-xl text-green-500">
@@ -47,8 +29,9 @@ const LiabilityRelease = ({ formData }) => {
       </p>
       <br />
       <p>
-        I understand and agree that neither Devilfish Diving LLC; nor the dive professional(s) who
-        may be present at the dive site, nor PADI Americas, Inc., nor any of their affiliate and
+        I understand and agree that neither
+        <span className="font-bold text-lg"> Devilfish Diving LLC</span>; nor the dive
+        professional(s) who may be present at the dive site, nor any of their affiliate and
         subsidiary corporations, nor any of their respective employees, officers, agents,
         contractors, and assigns (hereinafter “Released Parties”) may be held liable or responsible
         in any way for any injury, death, or other damages to me, my family, estate, heirs, or

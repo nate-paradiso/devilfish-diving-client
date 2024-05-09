@@ -16,6 +16,22 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   const errorRefs = useRef({});
   const [isPayPalSuccessful, setIsPayPalSuccessful] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const formatDateForHTMLInput = selectedDate => {
+    // Create a new Date object from the selectedDate
+    const dateObj = new Date(selectedDate);
+
+    // Extract year, month, and day
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const day = String(dateObj.getDate()).padStart(2, "0");
+
+    // Format the date as yyyy-mm-dd
+    const formattedDate = `${year}-${month}-${day}`;
+
+    return formattedDate;
+  };
+  const today = new Date();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -32,7 +48,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     divingDate: selectedDate,
     message: "",
     electronicSignature: "",
-    electronicSignatureDate: "",
+    electronicSignatureDate: formatDateForHTMLInput(today),
   });
 
   const [validationErrors, setValidationErrors] = useState({
@@ -59,20 +75,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   const [formOutside, setFormOutside] = useState({}); // State to control button visibility
 
   // Format the selectedDate to type=date for the form
-  const formatDateForHTMLInput = selectedDate => {
-    // Create a new Date object from the selectedDate
-    const dateObj = new Date(selectedDate);
-
-    // Extract year, month, and day
-    const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
-    const day = String(dateObj.getDate()).padStart(2, "0");
-
-    // Format the date as yyyy-mm-dd
-    const formattedDate = `${year}-${month}-${day}`;
-
-    return formattedDate;
-  };
 
   // get all data in form and return object
   function getFormData(form) {
@@ -299,80 +301,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     setIsButtonVisible(false);
     setIsFormVisible(false);
     setLoading(false);
-
-    // // Handle form submission via XMLHttpRequest
-    // const handleGoogleSheetSubmit = () => {
-    //   let url = form.action;
-    //   let xhr = new XMLHttpRequest();
-    //   xhr.open("POST", url);
-    //   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    //   xhr.onreadystatechange = function () {
-    //     if (xhr.readyState === 4) {
-    //       form.removeAttribute("data-submitting"); // Release the form from submitting state
-    //       submitButton.disabled = false; // Re-enable the submit button
-
-    //       if (xhr.status === 200) {
-    //         console.log("Form submission successful.");
-    //         // Reset form
-    //         // setFormData({
-    //         //   firstName: "",
-    //         //   lastName: "",
-    //         //   email: "",
-    //         //   phone: "",
-    //         //   birthday: "",
-    //         //   address: "",
-    //         //   lastDive: "",
-    //         //   certifyingAgency: "",
-    //         //   certificationNumber: "",
-    //         //   danInsuranceNumber: "",
-    //         //   emergencyContactName: "",
-    //         //   emergencyContactPhone: "",
-    //         //   divingDate: "",
-    //         //   electronicSignature: "",
-    //         //   electronicSignatureDate: "",
-    //         // });
-    //         // Reset form validation data
-    //         setValidationErrors({
-    //           firstName: "",
-    //           lastName: "",
-    //           email: "",
-    //           phone: "",
-    //           birthday: "",
-    //           address: "",
-    //           lastDive: "",
-    //           certifyingAgency: "",
-    //           certificationNumber: "",
-    //           danInsuranceNumber: "",
-    //           emergencyContactName: "",
-    //           emergencyContactPhone: "",
-    //           divingDate: "",
-    //           electronicSignature: "",
-    //           electronicSignatureDate: "",
-    //         });
-
-    //         // Reset form
-    //         form.reset();
-    //         let formElements = form.querySelector(".form-elements");
-    //         if (formElements) {
-    //           formElements.style.display = "none";
-    //         }
-    //         let thankYouMessage = form.querySelector(".thankyou_message");
-    //         if (thankYouMessage) {
-    //           thankYouMessage.style.display = "block";
-    //         }
-    //       } else {
-    //         console.error("Form submission failed.");
-    //       }
-    //     }
-    //   };
-    //   let encoded = Object.keys(data)
-    //     .map(function (k) {
-    //       return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
-    //     })
-    //     .join("&");
-    //   xhr.send(encoded);
-    // };
 
     function validateFirstName(firstName) {
       return (firstName ?? "").trim() !== ""; // Check if the name is not empty
@@ -1022,7 +950,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
               </div>
               <div className="flex-col flex">
                 <label htmlFor="electronicSignatureDate" className="mt-2 flex flex-row">
-                  Signature Date: <span className="text-red-500">*</span>
+                  Today's Signature Date: <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="electronicSignatureDate"
