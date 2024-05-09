@@ -639,7 +639,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
               <div>
                 <div className="flex-col flex">
                   <label htmlFor="divingDate" className="mt-2 flex flex-row">
-                    Diving Date: <span className="text-red-500">*</span>
+                    Diving Date: <span className="text-red-500">&ast</span>
                   </label>
                   <input
                     id="divingDate"
@@ -660,7 +660,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="firstName " className="mt-2 flex flex-row">
-                    First Name: <span className="text-red-500 ">*</span>
+                    First Name: <span className="text-red-500 ">&ast</span>
                   </label>
                   <input
                     type="text"
@@ -678,7 +678,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="lastName " className="mt-2 flex flex-row">
-                    Last Name: <span className="text-red-500">*</span>
+                    Last Name: <span className="text-red-500">&ast</span>
                   </label>
                   <input
                     type="text"
@@ -696,7 +696,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="email" className="mt-2 flex flex-row">
-                    Email: <span className="text-red-500">*</span>
+                    Email: <span className="text-red-500">&ast</span>
                   </label>
                   <input
                     id="email"
@@ -714,7 +714,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="phone" className="mt-2 flex flex-row">
-                    Phone: <span className="text-red-500">*</span>
+                    Phone: <span className="text-red-500">&ast</span>
                   </label>
                   <input
                     id="phone"
@@ -732,7 +732,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="birthday" className="mt-2 flex flex-row">
-                    Birthday: <span className="text-red-500">*</span>
+                    Birthday: <span className="text-red-500">&ast</span>
                   </label>
                   <input
                     id="birthday"
@@ -750,7 +750,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="address" className="mt-2 flex flex-row">
-                    Address: <span className="text-red-500">*</span>
+                    Address: <span className="text-red-500">&ast</span>
                   </label>
                   <input
                     id="address"
@@ -770,7 +770,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
               <div>
                 <div className="flex-col flex">
                   <label htmlFor="lastDive" className="mt-2 flex flex-row">
-                    Date of Last Dive: <span className="text-red-500">*</span>
+                    Date of Last Dive: <span className="text-red-500">&ast</span>
                   </label>
                   <input
                     id="lastDive"
@@ -789,7 +789,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
                 <div className="flex-col flex">
                   <label htmlFor="certifyingAgency" className="mt-2 flex flex-row">
-                    Certifying Agency: <span className="text-red-500">*</span>
+                    Certifying Agency: <span className="text-red-500">&ast</span>
                   </label>
                   <input
                     id="certifyingAgency"
@@ -810,7 +810,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="certificationNumber" className="mt-2 flex flex-row">
-                    Certification Number: <span className="text-red-500">*</span>
+                    Certification Number: <span className="text-red-500">&ast</span>
                   </label>
                   <input
                     id="certificationNumber"
@@ -831,7 +831,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="danInsuranceNumber" className="mt-2 flex flex-row">
-                    DAN Insurance Number: <span className="text-red-500">*</span>
+                    DAN Insurance Number: <span className="text-red-500">&ast</span>
                   </label>
                   <input
                     id="danInsuranceNumber"
@@ -853,7 +853,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="emergencyContactName" className="mt-2 flex flex-row">
-                    Emergency Contact Name: <span className="text-red-500">*</span>
+                    Emergency Contact Name: <span className="text-red-500">&ast</span>
                   </label>
                   <input
                     id="emergencyContactName"
@@ -874,7 +874,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="emergencyContactPhone" className="mt-2 flex flex-row">
-                    Emergency Contact Phone: <span className="text-red-500">*</span>
+                    Emergency Contact Phone: <span className="text-red-500">&ast</span>
                   </label>
                   <input
                     id="emergencyContactPhone"
@@ -896,7 +896,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
                 <div className="flex-col flex">
                   <label htmlFor="message" className="mt-2 flex flex-row">
-                    Send a Message: <span className="text-red-500">*</span>
+                    Send a Message: <span className="text-red-500">&ast</span>
                   </label>
                   <textarea
                     id="message"
@@ -929,7 +929,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   <br />
                 </p>
                 <label htmlFor="electronicSignature" className="mt-2 flex flex-row">
-                  Electronic Signature: <span className="text-red-500">*</span>
+                  Electronic Signature: <span className="text-red-500">&ast</span>
                 </label>
                 <input
                   id="electronicSignature"
@@ -950,7 +950,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
               </div>
               <div className="flex-col flex">
                 <label htmlFor="electronicSignatureDate" className="mt-2 flex flex-row">
-                  Today's Signature Date: <span className="text-red-500">*</span>
+                  Today's Signature Date: <span className="text-red-500">&ast</span>
                 </label>
                 <input
                   id="electronicSignatureDate"
