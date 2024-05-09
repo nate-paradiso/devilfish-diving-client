@@ -6,7 +6,7 @@ const MetridiumWall = () => {
       <div className="m-4 flex flex-col">
         <div className="mb-4">
           <h1 className="text-xl">Metridium Wall</h1>
-          <h3 className="text-lg">Depth: 35 to 75&plus ft</h3>
+          <h3 className="text-lg">Depth: 35 to 75+ ft</h3>
 
           <p>
             Metridium, named after the anemone that can be found in abundance here, is a perfect
