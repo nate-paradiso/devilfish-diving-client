@@ -20,16 +20,6 @@ const BlakeIsland = () => {
             slack before ebb to minimize current-related challenges.
           </p>
         </div>
-
-        <div className="flex justify-center flex-col m-auto shadow-xl">
-          <h3 className="text-xl">Typical Dive Profile with EAN36</h3>
-          <Image
-            src={"/images/deep-barge-profile.jpg"}
-            alt="The Deep Barge Dive Site Profile"
-            width={400}
-            height={400}
-          ></Image>
-        </div>
       </div>
     </div>
   );
