@@ -119,6 +119,51 @@ const MapComponent = () => {
         ],
         opacity: 0.8,
       },
+      {
+        name: "Sekiu",
+        url: "/images/tiles/sekiu.png",
+        bounds: [
+          [48.25439, -124.30327], // Top-left corner
+          [48.2853, -124.24267],
+        ],
+        opacity: 0.8,
+      },
+      {
+        name: "Hoko",
+        url: "/images/tiles/hoko1.png",
+        bounds: [
+          [48.26792, -124.35416], // Top-left corner
+          [48.29231, -124.30095],
+        ],
+        opacity: 0.8,
+      },
+      {
+        name: "Bullman",
+        url: "/images/tiles/bullman.png",
+        bounds: [
+          [48.34537, -124.5664], // Top-left corner
+          [48.37947, -124.5161],
+        ],
+        opacity: 0.8,
+      },
+      {
+        name: "Neah",
+        url: "/images/tiles/neah.png",
+        bounds: [
+          [48.36877, -124.62317], // Top-left corner
+          [48.395, -124.56549],
+        ],
+        opacity: 0.8,
+      },
+      {
+        name: "Kydaka",
+        url: "/images/tiles/kydaka.png",
+        bounds: [
+          [48.2844848450342354, -124.4134099999999989], // Top-left corner
+          [48.3061851549657462, -124.3533199999999965],
+        ],
+        opacity: 0.8,
+      },
       // Add more PNG images as needed
     ];
     return pngImages.map((image, index) => (
@@ -196,7 +241,7 @@ const MapComponent = () => {
                 attribution="Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
               />
             </BaseLayer>{" "}
-            <BaseLayer name="Nautical Chart - Depth in Meters">
+            <BaseLayer checked name="Nautical Chart - Depth in Meters">
               <TileLayer
                 url="https://www.marinetraffic.com/TMS/1.0.0/TX97/{z}/{x}/{y}.png?v=3"
                 minZoom={0}
@@ -211,7 +256,7 @@ const MapComponent = () => {
                 maxZoom={16}
               />
             </BaseLayer>
-            <BaseLayer checked name="OpenStreetMap">
+            <BaseLayer name="OpenStreetMap">
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
