@@ -7,6 +7,7 @@ const NorandersReef = () => {
         <div className="mb-4">
           <h1 className="text-xl">Noranders Reef </h1>
           <h3 className="text-lg">Depth: 35 to 85 ft</h3>
+          <h3 className="text-lg">Level: Open Water or Advanced</h3>
 
           <p>
             Norranders Reef consists of a number of rock outcrops that run from depths of about 35

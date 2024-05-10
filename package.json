@@ -38,7 +38,8 @@
     "react-leaflet-cluster": "^2.1.0",
     "react-leaflet-markercluster": "^3.0.0-rc1",
     "react-modal": "^3.16.1",
-    "react-signature-canvas": "^1.0.6"
+    "react-signature-canvas": "^1.0.6",
+    "react-youtube": "^10.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",

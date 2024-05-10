@@ -8,6 +8,7 @@ const LikersReef = () => {
         <div className="mb-4">
           <h1 className="text-xl">Likers Reef</h1>
           <h3 className="text-lg">Depth: 50 to 70 ft</h3>
+          <h3 className="text-lg">Level: Open Water or Advanced</h3>
 
           <p>
             A large boulder patch with many nooks and crannies to peer into. After you have

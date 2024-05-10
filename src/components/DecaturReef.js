@@ -7,6 +7,7 @@ const DecaturReef = () => {
         <div className="mb-4">
           <h1 className="text-xl">Decatur Reef - Restoration Point</h1>
           <h3 className="text-lg">Depth: 20 to 130 ft</h3>
+          <h3 className="text-lg">Level: Advanced</h3>
 
           <p>
             This site is similar to Blakely Rock, but featuring several large rocky reefs. The

@@ -5,8 +5,9 @@ const ChinaWall = () => {
     <div className=" pb-3 max-w-[1000px] m-auto ">
       <div className="m-4 flex flex-col">
         <div className="mb-4">
-          <h1 className="text-xl">Blakely Rock - Shangri-La</h1>
+          <h1 className="text-xl">China Wall</h1>
           <h3 className="text-lg">Depth: 60 to 100 ft</h3>
+          <h3 className="text-lg">Level: Advanced</h3>
 
           <p>
             An amazing dive site nestled just off the coast of Bainbridge Island next to Blakely
