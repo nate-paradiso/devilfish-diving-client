@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // import MarkerClusterGroup from "react-leaflet-markercluster";
 import {
   MapContainer,
@@ -21,6 +21,11 @@ import TheBoss from "./TheBoss";
 import LikersReef from "./LikersReef";
 import MetridiumWall from "./MetridiumWall";
 import NorandersReef from "./NorandersReef";
+import VerticalBarge from "./VerticalBarge";
+import DeepBarge from "./DeepBarge";
+import FourMileRockBarges from "./FourMileRockBarges";
+import AlkiReef from "./AlkiReef";
+import BlakeIsland from "./BlakeIsland";
 
 const { BaseLayer } = LayersControl;
 
@@ -206,6 +211,7 @@ const MapComponent = () => {
     { name: "Deep Barge", position: [47.674, -122.423] },
     { name: "Alki Fishing Reef", position: [47.557, -122.408] },
     { name: "Blake Island Reef", position: [47.5295, -122.494] },
+
     // Add more pins as needed
   ];
 
@@ -309,6 +315,11 @@ const MapComponent = () => {
           {selectedComponent === "Likers Reef" && <LikersReef />}
           {selectedComponent === "Metridium Wall" && <MetridiumWall />}
           {selectedComponent === "Noranders Reef" && <NorandersReef />}
+          {selectedComponent === "Vertical Barge" && <VerticalBarge />}
+          {selectedComponent === "Deep Barge" && <DeepBarge />}
+          {selectedComponent === "4 Mile Rock Barges" && <FourMileRockBarges />}
+          {selectedComponent === "Alki Fishing Reef" && <AlkiReef />}
+          {selectedComponent === "Blake Island Reef" && <BlakeIsland />}
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
 
-const DiveSites = () => {
+const DiveMap = () => {
   const MapComponent = useMemo(
     () =>
       dynamic(() => import("../components/MapComponent"), {
@@ -19,4 +19,4 @@ const DiveSites = () => {
   );
 };
 
-export default DiveSites;
+export default DiveMap;
