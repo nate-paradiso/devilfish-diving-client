@@ -19,7 +19,7 @@ const NorandersReef = () => {
         <div className="flex justify-center flex-col m-auto">
           <h3 className="text-xl">Typical Dive Profile with Air</h3>
           <Image
-            src={"/images/noranders-reef-profile.jpeg"}
+            src={"/images/noranders-reef-profile.jpg"}
             alt="Noranders Reef Dive Site Profile"
             width={400}
             height={400}

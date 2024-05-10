@@ -4,6 +4,7 @@ const PrivacyPolicy = () => {
   return (
     <div className="max-w-[800px] mx-auto p-4 flex flex-col justify-start">
       <h1 className="text-xl">Privacy Policy</h1>
+      <p>Last updated: May 9, 2024</p>
       <p>
         At Devilfish Diving LLC, we take your privacy seriously. This Privacy Policy outlines the
         types of personal information we collect, how we use it, and your rights regarding this
@@ -34,6 +35,21 @@ const PrivacyPolicy = () => {
         We take reasonable measures to protect the security of your personal information. However,
         no method of transmission over the internet or electronic storage is completely secure, so
         we cannot guarantee absolute security.
+      </p>
+      <br />
+      <h2 className="text-lg">Data Retention</h2>
+      <p>
+        We retain your personal information only for as long as necessary for the purposes outlined
+        in this Privacy Policy. The criteria used to determine the retention periods include the
+        nature of the data, the purposes for which it is processed, and any legal or regulatory
+        requirements.
+      </p>
+      <br />
+      <h2 className="text-lg">Data Subject Rights</h2>
+      <p>
+        You have the right to access, rectify, or delete your personal information. If you would
+        like to exercise any of these rights, please contact us using the information provided at
+        the end of this Privacy Policy.
       </p>
       <br />
       <h2 className="text-lg">Changes to This Privacy Policy</h2>

@@ -6,7 +6,7 @@ const DiveSites = () => {
   const MapComponent = useMemo(
     () =>
       dynamic(() => import("../components/MapComponent"), {
-        loading: () => <p>A map is loading</p>,
+        loading: () => <p>Loading map...</p>,
         ssr: false,
       }),
     [],
