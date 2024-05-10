@@ -11,11 +11,10 @@ const DeepBarge = () => {
           <h3 className="text-lg">Level: Advanced</h3>
 
           <p>
-            Not far from the Vertical Barges lies another barge called the "deep barge". The bow
-            rests in about 100 feet of water, while the stern settled at about 90 feet. This barge
-            is intact, upright, and lies in an east-west direction with the bow facing west. The
-            site offers similar marine life to the Vertical Barge but the wreck itself is not
-            penetrable.
+            Not far from the Vertical Barges lies another barge called the deep barge. The bow rests
+            in about 100 feet of water, while the stern settled at about 90 feet. This barge is
+            intact, upright, and lies in an east-west direction with the bow facing west. The site
+            offers similar marine life to the Vertical Barge but the wreck itself is not penetrable.
           </p>
         </div>
         <div className="flex justify-center flex-col m-auto">

@@ -9,10 +9,11 @@ const BlakeIsland = () => {
           <h3 className="text-lg">Depth: 50 to 110 ft</h3>
           <h3 className="text-lg">Level: Advanced</h3>
           <p>
-            Created as part of the Washington Department of Fish and Wildlife's artificial reef
-            program, it consists of concrete debris scattered across the ocean floor, resembling the
-            remnants of an old bridge. This scattered debris forms a complex habitat, attracting a
-            variety of marine creatures and providing ample opportunities for exploration.
+            Created as part of the Washington Department of Fish and Wildlife&rsquo;s artificial
+            reef program, it consists of concrete debris scattered across the ocean floor,
+            resembling the remnants of an old bridge. This scattered debris forms a complex habitat,
+            attracting a variety of marine creatures and providing ample opportunities for
+            exploration.
           </p>
           <p>
             Diving at Blake Island Reef requires careful consideration of the current, as the site
