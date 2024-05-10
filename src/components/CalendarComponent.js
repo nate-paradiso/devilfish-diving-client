@@ -109,7 +109,7 @@ const CalendarComponent = () => {
   };
 
   return (
-    <div className="max-w-[800px] mx-auto">
+    <div className="max-w-[800px] mx-auto ">
       {!isSubmitted ? (
         <div>
           {loading ? (
@@ -128,6 +128,7 @@ const CalendarComponent = () => {
               {!showDiverInfo && (
                 <FullCalendar
                   plugins={[dayGridPlugin, googleCalendarPlugin, interactionPlugin]}
+                  className="shadow-md"
                   initialView="dayGridMonth"
                   eventClick={handleEventClick}
                   events={googleEvents}

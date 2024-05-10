@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 // import MarkerClusterGroup from "react-leaflet-markercluster";
-import { MapContainer, TileLayer, LayersControl, ImageOverlay, Marker, Popup } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  LayersControl,
+  ImageOverlay,
+  Marker,
+  Popup,
+  useMapEvents,
+  ScaleControl,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 // import "~react-leaflet-markercluster/dist/styles.min.css";
 // import Script from "next/script";
@@ -16,6 +25,7 @@ import NorandersReef from "./NorandersReef";
 const { BaseLayer } = LayersControl;
 
 const MapComponent = () => {
+  const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
   // Bathymetry images
   const loadPNGImages = () => {
     const pngImages = [
@@ -164,6 +174,15 @@ const MapComponent = () => {
         ],
         opacity: 0.8,
       },
+      {
+        name: "Day Island",
+        url: "/images/tiles/day-island.png",
+        bounds: [
+          [47.23833, -122.57213], // Top-left corner
+          [47.25467, -122.55162],
+        ],
+        opacity: 0.8,
+      },
       // Add more PNG images as needed
     ];
     return pngImages.map((image, index) => (
@@ -200,18 +219,28 @@ const MapComponent = () => {
     // Set the selected component based on the link clicked
     setSelectedComponent(componentName);
   };
+
+  const MapEvents = () => {
+    useMapEvents({
+      mousemove: e => {
+        setCoordinates({ lat: e.latlng.lat, lng: e.latlng.lng });
+      },
+    });
+
+    return null;
+  };
   return (
-    <div className="mb-8 ">
+    <div className="mb-2 flex flex-col ">
       <div className="flex pb-3 max-w-[1000px] justify-center align-middle m-auto  ">
         <p className="m-4">
           Explore Devilfish Diving&rsquo;s current dive sites. Dive site visits depend on weather,
           tides, and currents. They are subject to change by the captain at any moment. Zoom in and
           click on a dive flag for more information, and use the layers button to switch background
-          map. The Nautical Chart reveals depths, while the bathymetry overlay unveils the
+          maps. The Nautical Chart reveals depths, while the bathymetry overlay unveils the
           underwater topography.
         </p>
       </div>
-      <div className="flex justify-center items-center flex-col ">
+      <div className="flex justify-center flex-col  ">
         {/* <Script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></Script>
       <Script src="https://unpkg.com/Leaflet.TileLayer.MBTiles@1.0.0/Leaflet.TileLayer.MBTiles.js"></Script> */}
         <MapContainer
@@ -220,6 +249,8 @@ const MapComponent = () => {
           zoom={9}
         >
           <LayersControl position="topright">
+            <ScaleControl position="bottomleft" imperial={true} />
+            <MapEvents />
             {loadPNGImages()}
             {/* <MarkerClusterGroup> */}
             {markers.map((marker, index) => (
@@ -264,8 +295,13 @@ const MapComponent = () => {
             </BaseLayer>
           </LayersControl>
         </MapContainer>
+
         <div className="">
-          {" "}
+          <div className=" text-sm mt-2 shadow-md justify-evenly flex flex-col bg-white p-3 rounded-md  w-[180px] m-auto">
+            {" "}
+            <p>Latitude: {coordinates.lat.toFixed(6)}</p>
+            <p>Longitude: {coordinates.lng.toFixed(6)}</p>
+          </div>{" "}
           {selectedComponent === "Blakely Rock - Shangri-La" && <BlakelyRock />}
           {selectedComponent === "China Wall" && <ChinaWall />}
           {selectedComponent === "Decatur Reef" && <DecaturReef />}
