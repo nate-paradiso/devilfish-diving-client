@@ -38,6 +38,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     email: "",
     phone: "",
     birthday: "",
+    under18: "",
     address: "",
     lastDive: "",
     certifyingAgency: "",
@@ -48,6 +49,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     divingDate: selectedDate,
     message: "",
     electronicSignature: "",
+    electronicParentSignature: "",
     electronicSignatureDate: formatDateForHTMLInput(today),
   });
 
@@ -57,6 +59,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     email: "",
     phone: "",
     birthday: "",
+    under18: "",
     address: "",
     lastDive: "",
     certifyingAgency: "",
@@ -67,6 +70,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     divingDate: "",
     message: "",
     electronicSignature: "",
+    electronicParentSignature: "",
     electronicSignatureDate: "",
   });
   const [isButtonVisible, setIsButtonVisible] = useState(true); // State to control button visibility
@@ -199,6 +203,15 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       submitButton.disabled = false; // Re-enable the submit button
       return;
     }
+    if (!validateUnder18(data.under18)) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        under18: "Please enter yes or no.",
+      }));
+      form.removeAttribute("data-submitting"); // Release the form from submitting state
+      submitButton.disabled = false; // Re-enable the submit button
+      return;
+    }
     if (!validateAddress(data.address)) {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
@@ -271,6 +284,16 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       submitButton.disabled = false; // Re-enable the submit button
       return;
     }
+    if (!validateMessage(data.message)) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        message: "Please enter a message.",
+      }));
+      form.removeAttribute("data-submitting"); // Release the form from submitting state
+      submitButton.disabled = false; // Re-enable the submit button
+      return;
+    }
+
     if (!validateElectronicSignature(data.electronicSignature)) {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
@@ -280,10 +303,11 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       submitButton.disabled = false; // Re-enable the submit button
       return;
     }
-    if (!validateMessage(data.message)) {
+    if (!validateElectronicParentSignature(data.electronicParentSignature)) {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
-        message: "Please enter a message.",
+        electronicParentSignature:
+          "Please enter a Parent or Legal Guardian electronic signature name.",
       }));
       form.removeAttribute("data-submitting"); // Release the form from submitting state
       submitButton.disabled = false; // Re-enable the submit button
@@ -318,8 +342,11 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     function validateBirthday(birthday) {
       return !isNaN(Date.parse(birthday)); // Check if the birthday is a valid date
     }
+    function validateUnder18(under18) {
+      return under18 !== ""; // Check if the yes or no is not empty
+    }
     function validateAddress(address) {
-      return address.trim() !== ""; // Check if the name is not empty
+      return address.trim() !== ""; // Check if the address is not empty
     }
     function validateLastDive(lastDive) {
       return !isNaN(Date.parse(lastDive)); // Check if the last dive is a valid date
@@ -347,6 +374,9 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     }
     function validateElectronicSignature(electronicSignature) {
       return (electronicSignature ?? "").trim() !== ""; // Check if the name is not empty
+    }
+    function validateElectronicParentSignature(electronicParentSignature) {
+      return (electronicParentSignature ?? "").trim() !== ""; // Check if the name is not empty
     }
     function validateElectronicSignatureDate(electronicSignatureDate) {
       return !isNaN(Date.parse(electronicSignatureDate)); // Check if the signature date is a valid date
@@ -378,6 +408,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
           //   email: "",
           //   phone: "",
           //   birthday: "",
+          // under18: "",
           //   address: "",
           //   lastDive: "",
           //   certifyingAgency: "",
@@ -388,6 +419,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
           //   divingDate: "",
           // message: "",
           //   electronicSignature: "",
+          // electronicParentSignature:"",
           //   electronicSignatureDate: "",
           // });
           // Reset form validation data
@@ -397,6 +429,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
             email: "",
             phone: "",
             birthday: "",
+            under18: "",
             address: "",
             lastDive: "",
             certifyingAgency: "",
@@ -407,6 +440,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
             divingDate: "",
             message: "",
             electronicSignature: "",
+            electronicParentSignature: "",
             electronicSignatureDate: "",
           });
 
@@ -541,8 +575,10 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   // Function to handle input changes in the form fields
   const handleInputChange = e => {
     const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
+
+    // Update the formData state for all input fields
+    setFormData(prevFormData => ({
+      ...prevFormData,
       [name]: value,
     }));
 
@@ -749,6 +785,28 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   )}
                 </div>
                 <div className="flex-col flex">
+                  <label htmlFor="under18" className="mt-2 flex flex-row">
+                    Are you under 18?
+                    <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    id="under18"
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                    name="under18"
+                    value={formData.under18}
+                    onChange={handleInputChange}
+                  >
+                    <option value="">Select</option>
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                  </select>{" "}
+                  {validationErrors.under18 && (
+                    <span ref={el => (errorRefs.current.under18 = el)} className="text-red-500">
+                      {validationErrors.under18}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-col flex">
                   <label htmlFor="address" className="mt-2 flex flex-row">
                     Address: <span className="text-red-500">*</span>
                   </label>
@@ -837,7 +895,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     id="danInsuranceNumber"
                     className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
                     type="text"
-                    placeholder="Enter n/a if none"
+                    placeholder="Enter N/A if none"
                     name="danInsuranceNumber"
                     value={formData.danInsuranceNumber}
                     onChange={handleInputChange}
@@ -928,25 +986,50 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   Assumption of Risk Agreement.
                   <br />
                 </p>
-                <label htmlFor="electronicSignature" className="mt-2 flex flex-row">
-                  Electronic Signature: <span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="electronicSignature"
-                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
-                  type="name"
-                  name="electronicSignature"
-                  value={formData.electronicSignature}
-                  onChange={handleInputChange}
-                />
-                {validationErrors.electronicSignature && (
-                  <span
-                    ref={el => (errorRefs.current.electronicSignature = el)}
-                    className="contact__error-message"
-                  >
-                    {validationErrors.electronicSignature}
-                  </span>
-                )}
+                <div>
+                  <label htmlFor="electronicSignature" className="mt-2 flex flex-row">
+                    Diver Electronic Signature: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="electronicSignature"
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                    type="name"
+                    name="electronicSignature"
+                    value={formData.electronicSignature}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.electronicSignature && (
+                    <span
+                      ref={el => (errorRefs.current.electronicSignature = el)}
+                      className="contact__error-message"
+                    >
+                      {validationErrors.electronicSignature}
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <label htmlFor="electronicParentSignature" className="mt-2 flex flex-row">
+                    Parent or Legal Guardian Electronic Signature:{" "}
+                    <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="electronicParentSignature"
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                    type="name"
+                    placeholder="Enter N/A if over 18"
+                    name="electronicParentSignature"
+                    value={formData.electronicParentSignature}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.electronicParentSignature && (
+                    <span
+                      ref={el => (errorRefs.current.electronicParentSignature = el)}
+                      className="contact__error-message"
+                    >
+                      {validationErrors.electronicParentSignature}
+                    </span>
+                  )}
+                </div>
               </div>
               <div className="flex-col flex">
                 <label htmlFor="electronicSignatureDate" className="mt-2 flex flex-row">

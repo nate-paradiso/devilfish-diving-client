@@ -22,7 +22,7 @@ const ChinaWall = () => {
         <div className="flex justify-center flex-col m-auto">
           <h3 className="text-xl">Typical Dive Profile with Air</h3>
           <Image
-            src={"/images/china-wall-profile.jpeg"}
+            src={"/images/china-wall-profile.jpg"}
             alt="China Wall Dive Site Profile"
             width={400}
             height={400}

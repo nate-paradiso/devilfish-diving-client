@@ -19,7 +19,7 @@ const TheBoss = () => {
         <div className="flex justify-center flex-col m-auto">
           <h3 className="text-xl">Typical Dive Profile with Air</h3>
           <Image
-            src={"/images/boss-profile.jpeg"}
+            src={"/images/boss-profile.jpg"}
             alt="The Boss Dive Site Profile"
             width={400}
             height={400}
