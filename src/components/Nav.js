@@ -8,7 +8,7 @@ export const Nav = () => {
       opacity-95
       h-6
       w-full
-      border-none p-4 shadow-lg "
+      border-none p-4 shadow-md "
     >
       <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/">
         Home

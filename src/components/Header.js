@@ -11,7 +11,7 @@ export const Header = () => {
         <div className="md:m-6 m-4 mr-6 ml-6 flex justify-center ">
           <Link href="/">
             <Image
-              className="-auto"
+              className=" bg-white shadow-lg rounded-md p-4"
               src="/images/devilfish-logo2.png"
               alt="Devilfish Logo"
               width={500}

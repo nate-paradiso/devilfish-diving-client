@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 // import MarkerClusterGroup from "react-leaflet-markercluster";
 import {
   MapContainer,
@@ -31,6 +31,8 @@ const { BaseLayer } = LayersControl;
 
 const MapComponent = () => {
   const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
+  const componentRef = useRef(null); // Create a ref for the component
+
   // Bathymetry images
   const loadPNGImages = () => {
     const pngImages = [
@@ -211,11 +213,15 @@ const MapComponent = () => {
     { name: "Deep Barge", position: [47.674, -122.423] },
     { name: "Alki Fishing Reef", position: [47.557, -122.408] },
     { name: "Blake Island Reef", position: [47.5295, -122.494] },
+    { name: "Don Armeni Boat Launch", position: [47.5928, -122.38203] },
 
     // Add more pins as needed
   ];
 
   const customIcon = new Icon({ iconUrl: "/images/diving.png", iconSize: [20, 20] });
+
+  // Define your second custom icon
+  const customIcon2 = new Icon({ iconUrl: "/images/boat-launch.svg", iconSize: [37, 50] });
 
   // State to manage which component to render under the map
   const [selectedComponent, setSelectedComponent] = useState(null);
@@ -224,6 +230,7 @@ const MapComponent = () => {
   const handlePopupLinkClick = componentName => {
     // Set the selected component based on the link clicked
     setSelectedComponent(componentName);
+    componentRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const MapEvents = () => {
@@ -235,6 +242,7 @@ const MapComponent = () => {
 
     return null;
   };
+
   return (
     <div className="mb-2 flex flex-col ">
       <div className="flex pb-3 max-w-[1000px] justify-center align-middle m-auto  ">
@@ -250,7 +258,7 @@ const MapComponent = () => {
         {/* <Script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></Script>
       <Script src="https://unpkg.com/Leaflet.TileLayer.MBTiles@1.0.0/Leaflet.TileLayer.MBTiles.js"></Script> */}
         <MapContainer
-          className="h-[400px] w-full md:h-[500px] "
+          className="h-[400px] w-full md:h-[500px] shadow-md mb-2"
           center={[47.605932, -122.448144]}
           zoom={9}
         >
@@ -258,9 +266,12 @@ const MapComponent = () => {
             <ScaleControl position="bottomleft" imperial={true} />
             <MapEvents />
             {loadPNGImages()}
-            {/* <MarkerClusterGroup> */}
             {markers.map((marker, index) => (
-              <Marker key={index} position={marker.position} icon={customIcon}>
+              <Marker
+                key={index}
+                position={marker.position}
+                icon={marker.name === "Don Armeni Boat Launch" ? customIcon2 : customIcon}
+              >
                 <Popup>
                   <button
                     className="text-blue-700 hover:text-blue-900"
@@ -270,8 +281,7 @@ const MapComponent = () => {
                   </button>
                 </Popup>{" "}
               </Marker>
-            ))}
-            {/* </MarkerClusterGroup>{" "} */}
+            ))}{" "}
             <BaseLayer name="Esri World Imagery">
               <TileLayer
                 url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
@@ -303,23 +313,25 @@ const MapComponent = () => {
         </MapContainer>
 
         <div className="">
-          <div className=" text-sm mt-2 shadow-md justify-evenly flex flex-col bg-white p-3 rounded-md  w-[180px] m-auto">
+          <div className=" text-sm mt-2  justify-evenly flex flex-col border-2 border-darkBlue bg-white shadow-md rounded-md p-3  w-[180px] m-auto">
             {" "}
             <p>Latitude: {coordinates.lat.toFixed(6)}</p>
             <p>Longitude: {coordinates.lng.toFixed(6)}</p>
           </div>{" "}
-          {selectedComponent === "Blakely Rock - Shangri-La" && <BlakelyRock />}
-          {selectedComponent === "China Wall" && <ChinaWall />}
-          {selectedComponent === "Decatur Reef" && <DecaturReef />}
-          {selectedComponent === "The Boss" && <TheBoss />}
-          {selectedComponent === "Likers Reef" && <LikersReef />}
-          {selectedComponent === "Metridium Wall" && <MetridiumWall />}
-          {selectedComponent === "Noranders Reef" && <NorandersReef />}
-          {selectedComponent === "Vertical Barge" && <VerticalBarge />}
-          {selectedComponent === "Deep Barge" && <DeepBarge />}
-          {selectedComponent === "4 Mile Rock Barges" && <FourMileRockBarges />}
-          {selectedComponent === "Alki Fishing Reef" && <AlkiReef />}
-          {selectedComponent === "Blake Island Reef" && <BlakeIsland />}
+          <div ref={componentRef}>
+            {selectedComponent === "Blakely Rock - Shangri-La" && <BlakelyRock />}
+            {selectedComponent === "China Wall" && <ChinaWall />}
+            {selectedComponent === "Decatur Reef" && <DecaturReef />}
+            {selectedComponent === "The Boss" && <TheBoss />}
+            {selectedComponent === "Likers Reef" && <LikersReef />}
+            {selectedComponent === "Metridium Wall" && <MetridiumWall />}
+            {selectedComponent === "Noranders Reef" && <NorandersReef />}
+            {selectedComponent === "Vertical Barge" && <VerticalBarge />}
+            {selectedComponent === "Deep Barge" && <DeepBarge />}
+            {selectedComponent === "4 Mile Rock Barges" && <FourMileRockBarges />}
+            {selectedComponent === "Alki Fishing Reef" && <AlkiReef />}
+            {selectedComponent === "Blake Island Reef" && <BlakeIsland />}
+          </div>
         </div>
       </div>
     </div>
