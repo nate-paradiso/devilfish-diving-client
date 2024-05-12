@@ -313,7 +313,7 @@ const MapComponent = () => {
         </MapContainer>
 
         <div className="">
-          <div className=" text-sm mt-2  justify-evenly flex flex-col border-2 border-darkBlue bg-white shadow-md rounded-md p-3  w-[180px] m-auto">
+          <div className=" text-sm mt-2  justify-evenly flex flex-col border-[1px] bg-white shadow-md rounded-md p-3  w-[180px] m-auto">
             {" "}
             <p>Latitude: {coordinates.lat.toFixed(6)}</p>
             <p>Longitude: {coordinates.lng.toFixed(6)}</p>
