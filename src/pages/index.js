@@ -9,8 +9,8 @@ export default function Home() {
       <Hero />
       <div className="flex justify-center m-8">
         <Link href="/Calendar">
-          <button className="border-solid p-2 font-bold border-2 border-darkBlue ">
-            Book a Dive
+          <button className=" p-2  transition-colors duration-200 hover:bg-slate-100 text-lg  font-bold border-[1px] bg-white shadow-md rounded-md ">
+            Book Here
           </button>
         </Link>
       </div>
@@ -74,7 +74,9 @@ export default function Home() {
           </div>
         </div>
         <div className="">
-          <h2 className="m-8 text-xl text-#0E1111">Serving Marine Area 10</h2>
+          <h2 className="m-8 text-xl text-#0E1111 border-[1px]  bg-white shadow-md rounded-md p-2">
+            Operating out of Alki
+          </h2>
         </div>
       </section>
     </>
