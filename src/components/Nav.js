@@ -16,15 +16,14 @@ export const Nav = () => {
       <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/DiveMap">
         Dive Map
       </Link>
-
-      <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/Vessel">
-        Vessel
-      </Link>
-      <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/About">
-        Gallery
+      <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/Services">
+        Services
       </Link>
       <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/About">
         About
+      </Link>
+      <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/Faq">
+        FAQ
       </Link>
       <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/Calendar">
         Calendar

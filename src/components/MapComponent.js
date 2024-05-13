@@ -258,7 +258,7 @@ const MapComponent = () => {
         {/* <Script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></Script>
       <Script src="https://unpkg.com/Leaflet.TileLayer.MBTiles@1.0.0/Leaflet.TileLayer.MBTiles.js"></Script> */}
         <MapContainer
-          className="h-[400px] w-full md:h-[500px] shadow-md mb-2"
+          className="h-[550px] w-full md:h-[500px] shadow-md mb-2"
           center={[47.605932, -122.448144]}
           zoom={9}
         >
@@ -288,7 +288,7 @@ const MapComponent = () => {
                 attribution="Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
               />
             </BaseLayer>{" "}
-            <BaseLayer checked name="Nautical Chart - Depth in Meters">
+            <BaseLayer name="Nautical Chart - Depth in Meters">
               <TileLayer
                 url="https://www.marinetraffic.com/TMS/1.0.0/TX97/{z}/{x}/{y}.png?v=3"
                 minZoom={0}
@@ -303,7 +303,7 @@ const MapComponent = () => {
                 maxZoom={16}
               />
             </BaseLayer>
-            <BaseLayer name="OpenStreetMap">
+            <BaseLayer checked name="OpenStreetMap">
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
