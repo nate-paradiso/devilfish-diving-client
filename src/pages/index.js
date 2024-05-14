@@ -9,20 +9,29 @@ export default function Home() {
       <Hero />
       <div className="flex justify-center m-8">
         <Link href="/Calendar">
-          <button className=" p-2  transition-colors duration-200 hover:bg-slate-100 text-lg  font-bold border-[1px] bg-white shadow-md rounded-md ">
-            Book Here
+          <button className=" p-2  transition-colors duration-200 hover:bg-slate-100 text-lg border-[1px] bg-white shadow-md rounded-md ">
+            Book Now
           </button>
         </Link>
       </div>
       <section className="flex justify-center items-center flex-col">
-        <div
-          className="bg-cover bg-center w-full flex justify-center items-center"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://res.cloudinary.com/hrdoqhgcp/image/upload/v1715708252/home-page/fkdpzulur1hqt7v3f6mj.jpg')`,
-            height: "250px",
-          }}
-        >
-          <h2 className="text-white md:text-5xl text-2xl font-serif ">Wreck Diving</h2>
+        <div className="flex w-full">
+          <div
+            className="bg-cover bg-center w-full flex justify-center items-center h-[250px] md:h-[500px] lg:h-[600px]"
+            style={{
+              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url('https://res.cloudinary.com/hrdoqhgcp/image/upload/v1715708252/home-page/fkdpzulur1hqt7v3f6mj.jpg')`,
+            }}
+          >
+            <h2 className="text-white md:text-5xl text-2xl font-serif  ">Diving</h2>
+          </div>
+          <div
+            className="bg-cover bg-center w-full flex justify-center items-center "
+            style={{
+              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url('https://res.cloudinary.com/hrdoqhgcp/image/upload/v1715721182/home-page/eh5pc2bco2fu18csvu9t.jpg')`,
+            }}
+          >
+            <h2 className="text-white md:text-5xl text-2xl font-serif ">Sight Seeing</h2>
+          </div>
         </div>
         <div className="">
           <h2 className="m-8 text-xl text-#0E1111 border-[1px]  bg-white shadow-md rounded-md p-2">

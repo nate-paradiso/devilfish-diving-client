@@ -211,7 +211,7 @@ const MapComponent = () => {
     { name: "4 Mile Rock Barges", position: [47.6403, -122.4267] },
     { name: "Vertical Barge", position: [47.673, -122.4219] },
     { name: "Deep Barge", position: [47.674, -122.423] },
-    { name: "Alki Fishing Reef", position: [47.557, -122.408] },
+    { name: "Alki Reef", position: [47.557, -122.408] },
     { name: "Blake Island Reef", position: [47.5295, -122.494] },
     { name: "Don Armeni Boat Launch", position: [47.5928, -122.38203] },
 
@@ -260,7 +260,7 @@ const MapComponent = () => {
         <MapContainer
           className="h-[550px] w-full md:h-[500px] shadow-md mb-2"
           center={[47.605932, -122.448144]}
-          zoom={9}
+          zoom={10}
         >
           <LayersControl position="topright">
             <ScaleControl position="bottomleft" imperial={true} />
@@ -329,7 +329,7 @@ const MapComponent = () => {
             {selectedComponent === "Vertical Barge" && <VerticalBarge />}
             {selectedComponent === "Deep Barge" && <DeepBarge />}
             {selectedComponent === "4 Mile Rock Barges" && <FourMileRockBarges />}
-            {selectedComponent === "Alki Fishing Reef" && <AlkiReef />}
+            {selectedComponent === "Alki Reef" && <AlkiReef />}
             {selectedComponent === "Blake Island Reef" && <BlakeIsland />}
           </div>
         </div>

@@ -11,13 +11,23 @@ const AlkiReef = () => {
           <h3 className="text-lg">Depth: 50 to 90 ft</h3>
           <h3 className="text-lg">Level: Open Water or Advanced</h3>
           <p>
-            Alki Reef is full of live. Schools of rockfish and perch swim about and giant lingcod
+            Alki Reef is full of life. Schools of rockfish and perch swim about and giant lingcod
             hide in the boulders. The giant pacific octopus also hangs out.Multiple large rock piles
             make up this site. Each pile is about 15 to 20 feet high and up to 100 feet in diameter.
             The rock piles are situated close to one another. Some piles run together while others
             are not connected, but are visible (assuming visibility is reasonable) from one another.{" "}
           </p>
         </div>
+        <div className="flex justify-center aspect-video mb-4">
+          <div className="w-full aspect-w-16 aspect-h-9">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/IGZRuA5xG34"
+              title="Alki Reef Video"
+              allowFullScreen
+            />
+          </div>
+        </div>{" "}
         {/* <div className="flex justify-center flex-col m-auto ">
           <h3 className="text-xl">Typical Dive Profile with Air</h3>
           <Image

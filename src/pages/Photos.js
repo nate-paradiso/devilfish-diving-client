@@ -4,6 +4,7 @@ import Image from "next/image";
 
 const Photos = () => {
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   useEffect(() => {
     // Fetch images from backend endpoint
@@ -27,8 +28,7 @@ const Photos = () => {
           const reversedImages = sortedImages.reverse();
 
           setImages(reversedImages);
-
-          console.log(images);
+          setLoading(false);
         } else {
           console.error("Failed to fetch images:", response.statusText);
         }
@@ -51,20 +51,23 @@ const Photos = () => {
 
   return (
     <div className="w-full flex m-auto">
-      {/* Display images */}
-      <div className="flex  m-auto mb-4 flex-wrap justify-center">
-        {images.map((imageUrl, index) => (
-          <div key={index}>
-            <Image
-              src={imageUrl}
-              alt={`Image ${index}`}
-              width={1200}
-              height={1}
-              className="w-full h-auto md:w-[250px] lg:w-[500px] p-1"
-            />
-          </div>
-        ))}
-      </div>{" "}
+      {loading ? (
+        <div className="m-4">Loading...</div>
+      ) : (
+        <div className="flex  m-auto mb-4 flex-wrap justify-center">
+          {images.map((imageUrl, index) => (
+            <div key={index}>
+              <Image
+                src={imageUrl}
+                alt={`Image ${index}`}
+                width={1200}
+                height={1}
+                className="w-full h-auto md:w-[250px] lg:w-[500px] p-1"
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
