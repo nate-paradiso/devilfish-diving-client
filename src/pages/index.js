@@ -18,7 +18,7 @@ export default function Home() {
         <div
           className="bg-cover bg-center w-full flex justify-center items-center"
           style={{
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(' https://res.cloudinary.com/hrdoqhgcp/image/upload/v1715706073/photos-page/p0mjo5jyk007gtotipsu.jpg')`,
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://res.cloudinary.com/hrdoqhgcp/image/upload/v1715708252/home-page/fkdpzulur1hqt7v3f6mj.jpg')`,
             height: "250px",
           }}
         >

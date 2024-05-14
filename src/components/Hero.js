@@ -12,7 +12,7 @@ const Hero = () => {
       <div className="mx-auto opacity-90 w-full flex justify-center">
         <div style={{ maxWidth: "100%", height: "auto" }}>
           <Image
-            src="/images/boat-sky-blank_D611840_new.jpg"
+            src="https://res.cloudinary.com/hrdoqhgcp/image/upload/v1715708314/home-page/wabzvj162adeutt3fu8y.jpg"
             alt="The Boat"
             width={2560}
             height={1440}
