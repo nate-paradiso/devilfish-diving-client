@@ -60,7 +60,7 @@ const Photos = () => {
               alt={`Image ${index}`}
               width={1200}
               height={1}
-              className="w-full h-auto md:w-[550px] p-1"
+              className="w-full h-auto md:w-[250px] lg:w-[500px] p-1"
             />
           </div>
         ))}

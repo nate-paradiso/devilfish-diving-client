@@ -18,6 +18,21 @@ export default function Home() {
         <div
           className="bg-cover bg-center w-full flex justify-center items-center"
           style={{
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(' https://res.cloudinary.com/hrdoqhgcp/image/upload/v1715706073/photos-page/p0mjo5jyk007gtotipsu.jpg')`,
+            height: "250px",
+          }}
+        >
+          <h2 className="text-white md:text-5xl text-2xl font-serif ">Wreck Diving</h2>
+        </div>
+        <div className="">
+          <h2 className="m-8 text-xl text-#0E1111 border-[1px]  bg-white shadow-md rounded-md p-2">
+            Operating out of Alki
+          </h2>
+        </div>
+
+        <div
+          className="bg-cover bg-center w-full flex justify-center items-center"
+          style={{
             backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/MA10-1.jpg')`,
             height: "300px", // Adjust height as needed
           }}
@@ -72,11 +87,6 @@ export default function Home() {
               />
             </div>
           </div>
-        </div>
-        <div className="">
-          <h2 className="m-8 text-xl text-#0E1111 border-[1px]  bg-white shadow-md rounded-md p-2">
-            Operating out of Alki
-          </h2>
         </div>
       </section>
     </>
