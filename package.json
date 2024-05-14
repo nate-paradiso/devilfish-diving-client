@@ -32,14 +32,18 @@
     "next-fonts": "^1.5.1",
     "next-google-fonts": "^2.2.0",
     "react": "^18",
+    "react-18-image-lightbox": "^5.1.4",
     "react-burger-menu": "^3.0.9",
     "react-dom": "^18",
+    "react-grid-gallery": "^1.0.1",
     "react-leaflet": "^4.2.1",
     "react-leaflet-cluster": "^2.1.0",
     "react-leaflet-markercluster": "^3.0.0-rc1",
     "react-modal": "^3.16.1",
+    "react-responsive-carousel": "^3.2.23",
     "react-signature-canvas": "^1.0.6",
-    "react-youtube": "^10.1.0"
+    "react-youtube": "^10.1.0",
+    "yet-another-react-lightbox": "^3.18.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",

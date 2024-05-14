@@ -1,0 +1,72 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Image from "next/image";
+
+const Photos = () => {
+  const [images, setImages] = useState([]);
+  const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  useEffect(() => {
+    // Fetch images from backend endpoint
+    const getImages = async () => {
+      try {
+        const response = await axios.get(`${serverUrl}/api/cloudinary/photos-page/images`);
+        if (response.status === 200) {
+          // Extract creation date from image URLs and sort the images
+          const sortedImages = response.data.images.sort((a, b) => {
+            // Extract timestamp from image URLs
+            const getDateFromUrl = url => {
+              const match = url.match(/\/v(\d+)\/[^/]+\/[^/]+\.jpg$/);
+              return match ? parseInt(match[1]) : 0;
+            };
+
+            // Compare timestamps for sorting
+            return getDateFromUrl(b) - getDateFromUrl(a);
+          });
+
+          // Reverse the array to display images in reverse order
+          const reversedImages = sortedImages.reverse();
+
+          setImages(reversedImages);
+
+          console.log(images);
+        } else {
+          console.error("Failed to fetch images:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
+    };
+
+    getImages();
+  }, []);
+
+  // Convert image URLs to the required format for the react-grid-gallery component
+  const formattedImages = images.map((imageUrl, index) => ({
+    src: imageUrl,
+    thumbnail: imageUrl,
+    thumbnailWidth: 320,
+    thumbnailHeight: 212,
+    caption: `Image ${index + 1}`,
+  }));
+
+  return (
+    <div className="w-full flex m-auto">
+      {/* Display images */}
+      <div className="flex  m-auto mb-4 flex-wrap justify-center">
+        {images.map((imageUrl, index) => (
+          <div key={index}>
+            <Image
+              src={imageUrl}
+              alt={`Image ${index}`}
+              width={1200}
+              height={1}
+              className="w-full h-auto md:w-[550px] p-1"
+            />
+          </div>
+        ))}
+      </div>{" "}
+    </div>
+  );
+};
+
+export default Photos;

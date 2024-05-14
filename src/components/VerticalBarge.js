@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import axios from "axios";
 
 const VerticalBarge = () => {
+  const [images, setImages] = useState([]);
+  const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  useEffect(() => {
+    // Fetch images from backend endpoint
+    const getImages = async () => {
+      try {
+        const response = await axios.get(`${serverUrl}/api/cloudinary/vertical-barge/images`);
+        if (response.status === 200) {
+          setImages(response.data.images);
+        } else {
+          console.error("Failed to fetch images:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
+    };
+
+    getImages();
+  }, []);
+
   return (
-    <div className=" pb-3 max-w-[1000px] m-auto ">
+    <div className=" pb-3 max-w-[1200px] m-auto ">
       <div className="m-4 flex flex-col">
         <div className="mb-4">
           <h1 className="text-xl">Vertical Barge</h1>
@@ -28,6 +49,20 @@ const VerticalBarge = () => {
               allowFullScreen
             />
           </div>
+        </div>{" "}
+        {/* Display images */}
+        <div className="flex flex-wrap justify-center m-auto">
+          {images.map((imageUrl, index) => (
+            <div key={index} className="m-1">
+              <Image
+                src={imageUrl}
+                alt={`Image ${index}`}
+                width={1200}
+                height={800}
+                className="w-[400px] h-auto md:w-[550px]"
+              />
+            </div>
+          ))}
         </div>{" "}
         <div className="flex justify-center flex-col m-auto ">
           <h3 className="text-xl">Typical Dive Profile with Air</h3>

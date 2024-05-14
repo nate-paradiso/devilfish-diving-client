@@ -3,12 +3,12 @@ import Link from "next/link";
 export const Nav = () => {
   return (
     <nav
-      className="flex justify-start items-center text-white  md:text-[1rem] text-[.73rem] md:p-6
+      className="flex justify-center items-center text-white  md:text-[1rem] text-[.73rem] md:p-6
       bg-nav
       opacity-95
       h-6
       w-full
-      border-none p-4 shadow-md "
+      border-none pt-4 pb-4 pl-1 pr-1 shadow-md "
     >
       <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/">
         Home
@@ -18,6 +18,9 @@ export const Nav = () => {
       </Link>
       <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/Services">
         Services
+      </Link>
+      <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/Photos">
+        Photos
       </Link>
       <Link className="mr-2 transition-colors duration-200 hover:text-hoverColor" href="/About">
         About
