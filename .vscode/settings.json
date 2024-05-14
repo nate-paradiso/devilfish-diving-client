@@ -1,5 +1,13 @@
 {
-  "cSpell.words": ["Alki", "Blakely", "lusitana", "Metridium", "Noranders", "Shangri"],
+  "cSpell.words": [
+    "Alki",
+    "Blakely",
+    "cloudinary",
+    "lusitana",
+    "Metridium",
+    "Noranders",
+    "Shangri"
+  ],
   "tailwindCSS.emmetCompletions": true,
   "tailwindCSS.suggestions": true
 }

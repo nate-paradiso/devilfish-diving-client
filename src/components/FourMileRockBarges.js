@@ -19,7 +19,16 @@ const FourMileRockBarges = () => {
             on no-deco time if breathing Nitrox. Giant nudibranchs can be found here.
           </p>
         </div>
-
+        <div className="flex justify-center aspect-video mb-4">
+          <div className="w-full aspect-w-16 aspect-h-9">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/5d0cJ9WY4wk?si=FyaBY83haTsuCyHC"
+              title="Vertical Barge Video"
+              allowFullScreen
+            />
+          </div>
+        </div>{" "}
         <div className="flex justify-center flex-col m-auto shadow-xl">
           <h3 className="text-xl">Typical Dive Profile with EAN36</h3>
           <Image
