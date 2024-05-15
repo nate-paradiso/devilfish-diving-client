@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import LiabilityRelease from "./LiabilityRelease";
+import LiabilityReleaseCruise from "./LiabilityReleaseCruise";
 import axios from "axios";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
@@ -40,10 +40,10 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     birthday: "",
     under18: "",
     address: "",
-    lastDive: "",
-    certifyingAgency: "",
-    certificationNumber: "",
-    danInsuranceNumber: "",
+    // lastDive: "",
+    // certifyingAgency: "",
+    // certificationNumber: "",
+    // danInsuranceNumber: "",
     emergencyContactName: "",
     emergencyContactPhone: "",
     divingDate: selectedDate,
@@ -61,10 +61,10 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     birthday: "",
     under18: "",
     address: "",
-    lastDive: "",
-    certifyingAgency: "",
-    certificationNumber: "",
-    danInsuranceNumber: "",
+    // lastDive: "",
+    // certifyingAgency: "",
+    // certificationNumber: "",
+    // danInsuranceNumber: "",
     emergencyContactName: "",
     emergencyContactPhone: "",
     divingDate: "",
@@ -221,42 +221,42 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       submitButton.disabled = false; // Re-enable the submit button
       return;
     }
-    if (!validateLastDive(data.lastDive)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        lastDive: "Please enter your last diving date.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateCertifyingAgency(data.certifyingAgency)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        certifyingAgency: "Please enter a certification agency.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateCertificationNumber(data.certificationNumber)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        certificationNumber: "Please enter a certification number.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateDanInsuranceNumber(data.danInsuranceNumber)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        danInsuranceNumber: "Please enter a DAN insurance number.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
+    // if (!validateLastDive(data.lastDive)) {
+    //   setValidationErrors(prevErrors => ({
+    //     ...prevErrors,
+    //     lastDive: "Please enter your last diving date.",
+    //   }));
+    //   form.removeAttribute("data-submitting"); // Release the form from submitting state
+    //   submitButton.disabled = false; // Re-enable the submit button
+    //   return;
+    // }
+    // if (!validateCertifyingAgency(data.certifyingAgency)) {
+    //   setValidationErrors(prevErrors => ({
+    //     ...prevErrors,
+    //     certifyingAgency: "Please enter a certification agency.",
+    //   }));
+    //   form.removeAttribute("data-submitting"); // Release the form from submitting state
+    //   submitButton.disabled = false; // Re-enable the submit button
+    //   return;
+    // }
+    // if (!validateCertificationNumber(data.certificationNumber)) {
+    //   setValidationErrors(prevErrors => ({
+    //     ...prevErrors,
+    //     certificationNumber: "Please enter a certification number.",
+    //   }));
+    //   form.removeAttribute("data-submitting"); // Release the form from submitting state
+    //   submitButton.disabled = false; // Re-enable the submit button
+    //   return;
+    // }
+    // if (!validateDanInsuranceNumber(data.danInsuranceNumber)) {
+    //   setValidationErrors(prevErrors => ({
+    //     ...prevErrors,
+    //     danInsuranceNumber: "Please enter a DAN insurance number.",
+    //   }));
+    //   form.removeAttribute("data-submitting"); // Release the form from submitting state
+    //   submitButton.disabled = false; // Re-enable the submit button
+    //   return;
+    // }
     if (!validateEmergencyContactName(data.emergencyContactName)) {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
@@ -348,18 +348,18 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     function validateAddress(address) {
       return address.trim() !== ""; // Check if the address is not empty
     }
-    function validateLastDive(lastDive) {
-      return !isNaN(Date.parse(lastDive)); // Check if the last dive is a valid date
-    }
-    function validateCertifyingAgency(certifyingAgency) {
-      return certifyingAgency.trim() !== ""; // Check if the name is not empty
-    }
-    function validateCertificationNumber(certificationNumber) {
-      return certificationNumber.trim() !== ""; // Check if the name is not empty
-    }
-    function validateDanInsuranceNumber(danInsuranceNumber) {
-      return danInsuranceNumber.trim() !== ""; // Check if the name is not empty
-    }
+    // function validateLastDive(lastDive) {
+    //   return !isNaN(Date.parse(lastDive)); // Check if the last dive is a valid date
+    // }
+    // function validateCertifyingAgency(certifyingAgency) {
+    //   return certifyingAgency.trim() !== ""; // Check if the name is not empty
+    // }
+    // function validateCertificationNumber(certificationNumber) {
+    //   return certificationNumber.trim() !== ""; // Check if the name is not empty
+    // }
+    // function validateDanInsuranceNumber(danInsuranceNumber) {
+    //   return danInsuranceNumber.trim() !== ""; // Check if the name is not empty
+    // }
     function validateEmergencyContactName(emergencyContactName) {
       return emergencyContactName.trim() !== ""; // Check if the name is not empty
     }
@@ -431,10 +431,10 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
             birthday: "",
             under18: "",
             address: "",
-            lastDive: "",
-            certifyingAgency: "",
-            certificationNumber: "",
-            danInsuranceNumber: "",
+            // lastDive: "",
+            // certifyingAgency: "",
+            // certificationNumber: "",
+            // danInsuranceNumber: "",
             emergencyContactName: "",
             emergencyContactPhone: "",
             divingDate: "",
@@ -476,30 +476,30 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   }, [isPayPalSuccessful]);
 
   // Define function to update Calendar from Available to 1 Spot Available
-  const upDateCalendar1Spot = async formData => {
-    try {
-      const response = await axios.patch(`${serverUrl}/api/update-calendar-1spot`, {
-        formData,
-      });
-      console.log("Diving date sent to the backend to update calendar to (1 spot)", response.data);
-      return response.data;
-    } catch (error) {
-      console.error("Error sending diving date to backend to update calendar to (1 spot):", error);
-      throw error;
-    }
-  };
+  // const upDateCalendar1Spot = async formData => {
+  //   try {
+  //     const response = await axios.patch(`${serverUrl}/api/update-calendar-1spot`, {
+  //       formData,
+  //     });
+  //     console.log("Diving date sent to the backend to update calendar to (1 spot)", response.data);
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error("Error sending diving date to backend to update calendar to (1 spot):", error);
+  //     throw error;
+  //   }
+  // };
 
-  // Define function to update Calendar from 1 Spot Available to Booked
+  // Define function to update Calendar from Cruise to Booked
   const upDateCalendarBooked = async formData => {
     try {
-      const response = await axios.patch(`${serverUrl}/api/update-calendar-booked`, {
+      const response = await axios.patch(`${serverUrl}/api/update-calendar-cruise-booked`, {
         formData,
       });
       // console.log(formData);
-      console.log("Diving date sent to the backend to update calendar to (booked)", response.data);
+      console.log("Cruise date sent to the backend to update calendar to (booked)", response.data);
       return response.data;
     } catch (error) {
-      console.error("Error sending diving date to backend to update calendar to (booked):", error);
+      console.error("Error sending cruise date to backend to update calendar to (booked):", error);
       throw error;
     }
   };
@@ -507,11 +507,11 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   // Define function to send email
   const sendEmail = async formData => {
     try {
-      const response = await axios.post(`${serverUrl}/api/send-email`, { formData });
-      console.log("Form data sent to the backend for email", response.data); // Log the response from the backend
+      const response = await axios.post(`${serverUrl}/api/send-cruise-email`, { formData });
+      console.log("Cruise form data sent to the backend for email", response.data); // Log the response from the backend
       return response.data; // Return the response data if needed
     } catch (error) {
-      console.error("Error sending form data to backend for email:", error);
+      console.error("Error sending cruise form data to backend for email:", error);
       throw error; // Throw the error to handle it in the calling code
     }
   };
@@ -551,7 +551,7 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         handleGoogleSheetSubmit();
 
         // Update Calendar
-        if (eventTitle === "1 Spot Available") {
+        if (eventTitle === "Cruise") {
           upDateCalendarBooked(formData);
         } else {
           upDateCalendar1Spot(formData);
@@ -784,6 +784,8 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     </span>
                   )}
                 </div>
+              </div>
+              <div>
                 <div className="flex-col flex">
                   <label htmlFor="under18" className="mt-2 flex flex-row">
                     Are you under 18?
@@ -824,9 +826,8 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     </span>
                   )}
                 </div>
-              </div>
-              <div>
-                <div className="flex-col flex">
+
+                {/* <div className="flex-col flex">
                   <label htmlFor="lastDive" className="mt-2 flex flex-row">
                     Date of Last Dive: <span className="text-red-500">*</span>
                   </label>
@@ -908,7 +909,7 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                       {validationErrors.danInsuranceNumber}
                     </span>
                   )}
-                </div>
+                </div> */}
                 <div className="flex-col flex">
                   <label htmlFor="emergencyContactName" className="mt-2 flex flex-row">
                     Emergency Contact Name: <span className="text-red-500">*</span>
@@ -978,7 +979,7 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
             </div>
 
             <div className="mt-4">
-              <LiabilityRelease formData={formData} />
+              <LiabilityReleaseCruise formData={formData} />
               <div className="flex-col flex">
                 <p>
                   By typing your name below you are electronically signing, you acknowledge that you
@@ -986,9 +987,9 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   Assumption of Risk Agreement.
                   <br />
                 </p>
-                <div>
+                <div className="flex flex-col">
                   <label htmlFor="electronicSignature" className="mt-2 flex flex-row">
-                    Diver Electronic Signature: <span className="text-red-500">*</span>
+                    Passenger Electronic Signature: <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="electronicSignature"
@@ -1007,7 +1008,7 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     </span>
                   )}
                 </div>
-                <div>
+                <div className="flex flex-col">
                   <label htmlFor="electronicParentSignature" className="mt-2 flex flex-row">
                     Parent or Legal Guardian Electronic Signature:{" "}
                     <span className="text-red-500">*</span>
@@ -1109,7 +1110,7 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                               body: JSON.stringify({
                                 cart: [
                                   {
-                                    id: "Dive Trip",
+                                    id: "Cruise Trip",
                                     quantity: "1",
                                   },
                                 ],

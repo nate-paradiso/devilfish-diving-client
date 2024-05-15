@@ -25,7 +25,13 @@ const CalendarComponent = () => {
     try {
       const response = await axios.get(`${serverUrl}/api/google-calendar-events`); // Endpoint on your backend
       const data = response.data;
-      setGoogleEvents(data);
+
+      // Filter events to include only those with titles "Booked", "Dive", "1 Dive Seat", or "Cruise"
+      const filteredEvents = data.filter(event =>
+        ["Booked", "Dive", "1 Dive Seat", "Cruise"].includes(event.title),
+      );
+
+      setGoogleEvents(filteredEvents);
       setLoading(false);
     } catch (error) {
       console.error("Failed to fetch events from backend:", error);
@@ -68,11 +74,17 @@ const CalendarComponent = () => {
       setShowDiverInfo(true);
       setEventTitle(clickedEvent.title);
     }
-    if (clickedEvent.title === "Booked") {
+    if (
+      clickedEvent.title === "Booked" ||
+      (clickedEvent.title !== "Dive" &&
+        clickedEvent.title !== "1 Dive Seat" &&
+        clickedEvent.title !== "Cruise")
+    ) {
       setShowDiverInfo(false);
       setSelectedDate(null);
       return; // Stop further execution
     }
+
     if (clickedEvent.title === "1 Dive Seat") {
       setSelectedDate(selectedDate); // Store the selected date in state
       setSelectedDateStr(formattedDate); // Store the formatted selected date string in state

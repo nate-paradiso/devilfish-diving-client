@@ -992,7 +992,8 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   Assumption of Risk Agreement.
                   <br />
                 </p>
-                <div>
+                <div className="flex flex-col">
+                  {" "}
                   <label htmlFor="electronicSignature" className="mt-2 flex flex-row">
                     Diver Electronic Signature: <span className="text-red-500">*</span>
                   </label>
@@ -1013,7 +1014,8 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     </span>
                   )}
                 </div>
-                <div>
+                <div className="flex flex-col">
+                  {" "}
                   <label htmlFor="electronicParentSignature" className="mt-2 flex flex-row">
                     Parent or Legal Guardian Electronic Signature:{" "}
                     <span className="text-red-500">*</span>
