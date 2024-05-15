@@ -9,7 +9,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 function Message({ content }) {
   return <p>{content}</p>;
 }
-const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
+const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   const [clientId, setClientId] = useState("");
   const [message, setMessage] = useState("");
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -475,27 +475,21 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     }
   }, [isPayPalSuccessful]);
 
-  // Define function to update Calendar from Dive to 1 Dive Seat
-  const upDateCalendar1Seat = async formData => {
+  // Define function to update Calendar from Available to 1 Spot Available
+  const upDateCalendar1Spot = async formData => {
     try {
-      const response = await axios.patch(`${serverUrl}/api/update-calendar-1seat`, {
+      const response = await axios.patch(`${serverUrl}/api/update-calendar-1spot`, {
         formData,
       });
-      console.log(
-        "Diving date sent to the backend to update calendar to (1 Dive Seat)",
-        response.data,
-      );
+      console.log("Diving date sent to the backend to update calendar to (1 spot)", response.data);
       return response.data;
     } catch (error) {
-      console.error(
-        "Error sending diving date to backend to update calendar to (1 Dive Seat):",
-        error,
-      );
+      console.error("Error sending diving date to backend to update calendar to (1 spot):", error);
       throw error;
     }
   };
 
-  // Define function to update Calendar from 1 Dive Seat to Booked
+  // Define function to update Calendar from 1 Spot Available to Booked
   const upDateCalendarBooked = async formData => {
     try {
       const response = await axios.patch(`${serverUrl}/api/update-calendar-booked`, {
@@ -557,10 +551,10 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         handleGoogleSheetSubmit();
 
         // Update Calendar
-        if (eventTitle === "1 Dive Seat") {
+        if (eventTitle === "1 Spot Available") {
           upDateCalendarBooked(formData);
         } else {
-          upDateCalendar1Seat(formData);
+          upDateCalendar1Spot(formData);
         }
 
         // Send email
@@ -681,7 +675,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
               <div>
                 <div className="flex-col flex">
                   <label htmlFor="divingDate" className="mt-2 flex flex-row">
-                    Diving Date: <span className="text-red-500">*</span>
+                    Cruise Date: <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="divingDate"
@@ -1155,4 +1149,4 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   );
 };
 
-export default DiverInfo;
+export default CruisePassengerInfo;
