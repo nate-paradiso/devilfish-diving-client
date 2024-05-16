@@ -14,7 +14,7 @@ const Services = () => {
         <br />
         <div className="">
           <h2>3 Hour Cruise - Elliot Bay to Blakely Rock in the Puget Sound</h2>
-          <div className="font-bold">$210 +tax - 2 person max</div>
+          <div className="font-bold">$105 per passenger +tax - 2 person max</div>
           <p className="">
             Step aboard and enjoy a picturesque cruise from Elliot Bay to Blakely Rock in the Puget
             Sound on a small craft, where you will feel intimately connected to the water and have

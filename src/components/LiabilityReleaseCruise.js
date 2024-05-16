@@ -1,6 +1,6 @@
 import React from "react";
 
-const LiabilityRelease = ({ formData }) => {
+const LiabilityRelease = ({ formData, secondPassenger }) => {
   return (
     <section className="mb-2">
       {" "}
@@ -9,6 +9,8 @@ const LiabilityRelease = ({ formData }) => {
         I,{" "}
         <span className="font-bold text-xl text-green-500">
           {formData.firstName} {formData.lastName}
+          {secondPassenger ? " and " : ""}
+          {formData.firstNameSecondPassenger} {formData.lastNameSecondPassenger}
         </span>
         , hereby affirm that I am participating in a pleasure cruise organized by Devilfish Diving
         LLC. I understand that cruising involves inherent risks, including those associated with
@@ -61,7 +63,9 @@ const LiabilityRelease = ({ formData }) => {
         I,{" "}
         <span className="font-bold text-xl text-green-500">
           {formData.firstName} {formData.lastName}
-        </span>
+          {secondPassenger ? " and " : ""}
+          {formData.firstNameSecondPassenger} {formData.lastNameSecondPassenger}
+        </span>{" "}
         , BY THIS INSTRUMENT, AGREE TO EXEMPT AND RELEASE THE RELEASED PARTIES DEFINED ABOVE FROM
         ALL LIABILITY OR RESPONSIBILITY WHATSOEVER FOR PERSONAL INJURY, PROPERTY DAMAGE OR WRONGFUL
         DEATH HOWEVER CAUSED, INCLUDING BUT NOT LIMITED TO THE NEGLIGENCE OF THE RELEASED PARTIES,

@@ -12,6 +12,7 @@ function Message({ content }) {
 const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   const [clientId, setClientId] = useState("");
   const [message, setMessage] = useState("");
+  const [secondPassenger, setSecondPassenger] = useState(false);
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const errorRefs = useRef({});
   const [isPayPalSuccessful, setIsPayPalSuccessful] = useState(false);
@@ -40,16 +41,23 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     birthday: "",
     under18: "",
     address: "",
-    // lastDive: "",
-    // certifyingAgency: "",
-    // certificationNumber: "",
-    // danInsuranceNumber: "",
     emergencyContactName: "",
     emergencyContactPhone: "",
     divingDate: selectedDate,
     message: "",
     electronicSignature: "",
     electronicParentSignature: "",
+    firstNameSecondPassenger: "",
+    lastNameSecondPassenger: "",
+    emailSecondPassenger: "",
+    phoneSecondPassenger: "",
+    birthdaySecondPassenger: "",
+    under18SecondPassenger: "",
+    addressSecondPassenger: "",
+    emergencyContactNameSecondPassenger: "",
+    emergencyContactPhoneSecondPassenger: "",
+    electronicSignatureSecondPassenger: "",
+    electronicParentSignatureSecondPassenger: "",
     electronicSignatureDate: formatDateForHTMLInput(today),
   });
 
@@ -61,16 +69,23 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     birthday: "",
     under18: "",
     address: "",
-    // lastDive: "",
-    // certifyingAgency: "",
-    // certificationNumber: "",
-    // danInsuranceNumber: "",
     emergencyContactName: "",
     emergencyContactPhone: "",
     divingDate: "",
     message: "",
     electronicSignature: "",
     electronicParentSignature: "",
+    firstNameSecondPassenger: "",
+    lastNameSecondPassenger: "",
+    emailSecondPassenger: "",
+    phoneSecondPassenger: "",
+    birthdaySecondPassenger: "",
+    under18SecondPassenger: "",
+    addressSecondPassenger: "",
+    emergencyContactNameSecondPassenger: "",
+    emergencyContactPhoneSecondPassenger: "",
+    electronicSignatureSecondPassenger: "",
+    electronicParentSignatureSecondPassenger: "",
     electronicSignatureDate: "",
   });
   const [isButtonVisible, setIsButtonVisible] = useState(true); // State to control button visibility
@@ -133,10 +148,13 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     setFormDataOutside(formData);
     setFormOutside(form);
   };
+  // Render Second Passenger form
+  const handleSecondPassenger = () => {
+    setSecondPassenger(true);
+  };
 
-  //Handle Paypal approval
   // Function to handle form submission
-  const handleFormSubmit = event => {
+  const handleFormSubmit = secondPassenger => event => {
     event.preventDefault();
 
     let form = event.target;
@@ -221,42 +239,6 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       submitButton.disabled = false; // Re-enable the submit button
       return;
     }
-    // if (!validateLastDive(data.lastDive)) {
-    //   setValidationErrors(prevErrors => ({
-    //     ...prevErrors,
-    //     lastDive: "Please enter your last diving date.",
-    //   }));
-    //   form.removeAttribute("data-submitting"); // Release the form from submitting state
-    //   submitButton.disabled = false; // Re-enable the submit button
-    //   return;
-    // }
-    // if (!validateCertifyingAgency(data.certifyingAgency)) {
-    //   setValidationErrors(prevErrors => ({
-    //     ...prevErrors,
-    //     certifyingAgency: "Please enter a certification agency.",
-    //   }));
-    //   form.removeAttribute("data-submitting"); // Release the form from submitting state
-    //   submitButton.disabled = false; // Re-enable the submit button
-    //   return;
-    // }
-    // if (!validateCertificationNumber(data.certificationNumber)) {
-    //   setValidationErrors(prevErrors => ({
-    //     ...prevErrors,
-    //     certificationNumber: "Please enter a certification number.",
-    //   }));
-    //   form.removeAttribute("data-submitting"); // Release the form from submitting state
-    //   submitButton.disabled = false; // Re-enable the submit button
-    //   return;
-    // }
-    // if (!validateDanInsuranceNumber(data.danInsuranceNumber)) {
-    //   setValidationErrors(prevErrors => ({
-    //     ...prevErrors,
-    //     danInsuranceNumber: "Please enter a DAN insurance number.",
-    //   }));
-    //   form.removeAttribute("data-submitting"); // Release the form from submitting state
-    //   submitButton.disabled = false; // Re-enable the submit button
-    //   return;
-    // }
     if (!validateEmergencyContactName(data.emergencyContactName)) {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
@@ -294,6 +276,122 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       return;
     }
 
+    // Validate second passenger's if the second passenger form is rendered
+    console.log(secondPassenger);
+    if (secondPassenger) {
+      if (!validateFirstNameSecondPassenger(data.firstNameSecondPassenger)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          firstNameSecondPassenger: "Please enter a valid first name for the second passenger.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateLastNameSecondPassenger(data.lastNameSecondPassenger)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          lastNameSecondPassenger: "Please enter a valid last name for the second passenger.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateEmailSecondPassenger(data.emailSecondPassenger)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          emailSecondPassenger: "Please enter a valid email for the second passenger.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validatePhoneSecondPassenger(data.phoneSecondPassenger)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          phoneSecondPassenger: "Please enter a valid phone number for the second passenger.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateBirthdaySecondPassenger(data.birthdaySecondPassenger)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          birthdaySecondPassenger: "Please enter a valid birthday for the second passenger.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateUnder18SecondPassenger(data.under18SecondPassenger)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          under18SecondPassenger: "Please enter yes or no for second passenger.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateAddressSecondPassenger(data.addressSecondPassenger)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          addressSecondPassenger: "Please enter a valid address for the second passenger.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateEmergencyContactNameSecondPassenger(data.emergencyContactNameSecondPassenger)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          emergencyContactNameSecondPassenger:
+            "Please enter a valid emergency contact name for the second passenger.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (
+        !validateEmergencyContactPhoneSecondPassenger(data.emergencyContactPhoneSecondPassenger)
+      ) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          emergencyContactPhoneSecondPassenger:
+            "Please enter a valid emergency contact phone number for the second passenger.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateElectronicSignatureSecondPassenger(data.electronicSignatureSecondPassenger)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          electronicSignatureSecondPassenger:
+            "Please enter a electronic signature name for the second passenger.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (
+        !validateElectronicParentSignatureSecondPassenger(
+          data.electronicParentSignatureSecondPassenger,
+        )
+      ) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          electronicParentSignatureSecondPassenger:
+            "Please enter a Parent or Legal Guardian electronic signature name for the second passenger.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+    } else {
+      submitButton.disabled = false;
+    }
+
     if (!validateElectronicSignature(data.electronicSignature)) {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
@@ -322,10 +420,11 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       submitButton.disabled = false; // Re-enable the submit button
       return;
     }
+    console.log(secondPassenger);
+
     setIsButtonVisible(false);
     setIsFormVisible(false);
     setLoading(false);
-
     function validateFirstName(firstName) {
       return (firstName ?? "").trim() !== ""; // Check if the name is not empty
     }
@@ -343,31 +442,19 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       return !isNaN(Date.parse(birthday)); // Check if the birthday is a valid date
     }
     function validateUnder18(under18) {
-      return under18 !== ""; // Check if the yes or no is not empty
+      return under18 === "Yes" || under18 === "No"; // Check if the value is either "yes" or "no"
     }
     function validateAddress(address) {
       return address.trim() !== ""; // Check if the address is not empty
     }
-    // function validateLastDive(lastDive) {
-    //   return !isNaN(Date.parse(lastDive)); // Check if the last dive is a valid date
-    // }
-    // function validateCertifyingAgency(certifyingAgency) {
-    //   return certifyingAgency.trim() !== ""; // Check if the name is not empty
-    // }
-    // function validateCertificationNumber(certificationNumber) {
-    //   return certificationNumber.trim() !== ""; // Check if the name is not empty
-    // }
-    // function validateDanInsuranceNumber(danInsuranceNumber) {
-    //   return danInsuranceNumber.trim() !== ""; // Check if the name is not empty
-    // }
     function validateEmergencyContactName(emergencyContactName) {
       return emergencyContactName.trim() !== ""; // Check if the name is not empty
     }
-    function validateMessage(message) {
-      return message.trim() !== ""; // Check if the message is not empty
-    }
     function validateEmergencyContactPhone(emergencyContactPhone) {
       return emergencyContactPhone.trim() !== ""; // Check if the name is not empty
+    }
+    function validateMessage(message) {
+      return message.trim() !== ""; // Check if the message is not empty
     }
     function validateDivingDate(divingDate) {
       return !isNaN(Date.parse(divingDate)); // Check if the diving date is a valid date
@@ -378,10 +465,50 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     function validateElectronicParentSignature(electronicParentSignature) {
       return (electronicParentSignature ?? "").trim() !== ""; // Check if the name is not empty
     }
+
+    // Second passenger validation
+    function validateFirstNameSecondPassenger(firstNameSecondPassenger) {
+      return (firstNameSecondPassenger ?? "").trim() !== ""; // Check if the name is not empty
+    }
+    function validateLastNameSecondPassenger(lastNameSecondPassenger) {
+      return lastNameSecondPassenger.trim() !== ""; // Check if the name is not empty
+    }
+    function validateEmailSecondPassenger(emailSecondPassenger) {
+      let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(emailSecondPassenger); // Check if the email has a valid format
+    }
+    function validatePhoneSecondPassenger(phoneSecondPassenger) {
+      return phoneSecondPassenger.trim() !== ""; // Check if the name is not empty
+    }
+    function validateBirthdaySecondPassenger(birthdaySecondPassenger) {
+      return !isNaN(Date.parse(birthdaySecondPassenger)); // Check if the birthday is a valid date
+    }
+    function validateUnder18SecondPassenger(under18SecondPassenger) {
+      return under18SecondPassenger === "Yes" || under18SecondPassenger === "No"; // Check if the value is either "yes" or "no"
+    }
+    function validateAddressSecondPassenger(addressSecondPassenger) {
+      return addressSecondPassenger.trim() !== ""; // Check if the address is not empty
+    }
+    function validateEmergencyContactNameSecondPassenger(emergencyContactNameSecondPassenger) {
+      return emergencyContactNameSecondPassenger.trim() !== ""; // Check if the name is not empty
+    }
+    function validateEmergencyContactPhoneSecondPassenger(emergencyContactPhoneSecondPassenger) {
+      return emergencyContactPhoneSecondPassenger.trim() !== ""; // Check if the name is not empty
+    }
+    function validateElectronicSignatureSecondPassenger(electronicSignatureSecondPassenger) {
+      return (electronicSignatureSecondPassenger ?? "").trim() !== ""; // Check if the name is not empty
+    }
+    function validateElectronicParentSignatureSecondPassenger(
+      electronicParentSignatureSecondPassenger,
+    ) {
+      return (electronicParentSignatureSecondPassenger ?? "").trim() !== ""; // Check if the name is not empty
+    }
+
     function validateElectronicSignatureDate(electronicSignatureDate) {
       return !isNaN(Date.parse(electronicSignatureDate)); // Check if the signature date is a valid date
     }
   };
+
   // Handle form submission via XMLHttpRequest
   const handleGoogleSheetSubmit = () => {
     // console.log("formDataOutside inside googlesheetsubmit", formDataOutside);
@@ -439,6 +566,17 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
             emergencyContactPhone: "",
             divingDate: "",
             message: "",
+            firstNameSecondPassenger: "",
+            lastNameSecondPassenger: "",
+            emailSecondPassenger: "",
+            phoneSecondPassenger: "",
+            birthdaySecondPassenger: "",
+            under18SecondPassenger: "",
+            addressSecondPassenger: "",
+            emergencyContactNameSecondPassenger: "",
+            emergencyContactPhoneSecondPassenger: "",
+            electronicSignatureSecondPassenger: "",
+            electronicParentSignatureSecondPassenger: "",
             electronicSignature: "",
             electronicParentSignature: "",
             electronicSignatureDate: "",
@@ -471,23 +609,9 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   useEffect(() => {
     let forms = document.querySelectorAll("form.gform");
     for (let i = 0; i < forms.length; i++) {
-      forms[i].addEventListener("submit", handleFormSubmit, false);
+      forms[i].addEventListener("submit", handleFormSubmit(secondPassenger), false);
     }
   }, [isPayPalSuccessful]);
-
-  // Define function to update Calendar from Available to 1 Spot Available
-  // const upDateCalendar1Spot = async formData => {
-  //   try {
-  //     const response = await axios.patch(`${serverUrl}/api/update-calendar-1spot`, {
-  //       formData,
-  //     });
-  //     console.log("Diving date sent to the backend to update calendar to (1 spot)", response.data);
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error("Error sending diving date to backend to update calendar to (1 spot):", error);
-  //     throw error;
-  //   }
-  // };
 
   // Define function to update Calendar from Cruise to Booked
   const upDateCalendarBooked = async formData => {
@@ -587,6 +711,8 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       ...prevErrors,
       [name]: "",
     }));
+    // Log the updated value
+    console.log(`Updated value of ${name}:`, value);
   };
 
   // Update diving date in form data when selected date changes
@@ -660,7 +786,6 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
     fetchClientId();
   }, []);
-
   return (
     <section className="max-w-[1200px] w-full">
       <form
@@ -799,8 +924,8 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     onChange={handleInputChange}
                   >
                     <option value="">Select</option>
-                    <option value="no">No</option>
-                    <option value="yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
                   </select>{" "}
                   {validationErrors.under18 && (
                     <span ref={el => (errorRefs.current.under18 = el)} className="text-red-500">
@@ -827,89 +952,6 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   )}
                 </div>
 
-                {/* <div className="flex-col flex">
-                  <label htmlFor="lastDive" className="mt-2 flex flex-row">
-                    Date of Last Dive: <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    id="lastDive"
-                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                    type="date"
-                    name="lastDive"
-                    value={formData.lastDive}
-                    onChange={handleInputChange}
-                  />
-                  {validationErrors.lastDive && (
-                    <span ref={el => (errorRefs.current.lastDive = el)} className="text-red-500">
-                      {validationErrors.lastDive}
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex-col flex">
-                  <label htmlFor="certifyingAgency" className="mt-2 flex flex-row">
-                    Certifying Agency: <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    id="certifyingAgency"
-                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                    type="text"
-                    name="certifyingAgency"
-                    value={formData.certifyingAgency}
-                    onChange={handleInputChange}
-                  />
-                  {validationErrors.certifyingAgency && (
-                    <span
-                      ref={el => (errorRefs.current.certifyingAgency = el)}
-                      className="text-red-500"
-                    >
-                      {validationErrors.certifyingAgency}
-                    </span>
-                  )}
-                </div>
-                <div className="flex-col flex">
-                  <label htmlFor="certificationNumber" className="mt-2 flex flex-row">
-                    Certification Number: <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    id="certificationNumber"
-                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                    type="text"
-                    name="certificationNumber"
-                    value={formData.certificationNumber}
-                    onChange={handleInputChange}
-                  />
-                  {validationErrors.certificationNumber && (
-                    <span
-                      ref={el => (errorRefs.current.certificationNumber = el)}
-                      className="contact__error-message"
-                    >
-                      {validationErrors.certificationNumber}
-                    </span>
-                  )}
-                </div>
-                <div className="flex-col flex">
-                  <label htmlFor="danInsuranceNumber" className="mt-2 flex flex-row">
-                    DAN Insurance Number: <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    id="danInsuranceNumber"
-                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
-                    type="text"
-                    placeholder="Enter N/A if none"
-                    name="danInsuranceNumber"
-                    value={formData.danInsuranceNumber}
-                    onChange={handleInputChange}
-                  />
-                  {validationErrors.danInsuranceNumber && (
-                    <span
-                      ref={el => (errorRefs.current.danInsuranceNumber = el)}
-                      className="contact__error-message"
-                    >
-                      {validationErrors.danInsuranceNumber}
-                    </span>
-                  )}
-                </div> */}
                 <div className="flex-col flex">
                   <label htmlFor="emergencyContactName" className="mt-2 flex flex-row">
                     Emergency Contact Name: <span className="text-red-500">*</span>
@@ -959,7 +1001,7 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   </label>
                   <textarea
                     id="message"
-                    className="border-solid p-2 pb-[100px] border-2 border-darkBlue md:w-64 min-h-[150px]"
+                    className="border-solid p-2 border-2 border-darkBlue md:w-64 h-[150px] md:h-[125px]"
                     type="text"
                     name="message"
                     placeholder="Type here..."
@@ -975,11 +1017,240 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     </span>
                   )}
                 </div>
+                <br />
+                <br />
               </div>
             </div>
+            <div className="flex justify-between mb-2 flex-row">
+              <button
+                className="border-solid p-2  border-2 border-sky-500 mt-1 w-32"
+                onClick={handleSecondPassenger}
+                type="button"
+              >
+                Add Second Passenger
+              </button>
+            </div>
+
+            {secondPassenger ? (
+              <div>
+                <div>
+                  <h2 className="text-xl md:ml-[85px]">Second Passenger</h2>
+                  <div className="  flex justify-center flex-col  md:flex-row md:justify-evenly ">
+                    <div>
+                      <div className="flex-col flex">
+                        <label htmlFor="firstNameSecondPassenger " className="mt-2 flex flex-row">
+                          First Name: <span className="text-red-500 ">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="firstNameSecondPassenger"
+                          name="firstNameSecondPassenger"
+                          value={formData.firstNameSecondPassenger}
+                          onChange={handleInputChange}
+                          className="border-solid p-2  border-2 border-darkBlue   md:w-64  w-full h-[46px] "
+                        />
+                        {validationErrors.firstNameSecondPassenger && (
+                          <span
+                            ref={el => (errorRefs.current.firstNameSecondPassenger = el)}
+                            className="text-red-500"
+                          >
+                            {validationErrors.firstNameSecondPassenger}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex-col flex">
+                        <label htmlFor="lastNameSecondPassenger " className="mt-2 flex flex-row">
+                          Last Name: <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="lastNameSecondPassenger"
+                          name="lastNameSecondPassenger"
+                          value={formData.lastNameSecondPassenger}
+                          onChange={handleInputChange}
+                          className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                        />
+                        {validationErrors.lastNameSecondPassenger && (
+                          <span
+                            ref={el => (errorRefs.current.lastNameSecondPassenger = el)}
+                            className="text-red-500"
+                          >
+                            {validationErrors.lastNameSecondPassenger}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex-col flex">
+                        <label htmlFor="emailSecondPassenger" className="mt-2 flex flex-row">
+                          Email: <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          id="emailSecondPassenger"
+                          className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                          type="emailSecondPassenger"
+                          name="emailSecondPassenger"
+                          value={formData.emailSecondPassenger}
+                          onChange={handleInputChange}
+                        />
+                        {validationErrors.emailSecondPassenger && (
+                          <span
+                            ref={el => (errorRefs.current.emailSecondPassenger = el)}
+                            className="text-red-500"
+                          >
+                            {validationErrors.emailSecondPassenger}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex-col flex">
+                        <label htmlFor="phoneSecondPassenger" className="mt-2 flex flex-row">
+                          Phone: <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          id="phoneSecondPassenger"
+                          className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                          type="tel"
+                          name="phoneSecondPassenger"
+                          value={formatPhoneNumber(formData.phoneSecondPassenger)}
+                          onChange={handleInputChange}
+                        />
+                        {validationErrors.phoneSecondPassenger && (
+                          <span
+                            ref={el => (errorRefs.current.phoneSecondPassenger = el)}
+                            className="text-red-500"
+                          >
+                            {validationErrors.phoneSecondPassenger}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex-col flex">
+                        <label htmlFor="birthdaySecondPassenger" className="mt-2 flex flex-row">
+                          Birthday: <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          id="birthdaySecondPassenger"
+                          className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                          type="date"
+                          name="birthdaySecondPassenger"
+                          value={formData.birthdaySecondPassenger}
+                          onChange={handleInputChange}
+                        />
+                        {validationErrors.birthdaySecondPassenger && (
+                          <span
+                            ref={el => (errorRefs.current.birthdaySecondPassenger = el)}
+                            className="text-red-500"
+                          >
+                            {validationErrors.birthdaySecondPassenger}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex-col flex">
+                        <label htmlFor="under18SecondPassenger" className="mt-2 flex flex-row">
+                          Are you under 18?
+                          <span className="text-red-500">*</span>
+                        </label>
+                        <select
+                          id="under18SecondPassenger"
+                          className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                          name="under18SecondPassenger"
+                          value={formData.under18SecondPassenger}
+                          onChange={handleInputChange}
+                        >
+                          <option value="">Select</option>
+                          <option value="No">No</option>
+                          <option value="Yes">Yes</option>
+                        </select>{" "}
+                        {validationErrors.under18SecondPassenger && (
+                          <span
+                            ref={el => (errorRefs.current.under18SecondPassenger = el)}
+                            className="text-red-500"
+                          >
+                            {validationErrors.under18SecondPassenger}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex-col flex">
+                        <label htmlFor="addressSecondPassenger" className="mt-2 flex flex-row">
+                          Address: <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          id="addressSecondPassenger"
+                          className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                          type="address"
+                          name="addressSecondPassenger"
+                          value={formData.addressSecondPassenger}
+                          onChange={handleInputChange}
+                        />
+                        {validationErrors.addressSecondPassenger && (
+                          <span
+                            ref={el => (errorRefs.current.addressSecondPassenger = el)}
+                            className="text-red-500"
+                          >
+                            {validationErrors.addressSecondPassenger}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex-col flex">
+                        <label
+                          htmlFor="emergencyContactNameSecondPassenger"
+                          className="mt-2 flex flex-row"
+                        >
+                          Emergency Contact Name: <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          id="emergencyContactNameSecondPassenger"
+                          className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]   "
+                          type="text"
+                          name="emergencyContactNameSecondPassenger"
+                          value={formData.emergencyContactNameSecondPassenger}
+                          onChange={handleInputChange}
+                        />
+                        {validationErrors.emergencyContactNameSecondPassenger && (
+                          <span
+                            ref={el => (errorRefs.current.emergencyContactNameSecondPassenger = el)}
+                            className="contact__error-message"
+                          >
+                            {validationErrors.emergencyContactNameSecondPassenger}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex-col flex">
+                        <label
+                          htmlFor="emergencyContactPhoneSecondPassenger"
+                          className="mt-2 flex flex-row"
+                        >
+                          Emergency Contact Phone: <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          id="emergencyContactPhoneSecondPassenger"
+                          className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]    "
+                          type="tel"
+                          name="emergencyContactPhoneSecondPassenger"
+                          value={formatPhoneNumber(formData.emergencyContactPhoneSecondPassenger)}
+                          onChange={handleInputChange}
+                        />
+                        {validationErrors.emergencyContactPhoneSecondPassenger && (
+                          <span
+                            ref={el =>
+                              (errorRefs.current.emergencyContactPhoneSecondPassenger = el)
+                            }
+                            className="contact__error-message"
+                          >
+                            {validationErrors.emergencyContactPhoneSecondPassenger}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
 
             <div className="mt-4">
-              <LiabilityReleaseCruise formData={formData} />
+              <LiabilityReleaseCruise formData={formData} secondPassenger={secondPassenger} />
               <div className="flex-col flex">
                 <p>
                   By typing your name below you are electronically signing, you acknowledge that you
@@ -1009,7 +1280,10 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   )}
                 </div>
                 <div className="flex flex-col">
-                  <label htmlFor="electronicParentSignature" className="mt-2 flex flex-row">
+                  <label
+                    htmlFor="electronicParentSignature"
+                    className="mt-2 flex flex-row md:w-[185px]"
+                  >
                     Parent or Legal Guardian Electronic Signature:{" "}
                     <span className="text-red-500">*</span>
                   </label>
@@ -1029,6 +1303,68 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     >
                       {validationErrors.electronicParentSignature}
                     </span>
+                  )}
+                </div>
+                <div>
+                  {secondPassenger ? (
+                    <div>
+                      {" "}
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="electronicSignatureSecondPassenger"
+                          className="mt-2 flex flex-row md:w-[215px]"
+                        >
+                          Second Passenger Electronic Signature:
+                          <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          id="electronicSignatureSecondPassenger"
+                          className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                          type="name"
+                          name="electronicSignatureSecondPassenger"
+                          value={formData.electronicSignatureSecondPassenger}
+                          onChange={handleInputChange}
+                        />
+                        {validationErrors.electronicSignatureSecondPassenger && (
+                          <span
+                            ref={el => (errorRefs.current.electronicSignatureSecondPassenger = el)}
+                            className="contact__error-message"
+                          >
+                            {validationErrors.electronicSignatureSecondPassenger}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="electronicParentSignatureSecondPassenger"
+                          className="mt-2 flex flex-row md:w-[255px]"
+                        >
+                          Second Passenger Parent or Legal Guardian Electronic Signature:{" "}
+                          <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          id="electronicParentSignatureSecondPassenger"
+                          className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                          type="name"
+                          placeholder="Enter N/A if over 18"
+                          name="electronicParentSignatureSecondPassenger"
+                          value={formData.electronicParentSignatureSecondPassenger}
+                          onChange={handleInputChange}
+                        />
+                        {validationErrors.electronicParentSignatureSecondPassenger && (
+                          <span
+                            ref={el =>
+                              (errorRefs.current.electronicParentSignatureSecondPassenger = el)
+                            }
+                            className="contact__error-message"
+                          >
+                            {validationErrors.electronicParentSignatureSecondPassenger}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    ""
                   )}
                 </div>
               </div>
@@ -1064,7 +1400,6 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
               <button
                 className="mt-4 border-solid p-2 border-2 border-sky-500 w-[150px]"
                 type="submit"
-                onChange={handleInputChange}
               >
                 Next to Payment
               </button>

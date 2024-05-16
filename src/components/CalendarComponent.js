@@ -68,12 +68,6 @@ const CalendarComponent = () => {
     const selectedDate = clickedEvent.start; // Get the selected event date
     const formattedDate = formatDate(selectedDate); // Format the selected date
 
-    if (clickedEvent.title === "Dive") {
-      setSelectedDate(selectedDate); // Store the selected date in state
-      setSelectedDateStr(formattedDate); // Store the formatted selected date string in state
-      setShowDiverInfo(true);
-      setEventTitle(clickedEvent.title);
-    }
     if (
       clickedEvent.title === "Booked" ||
       (clickedEvent.title !== "Dive" &&
@@ -84,13 +78,13 @@ const CalendarComponent = () => {
       setSelectedDate(null);
       return; // Stop further execution
     }
-
-    if (clickedEvent.title === "1 Dive Seat") {
+    if (clickedEvent.title === "Dive" || clickedEvent.title === "1 Dive Seat") {
       setSelectedDate(selectedDate); // Store the selected date in state
       setSelectedDateStr(formattedDate); // Store the formatted selected date string in state
       setShowDiverInfo(true);
       setEventTitle(clickedEvent.title);
     }
+
     if (clickedEvent.title === "Cruise") {
       setSelectedDate(selectedDate); // Store the selected date in state
       setSelectedDateStr(formattedDate); // Store the formatted selected date string in state
@@ -119,18 +113,18 @@ const CalendarComponent = () => {
 
     // Apply Tailwind classes based on event title
     if (arg.event.title === "Dive") {
-      eventClasses = "bg-green-500"; // Blue background for "Dive" events
+      eventClasses = "bg-blue-500"; // Blue background for "Dive" events
     } else if (arg.event.title === "Booked") {
       eventClasses = "bg-red-500"; // Green background for "Booked" events
     } else if (arg.event.title === "1 Dive Seat") {
-      eventClasses = "bg-green-500"; // Green background for "Dive" events
+      eventClasses = "bg-blue-500"; // Green background for "Dive" events
     } else if (arg.event.title === "Cruise") {
       eventClasses = "bg-green-500"; // Green background for "Cruise" events
     }
 
     return (
-      <div className={`p-0.5  ${eventClasses}`}>
-        {arg.event.title} {/* Render event title */}
+      <div className={`p-0.5 ${eventClasses}`}>
+        <div className="event-title">{arg.event.title}</div> {/* Render event title */}
       </div>
     );
   };
@@ -144,20 +138,27 @@ const CalendarComponent = () => {
           ) : (
             <div className="m-4 flex justify-center flex-col ">
               <h1 className="m-auto text-2xl">Welcome!</h1>
-              <p className="text-xl">Diving</p>
+              <h3 className="text-xl">Diving</h3>
+
               <p>
-                Select a <span className="font-extrabold">Dive</span> or{" "}
-                <span className="font-extrabold"> 1 Dive Seat </span> event then complete the form
-                and pay. The Dive events have 2 seats open. Only single day selection allowed. There
-                is a 2 diver maximum and minimum, no solo divers.
+                Choose between <span className="font-extrabold">Dive</span> or{" "}
+                <span className="font-extrabold"> 1 Dive Seat </span> events for an underwater
+                adventure. <span className="font-extrabold">Dive</span> events offer two available
+                seats, while <span className="font-extrabold"> 1 Dive Seat </span> events have only
+                one. When selecting your dive, remember that only single-day reservations are
+                permitted. Additionally, for safety and enjoyment, there's a minimum and maximum of
+                two divers per outing—no solo diving allowed.
               </p>
               <br />
-              <p className="text-xl">Cruise</p>
+              <h3 className="text-xl">Cruise</h3>
+
               <p>
-                Select <span className="font-extrabold"> Cruise </span>for the 3 hour tour from
-                Elliot Bay to Blakely Rock. 2 person maximum.
+                Experience a scenic 3-hour tour from Elliot Bay to Blakely Rock by selecting
+                <span className="font-extrabold"> Cruise </span>. The
+                <span className="font-extrabold"> Cruise </span> event has 2 seats available.
+                Additionally, for safety and enjoyment, there's a maximum of two passengers per
+                cruise.
               </p>
-              <br />
               <br />
               {!showDiverInfo && !showCruiseInfo && (
                 <FullCalendar
@@ -206,7 +207,7 @@ const CalendarComponent = () => {
                     )}
                     {eventTitle === "Cruise" && (
                       <h3 className="mt-1">
-                        Price: <span className="font-extrabold">$210 for 3 hour charter.</span>
+                        Price: <span className="font-extrabold">$210 for the 3 hour charter.</span>
                       </h3>
                     )}{" "}
                     <div className="flex justify-between mb-2 flex-row">
@@ -221,11 +222,8 @@ const CalendarComponent = () => {
                       <div className="flex max-w-[1200px] mx-auto ">
                         <DiverInfo
                           setSelectedDate={setSelectedDate}
-                          setShowDiverInfo={setShowDiverInfo}
-                          showDiverInfo={showDiverInfo}
                           setIsSubmitted={setIsSubmitted}
                           selectedDate={selectedDate}
-                          clearSelectedDate={clearSelectedDate}
                           eventTitle={eventTitle}
                         />
                       </div>
@@ -234,11 +232,8 @@ const CalendarComponent = () => {
                       <div className="flex max-w-[1200px] mx-auto ">
                         <CruisePassengerInfo
                           setSelectedDate={setSelectedDate}
-                          setShowDiverInfo={setShowDiverInfo}
-                          showDiverInfo={showDiverInfo}
                           setIsSubmitted={setIsSubmitted}
                           selectedDate={selectedDate}
-                          clearSelectedDate={clearSelectedDate}
                           eventTitle={eventTitle}
                         />
                       </div>

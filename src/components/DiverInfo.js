@@ -343,7 +343,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       return !isNaN(Date.parse(birthday)); // Check if the birthday is a valid date
     }
     function validateUnder18(under18) {
-      return under18 !== ""; // Check if the yes or no is not empty
+      return under18 === "yes" || under18 === "no"; // Check if the value is either "yes" or "no"
     }
     function validateAddress(address) {
       return address.trim() !== ""; // Check if the address is not empty
@@ -964,7 +964,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   </label>
                   <textarea
                     id="message"
-                    className="border-solid p-2 pb-[100px] border-2 border-darkBlue md:w-64 min-h-[150px]"
+                    className="border-solid p-2 border-2 border-darkBlue md:w-64 h-[150px] md:h-[125px]"
                     type="text"
                     name="message"
                     placeholder="Type here..."
@@ -1016,7 +1016,10 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
                 <div className="flex flex-col">
                   {" "}
-                  <label htmlFor="electronicParentSignature" className="mt-2 flex flex-row">
+                  <label
+                    htmlFor="electronicParentSignature"
+                    className="mt-2 flex flex-row md:w-[185px]"
+                  >
                     Parent or Legal Guardian Electronic Signature:{" "}
                     <span className="text-red-500">*</span>
                   </label>
@@ -1071,7 +1074,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
               <button
                 className="mt-4 border-solid p-2 border-2 border-sky-500 w-[150px]"
                 type="submit"
-                onChange={handleInputChange}
               >
                 Next to Payment
               </button>
