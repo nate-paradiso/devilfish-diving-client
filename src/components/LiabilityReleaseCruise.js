@@ -1,6 +1,6 @@
 import React from "react";
 
-const LiabilityRelease = ({ formData, secondPassenger }) => {
+const LiabilityRelease = ({ formData, showSecondPassengerForm }) => {
   return (
     <section className="mb-2">
       {" "}
@@ -9,7 +9,7 @@ const LiabilityRelease = ({ formData, secondPassenger }) => {
         I,{" "}
         <span className="font-bold text-xl text-green-500">
           {formData.firstName} {formData.lastName}
-          {secondPassenger ? " and " : ""}
+          {showSecondPassengerForm ? " and " : ""}
           {formData.firstNameSecondPassenger} {formData.lastNameSecondPassenger}
         </span>
         , hereby affirm that I am participating in a pleasure cruise organized by Devilfish Diving
@@ -63,7 +63,7 @@ const LiabilityRelease = ({ formData, secondPassenger }) => {
         I,{" "}
         <span className="font-bold text-xl text-green-500">
           {formData.firstName} {formData.lastName}
-          {secondPassenger ? " and " : ""}
+          {showSecondPassengerForm ? " and " : ""}
           {formData.firstNameSecondPassenger} {formData.lastNameSecondPassenger}
         </span>{" "}
         , BY THIS INSTRUMENT, AGREE TO EXEMPT AND RELEASE THE RELEASED PARTIES DEFINED ABOVE FROM

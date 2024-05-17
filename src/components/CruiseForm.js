@@ -2,6 +2,12 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import LiabilityReleaseCruise from "./LiabilityReleaseCruise";
 import axios from "axios";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+
+// Renders errors or successful transactions on the screen.
+function Message({ content }) {
+  return <p>{content}</p>;
+}
 
 const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   const [showSecondPassengerForm, setShowSecondPassengerForm] = useState(false);
@@ -158,6 +164,9 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     if (validateForm()) {
       // Handle submission of both forms
       // You can collect data from both forms (formData) here and submit it
+      setIsButtonVisible(false);
+      setIsFormVisible(false);
+      setLoading(false);
     } else {
       // Validation failed, do something (e.g., show error messages)
     }
@@ -175,19 +184,6 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     let isValid = true;
 
     // Validate first passenger's fields
-
-    // if (!isNaN(Date.parse(formData.divingDate))) {
-    //   setValidationErrors(prevErrors => ({
-    //     ...prevErrors,
-    //     divingDate: "Please enter a diving date",
-    //   }));
-    //   isValid = false;
-    // } else {
-    //   setValidationErrors(prevErrors => ({
-    //     ...prevErrors,
-    //     divingDate: "",
-    //   }));
-    // }
     if (formData.firstName.trim() === "") {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
@@ -212,10 +208,8 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         lastName: "",
       }));
     }
-
     let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     let isValidEmail = emailRegex.test(formData.email);
-
     if (!isValidEmail) {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
@@ -228,7 +222,6 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         email: "",
       }));
     }
-
     if (formData.phone.trim() === "") {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
@@ -253,7 +246,6 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         birthday: "",
       }));
     }
-
     if (formData.under18 !== "Yes" && formData.under18 !== "No") {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
@@ -278,7 +270,6 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         address: "",
       }));
     }
-
     if (formData.emergencyContactName.trim() === "") {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
@@ -291,7 +282,6 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         emergencyContactName: "",
       }));
     }
-
     if (formData.emergencyContactPhone.trim() === "") {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
@@ -304,7 +294,6 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         emergencyContactPhone: "",
       }));
     }
-
     if (formData.message.trim() === "") {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
@@ -315,6 +304,30 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
         message: "",
+      }));
+    }
+    if (formData.electronicSignature.trim() === "") {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        electronicSignature: "Please type your full name.",
+      }));
+      isValid = false;
+    } else {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        electronicSignature: "",
+      }));
+    }
+    if (formData.electronicParentSignature.trim() === "") {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        electronicParentSignature: "Please type a parent or legal guardian full name.",
+      }));
+      isValid = false;
+    } else {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        electronicParentSignature: "",
       }));
     }
 
@@ -343,6 +356,124 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         setValidationErrors(prevErrors => ({
           ...prevErrors,
           lastNameSecondPassenger: "",
+        }));
+      }
+      if (!formData.emailSecondPassenger.includes("@")) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          emailSecondPassenger: "Please enter a valid email for the second passenger.",
+        }));
+        isValid = false;
+      } else {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          emailSecondPassenger: "",
+        }));
+      }
+
+      if (formData.phoneSecondPassenger.trim() === "") {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          phoneSecondPassenger: "Please enter a phone number for the second passenger.",
+        }));
+        isValid = false;
+      } else {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          phoneSecondPassenger: "",
+        }));
+      }
+
+      if (formData.birthdaySecondPassenger.trim() === "") {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          birthdaySecondPassenger: "Please enter a birthday for the second passenger.",
+        }));
+        isValid = false;
+      } else {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          birthdaySecondPassenger: "",
+        }));
+      }
+
+      if (formData.under18SecondPassenger.trim() === "") {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          under18SecondPassenger: "Please select if the second passenger is under 18.",
+        }));
+        isValid = false;
+      } else {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          under18SecondPassenger: "",
+        }));
+      }
+
+      if (formData.addressSecondPassenger.trim() === "") {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          addressSecondPassenger: "Please enter an address for the second passenger.",
+        }));
+        isValid = false;
+      } else {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          addressSecondPassenger: "",
+        }));
+      }
+
+      if (formData.emergencyContactNameSecondPassenger.trim() === "") {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          emergencyContactNameSecondPassenger:
+            "Please enter an emergency contact name for the second passenger.",
+        }));
+        isValid = false;
+      } else {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          emergencyContactNameSecondPassenger: "",
+        }));
+      }
+
+      if (formData.emergencyContactPhoneSecondPassenger.trim() === "") {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          emergencyContactPhoneSecondPassenger:
+            "Please enter an emergency contact phone for the second passenger.",
+        }));
+        isValid = false;
+      } else {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          emergencyContactPhoneSecondPassenger: "",
+        }));
+      }
+
+      if (formData.electronicSignatureSecondPassenger.trim() === "") {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          electronicSignatureSecondPassenger: "Please type the second passenger full name.",
+        }));
+        isValid = false;
+      } else {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          electronicSignatureSecondPassenger: "",
+        }));
+      }
+      if (formData.electronicParentSignatureSecondPassenger.trim() === "") {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          electronicParentSignatureSecondPassenger:
+            "Please type the second passengers parent or legal guardian full name.",
+        }));
+        isValid = false;
+      } else {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          electronicParentSignatureSecondPassenger: "",
         }));
       }
     }
@@ -618,6 +749,17 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         data-email="example@gmail.com"
         action="https://script.google.com/macros/s/AKfycbx8TRKTZ22mPpYJ0sNgBEmM-NLEwnvIAHn3clbkiztEyR0sg5UXZmM7R3YME9k3MT7_7w/exec"
       >
+        <div>
+          {!showSecondPassengerForm && (
+            <button
+              className="border-solid p-2 border-2 border-sky-500 mb-2 w-32"
+              onClick={handleAddSecondPassenger}
+            >
+              Add Second Passenger
+            </button>
+          )}
+        </div>
+
         {isFormVisible ? (
           <div>
             {/* First passenger form inputs */}
@@ -812,55 +954,344 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
             </div>
 
             {showSecondPassengerForm && (
-              <div className="  flex justify-center flex-col  md:flex-row md:justify-evenly ">
-                <h2 className="text-xl md:ml-[85px]">Second Passenger Form</h2>
-                <div>
-                  <div className="flex-col flex">
-                    <label htmlFor="firstNameSecondPassenger">First Name:</label>
-                    <input
-                      type="text"
-                      id="firstNameSecondPassenger"
-                      name="firstNameSecondPassenger"
-                      value={formData.firstNameSecondPassenger}
-                      onChange={handleInputChange}
-                    />
-                    {validationErrors.firstNameSecondPassenger && (
-                      <span className="error">{validationErrors.firstNameSecondPassenger}</span>
-                    )}
+              <div>
+                <h2 className="text-xl  md:ml-[85px] mt-12">Second Passenger Form</h2>
+                <div className="  flex justify-center flex-col  md:flex-row md:justify-evenly ">
+                  <div>
+                    <div className="flex-col flex">
+                      <label htmlFor="firstNameSecondPassenger" className="mt-2 flex flex-row">
+                        First Name: <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="border-solid p-2 font-extrabold border-2 border-darkBlue md:w-64 w-full h-[46px]"
+                        id="firstNameSecondPassenger"
+                        name="firstNameSecondPassenger"
+                        value={formData.firstNameSecondPassenger}
+                        onChange={handleInputChange}
+                      />
+                      {validationErrors.firstNameSecondPassenger && (
+                        <span className="error text-red-500">
+                          {validationErrors.firstNameSecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-col flex">
+                      <label htmlFor="lastNameSecondPassenger" className="mt-2 flex flex-row">
+                        Last Name:<span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="border-solid p-2 font-extrabold border-2 border-darkBlue md:w-64 w-full h-[46px]"
+                        id="lastNameSecondPassenger"
+                        name="lastNameSecondPassenger"
+                        value={formData.lastNameSecondPassenger}
+                        onChange={handleInputChange}
+                      />
+                      {validationErrors.lastNameSecondPassenger && (
+                        <span className="error text-red-500">
+                          {validationErrors.lastNameSecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-col flex">
+                      <label htmlFor="emailSecondPassenger" className="mt-2 flex flex-row">
+                        Email:<span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        className="border-solid p-2 font-extrabold border-2 border-darkBlue md:w-64 w-full h-[46px]"
+                        id="emailSecondPassenger"
+                        name="emailSecondPassenger"
+                        value={formData.emailSecondPassenger}
+                        onChange={handleInputChange}
+                      />
+                      {validationErrors.emailSecondPassenger && (
+                        <span className="error text-red-500">
+                          {validationErrors.emailSecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-col flex">
+                      <label htmlFor="phoneSecondPassenger" className="mt-2 flex flex-row">
+                        Phone:<span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        className="border-solid p-2 font-extrabold border-2 border-darkBlue md:w-64 w-full h-[46px]"
+                        id="phoneSecondPassenger"
+                        name="phoneSecondPassenger"
+                        value={formatPhoneNumber(formData.phoneSecondPassenger)}
+                        onChange={handleInputChange}
+                      />
+                      {validationErrors.phoneSecondPassenger && (
+                        <span className="error text-red-500">
+                          {validationErrors.phoneSecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-col flex">
+                      <label htmlFor="birthdaySecondPassenger" className="mt-2 flex flex-row">
+                        Birthday:<span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="date"
+                        className="border-solid p-2 font-extrabold border-2 border-darkBlue md:w-64 w-full h-[46px]"
+                        id="birthdaySecondPassenger"
+                        name="birthdaySecondPassenger"
+                        value={formData.birthdaySecondPassenger}
+                        onChange={handleInputChange}
+                      />
+                      {validationErrors.birthdaySecondPassenger && (
+                        <span className="error text-red-500">
+                          {validationErrors.birthdaySecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                    {/* second column */}
                   </div>
                   <div>
-                    <label htmlFor="lastNameSecondPassenger">Last Name:</label>
-                    <input
-                      type="text"
-                      id="lastNameSecondPassenger"
-                      name="lastNameSecondPassenger"
-                      value={formData.lastNameSecondPassenger}
-                      onChange={handleInputChange}
-                    />
-                    {validationErrors.lastNameSecondPassenger && (
-                      <span className="error">{validationErrors.lastNameSecondPassenger}</span>
-                    )}
+                    <div className="flex-col flex">
+                      <label htmlFor="under18SecondPassenger" className="mt-2 flex flex-row">
+                        Are you under 18?<span className="text-red-500">*</span>
+                      </label>
+                      <select
+                        id="under18SecondPassenger"
+                        className="border-solid p-2 border-2 border-darkBlue md:w-64 w-full h-[46px]"
+                        name="under18SecondPassenger"
+                        value={formData.under18SecondPassenger}
+                        onChange={handleInputChange}
+                      >
+                        <option value="">Select</option>
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                      </select>
+                      {validationErrors.under18SecondPassenger && (
+                        <span className="error text-red-500">
+                          {validationErrors.under18SecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-col flex">
+                      <label htmlFor="addressSecondPassenger" className="mt-2 flex flex-row">
+                        Address:<span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="address"
+                        id="addressSecondPassenger"
+                        className="border-solid p-2 border-2 border-darkBlue md:w-64 w-full h-[46px]"
+                        name="addressSecondPassenger"
+                        value={formData.addressSecondPassenger}
+                        onChange={handleInputChange}
+                      />
+                      {validationErrors.addressSecondPassenger && (
+                        <span className="error text-red-500">
+                          {validationErrors.addressSecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-col flex">
+                      <label
+                        htmlFor="emergencyContactNameSecondPassenger"
+                        className="mt-2 flex flex-row"
+                      >
+                        Emergency Contact Name:<span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="emergencyContactNameSecondPassenger"
+                        className="border-solid p-2 border-2 border-darkBlue md:w-64 w-full h-[46px]"
+                        name="emergencyContactNameSecondPassenger"
+                        value={formData.emergencyContactNameSecondPassenger}
+                        onChange={handleInputChange}
+                      />
+                      {validationErrors.emergencyContactNameSecondPassenger && (
+                        <span className="error text-red-500">
+                          {validationErrors.emergencyContactNameSecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-col flex">
+                      <label
+                        htmlFor="emergencyContactPhoneSecondPassenger"
+                        className="mt-2 flex flex-row"
+                      >
+                        Emergency Contact Phone:<span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        id="emergencyContactPhoneSecondPassenger"
+                        className="border-solid p-2 border-2 border-darkBlue md:w-64 w-full h-[46px]"
+                        name="emergencyContactPhoneSecondPassenger"
+                        value={formatPhoneNumber(formData.emergencyContactPhoneSecondPassenger)}
+                        onChange={handleInputChange}
+                      />
+                      {validationErrors.emergencyContactPhoneSecondPassenger && (
+                        <span className="error text-red-500">
+                          {validationErrors.emergencyContactPhoneSecondPassenger}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             )}
+
+            <div className="mt-4">
+              <LiabilityReleaseCruise
+                formData={formData}
+                showSecondPassengerForm={showSecondPassengerForm}
+              />
+              <div className="flex-col flex">
+                <p>
+                  By typing your name below you are electronically signing, you acknowledge that you
+                  have read, understand, and agree to the terms of the Liability Release and
+                  Assumption of Risk Agreement.
+                  <br />
+                </p>
+                <div className="flex flex-col">
+                  <label htmlFor="electronicSignature" className="mt-2 flex flex-row">
+                    Passenger Electronic Signature: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="electronicSignature"
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                    type="name"
+                    name="electronicSignature"
+                    value={formData.electronicSignature}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.electronicSignature && (
+                    <span
+                      ref={el => (errorRefs.current.electronicSignature = el)}
+                      className="contact__error-message"
+                    >
+                      {validationErrors.electronicSignature}
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="electronicParentSignature"
+                    className="mt-2 flex flex-row md:w-[185px]"
+                  >
+                    Parent or Legal Guardian Electronic Signature:{" "}
+                    <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="electronicParentSignature"
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                    type="name"
+                    placeholder="Enter N/A if over 18"
+                    name="electronicParentSignature"
+                    value={formData.electronicParentSignature}
+                    onChange={handleInputChange}
+                  />
+                  {validationErrors.electronicParentSignature && (
+                    <span
+                      ref={el => (errorRefs.current.electronicParentSignature = el)}
+                      className="contact__error-message"
+                    >
+                      {validationErrors.electronicParentSignature}
+                    </span>
+                  )}
+                </div>
+                {showSecondPassengerForm && (
+                  <div>
+                    {" "}
+                    <div className="flex flex-col">
+                      <label
+                        htmlFor="electronicSignatureSecondPassenger"
+                        className="mt-2 flex flex-row md:w-[215px]"
+                      >
+                        Second Passenger Electronic Signature:
+                        <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        id="electronicSignatureSecondPassenger"
+                        className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                        type="name"
+                        placeholder="Enter N/A if none"
+                        name="electronicSignatureSecondPassenger"
+                        value={formData.electronicSignatureSecondPassenger}
+                        onChange={handleInputChange}
+                      />
+                      {validationErrors.electronicSignatureSecondPassenger && (
+                        <span
+                          ref={el => (errorRefs.current.electronicSignatureSecondPassenger = el)}
+                          className="contact__error-message"
+                        >
+                          {validationErrors.electronicSignatureSecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex flex-col">
+                      <label
+                        htmlFor="electronicParentSignatureSecondPassenger"
+                        className="mt-2 flex flex-row md:w-[255px]"
+                      >
+                        Second Passenger Parent or Legal Guardian Electronic Signature:{" "}
+                        <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        id="electronicParentSignatureSecondPassenger"
+                        className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                        type="name"
+                        placeholder="Enter N/A if over 18"
+                        name="electronicParentSignatureSecondPassenger"
+                        value={formData.electronicParentSignatureSecondPassenger}
+                        onChange={handleInputChange}
+                      />
+                      {validationErrors.electronicParentSignatureSecondPassenger && (
+                        <span
+                          ref={el =>
+                            (errorRefs.current.electronicParentSignatureSecondPassenger = el)
+                          }
+                          className="contact__error-message"
+                        >
+                          {validationErrors.electronicParentSignatureSecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="flex-col flex">
+                <label htmlFor="electronicSignatureDate" className="mt-2 flex flex-row">
+                  Today&rsquo;s Signature Date: <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="electronicSignatureDate"
+                  className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                  type="date"
+                  name="electronicSignatureDate"
+                  value={formData.electronicSignatureDate}
+                  onChange={handleInputChange}
+                />
+                {validationErrors.electronicSignatureDate && (
+                  <span
+                    ref={el => (errorRefs.current.electronicSignatureDate = el)}
+                    className="contact__error-message"
+                  >
+                    {validationErrors.electronicSignatureDate}
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
         ) : (
           ""
         )}
-        <div className="mt-4">
+
+        <div className="">
           <div>
             {isButtonVisible ? (
-              <button
-                className="mt-4 border-solid p-2 border-2 border-sky-500 w-[150px]"
-                type="submit"
-              >
+              <button className="mt-4 border-solid p-2 border-2 border-sky-500  w-32" type="submit">
                 Next to Payment
               </button>
             ) : (
               <div>
                 {loading ? (
-                  // <p className="m-4">Loading...</p>
                   <div>
                     <Image
                       className=""
@@ -934,15 +1365,6 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
             )}
           </div>
         </div>
-
-        {!showSecondPassengerForm && (
-          <button
-            className="border-solid p-2 border-2 border-sky-500 mt-1 w-32"
-            onClick={handleAddSecondPassenger}
-          >
-            Add Second Passenger
-          </button>
-        )}
       </form>
     </section>
   );

@@ -26,9 +26,9 @@ const CalendarComponent = () => {
       const response = await axios.get(`${serverUrl}/api/google-calendar-events`); // Endpoint on your backend
       const data = response.data;
 
-      // Filter events to include only those with titles "Booked", "Dive", "1 Dive Seat", or "Cruise"
+      // Filter events to include only those with titles "Dive Booked", "Dive", "1 Dive Seat", or "Cruise" or "Cruise Booked"
       const filteredEvents = data.filter(event =>
-        ["Booked", "Dive", "1 Dive Seat", "Cruise"].includes(event.title),
+        ["Dive Booked", "Dive", "1 Dive Seat", "Cruise", "Cruise Booked"].includes(event.title),
       );
 
       setGoogleEvents(filteredEvents);
@@ -69,7 +69,7 @@ const CalendarComponent = () => {
     const formattedDate = formatDate(selectedDate); // Format the selected date
 
     if (
-      clickedEvent.title === "Booked" ||
+      (clickedEvent.title === "Dive Booked" && clickedEvent.title === "Cruise Booked") ||
       (clickedEvent.title !== "Dive" &&
         clickedEvent.title !== "1 Dive Seat" &&
         clickedEvent.title !== "Cruise")
@@ -114,12 +114,14 @@ const CalendarComponent = () => {
     // Apply Tailwind classes based on event title
     if (arg.event.title === "Dive") {
       eventClasses = "bg-blue-500"; // Blue background for "Dive" events
-    } else if (arg.event.title === "Booked") {
-      eventClasses = "bg-red-500"; // Green background for "Booked" events
+    } else if (arg.event.title === "Dive Booked") {
+      eventClasses = "bg-red-500"; // Red background for "Dive Booked" events
     } else if (arg.event.title === "1 Dive Seat") {
       eventClasses = "bg-blue-500"; // Green background for "Dive" events
     } else if (arg.event.title === "Cruise") {
       eventClasses = "bg-green-500"; // Green background for "Cruise" events
+    } else if (arg.event.title === "Cruise Booked") {
+      eventClasses = "bg-red-500"; // Red background for "Cruise Booked" events
     }
 
     return (
@@ -154,7 +156,7 @@ const CalendarComponent = () => {
 
               <p>
                 Experience a scenic 3-hour tour from Elliot Bay to Blakely Rock by selecting
-                <span className="font-extrabold"> Cruise </span>. The
+                <span className="font-extrabold"> Cruise</span>. The
                 <span className="font-extrabold"> Cruise </span> event has 2 seats available.
                 Additionally, for safety and enjoyment, there's a maximum of two passengers per
                 cruise.
@@ -207,7 +209,7 @@ const CalendarComponent = () => {
                     )}
                     {eventTitle === "Cruise" && (
                       <h3 className="mt-1">
-                        Price: <span className="font-extrabold">$210 for the 3 hour charter.</span>
+                        Price: <span className="font-extrabold">$210 for the 3 hour cruise.</span>
                       </h3>
                     )}{" "}
                     <div className="flex justify-between mb-2 flex-row">
@@ -273,6 +275,7 @@ const CalendarComponent = () => {
               onClick={() => {
                 setIsSubmitted(false);
                 setShowDiverInfo(false);
+                setShowCruiseInfo(false);
                 setSelectedDate(null);
                 fetchEventsFromBackend();
               }}

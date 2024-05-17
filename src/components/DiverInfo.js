@@ -495,17 +495,23 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     }
   };
 
-  // Define function to update Calendar from 1 Dive Seat to Booked
+  // Define function to update Calendar from 1 Dive Seat to Dive Booked
   const upDateCalendarBooked = async formData => {
     try {
-      const response = await axios.patch(`${serverUrl}/api/update-calendar-booked`, {
+      const response = await axios.patch(`${serverUrl}/api/update-calendar-dive-booked`, {
         formData,
       });
       // console.log(formData);
-      console.log("Diving date sent to the backend to update calendar to (booked)", response.data);
+      console.log(
+        "Diving date sent to the backend to update calendar to (Dive Booked)",
+        response.data,
+      );
       return response.data;
     } catch (error) {
-      console.error("Error sending diving date to backend to update calendar to (booked):", error);
+      console.error(
+        "Error sending diving date to backend to update calendar to (Dive Booked):",
+        error,
+      );
       throw error;
     }
   };
