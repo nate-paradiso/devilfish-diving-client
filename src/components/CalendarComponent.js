@@ -5,7 +5,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { useState, useEffect } from "react";
 import DiverInfo from "./DiverInfo";
 import CruisePassengerInfo from "./CruisePassengerInfo";
-// import DiverInfoTest from "./DiverInfoTest";
+import CruiseForm from "./CruiseForm";
 import axios from "axios";
 
 const CalendarComponent = () => {
@@ -230,7 +230,13 @@ const CalendarComponent = () => {
                     )}{" "}
                     {eventTitle === "Cruise" && (
                       <div className="flex max-w-[1200px] mx-auto ">
-                        <CruisePassengerInfo
+                        {/* <CruisePassengerInfo
+                          setSelectedDate={setSelectedDate}
+                          setIsSubmitted={setIsSubmitted}
+                          selectedDate={selectedDate}
+                          eventTitle={eventTitle}
+                        /> */}
+                        <CruiseForm
                           setSelectedDate={setSelectedDate}
                           setIsSubmitted={setIsSubmitted}
                           selectedDate={selectedDate}
