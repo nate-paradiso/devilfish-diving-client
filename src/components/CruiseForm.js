@@ -749,19 +749,18 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         data-email="example@gmail.com"
         action="https://script.google.com/macros/s/AKfycbx8TRKTZ22mPpYJ0sNgBEmM-NLEwnvIAHn3clbkiztEyR0sg5UXZmM7R3YME9k3MT7_7w/exec"
       >
-        <div>
-          {!showSecondPassengerForm && (
-            <button
-              className="border-solid p-2 border-2 border-sky-500 mb-2 w-32"
-              onClick={handleAddSecondPassenger}
-            >
-              Add Second Passenger
-            </button>
-          )}
-        </div>
-
         {isFormVisible ? (
           <div>
+            <div>
+              {!showSecondPassengerForm && (
+                <button
+                  className="border-solid p-2 border-2 border-sky-500 mb-2 w-32"
+                  onClick={handleAddSecondPassenger}
+                >
+                  Add Second Passenger
+                </button>
+              )}
+            </div>
             {/* First passenger form inputs */}
 
             <div className="  flex justify-center flex-col  md:flex-row md:justify-evenly ">

@@ -17,7 +17,7 @@ const LiabilityRelease = ({ formData, showSecondPassengerForm }) => {
         boat travel, which may result in injury or death. I acknowledge that the cruise may include
         risks such as slipping or falling while on board the boat, being cut or struck by a boat
         while in the water, injuries occurring while getting on or off the boat, and other perils of
-        the sea. I still choose to proceed with the cruise in spite of these risks..
+        the sea. I still choose to proceed with the cruise in spite of these risks.
       </p>
       <br />
       <p>
