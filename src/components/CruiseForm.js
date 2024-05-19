@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import LiabilityReleaseCruise from "./LiabilityReleaseCruise";
 import axios from "axios";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import Image from "next/image";
 
 // Renders errors or successful transactions on the screen.
 function Message({ content }) {
@@ -16,7 +17,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const errorRefs = useRef({});
   const [isPayPalSuccessful, setIsPayPalSuccessful] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const formatDateForHTMLInput = selectedDate => {
     // Create a new Date object from the selectedDate
@@ -166,7 +167,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       // You can collect data from both forms (formData) here and submit it
       setIsButtonVisible(false);
       setIsFormVisible(false);
-      setLoading(false);
+      setLoading(true);
     } else {
       // Validation failed, do something (e.g., show error messages)
     }
@@ -1291,15 +1292,13 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
             ) : (
               <div>
                 {loading ? (
-                  <div>
-                    <Image
-                      className=""
-                      src="/images/tube-spinner.svg"
-                      alt="loading"
-                      width={50}
-                      height={50}
-                    />
-                  </div>
+                  <Image
+                    className=""
+                    src="/images/tube-spinner.svg"
+                    alt="loading"
+                    width={50}
+                    height={50}
+                  />
                 ) : (
                   <PayPalScriptProvider
                     options={{
@@ -1312,6 +1311,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   >
                     <div className="App max-w-[750px] flex flex-col md:max-w-[256px] ">
                       <PayPalButtons
+                        onInit={setLoading(false)}
                         style={{
                           shape: "rect",
                           layout: "vertical",
@@ -1337,7 +1337,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                             });
 
                             const orderData = await response.json();
-                            // console.log(orderData);
+                            console.log(orderData);
 
                             if (orderData.id) {
                               return orderData.id;
