@@ -146,10 +146,9 @@ const CalendarComponent = () => {
                 Choose between <span className="font-bold">Dive</span> or{" "}
                 <span className="font-bold"> 1 Dive Seat </span> events for an underwater adventure.{" "}
                 <span className="font-bold">Dive</span> events offer two available seats, while{" "}
-                <span className="font-bold"> 1 Dive Seat </span> events have only one. When
-                selecting your dive, remember that only single-day reservations are permitted.
-                Additionally, for safety and enjoyment, there's a minimum and maximum of two divers
-                per outing—no solo diving allowed.
+                <span className="font-bold"> 1 Dive Seat </span> events have only one. For safety
+                and enjoyment, there is a minimum and maximum of two divers per outing—no solo
+                diving allowed.
               </p>
               <br />
               <h3 className="text-xl">Cruise</h3>
@@ -157,9 +156,8 @@ const CalendarComponent = () => {
               <p>
                 Experience a scenic 3-hour tour from Elliot Bay to Blakely Rock by selecting
                 <span className="font-bold"> Cruise</span>. The
-                <span className="font-bold"> Cruise </span> event has 2 seats available.
-                Additionally, for safety and enjoyment, there's a maximum of two passengers per
-                cruise.
+                <span className="font-bold"> Cruise </span> event has 2 seats available. For safety
+                and enjoyment, there is a maximum of two passengers per cruise.
               </p>
               <br />
               {!showDiverInfo && !showCruiseInfo && (

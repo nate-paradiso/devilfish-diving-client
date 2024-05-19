@@ -24,10 +24,10 @@ const LiabilityRelease = ({ formData, showSecondPassengerForm }) => {
         I understand and agree that neither
         <span className="font-bold text-lg"> Devilfish Diving LLC</span> nor any of their affiliate
         and subsidiary corporations, nor any of their respective employees, officers, agents,
-        contractors, and assigns (hereinafter referred to as "Released Parties") may be held liable
-        or responsible in any way for any injury, death, or other damages that may occur during the
-        cruise as a result of my participation or as a result of the negligence of any party,
-        including the Released Parties, whether passive or active.
+        contractors, and assigns (hereinafter referred to as &ldquoReleased Parties&ldquo) may be
+        held liable or responsible in any way for any injury, death, or other damages that may occur
+        during the cruise as a result of my participation or as a result of the negligence of any
+        party, including the Released Parties, whether passive or active.
       </p>
       <br />
       <p>
