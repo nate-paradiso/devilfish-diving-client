@@ -6,14 +6,16 @@ body {
   background-color: #f8fafc;
 }
 /* CSS */
-.full-calendar-container {
-  /* user-select: none; Disable click and hold effect on the FullCalendar container */
-}
+
 .fc-event {
-  font-size: 0.8rem;
+  flex: flexbox;
+  font-size: 112x;
   cursor: pointer;
-  overflow: hidden; /* Hide overflow text */
 }
+.event-title {
+  white-space: normal; /* Allow text to wrap */
+}
+
 .contact__tube-spinner {
   height: 50px;
   width: 50px;

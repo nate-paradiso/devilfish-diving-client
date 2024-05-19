@@ -4,13 +4,15 @@ import googleCalendarPlugin from "@fullcalendar/google-calendar";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useState, useEffect } from "react";
 import DiverInfo from "./DiverInfo";
-// import DiverInfoTest from "./DiverInfoTest";
+import CruisePassengerInfo from "./CruisePassengerInfo";
+import CruiseForm from "./CruiseForm";
 import axios from "axios";
 
 const CalendarComponent = () => {
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   // State to store the selected date
   const [showDiverInfo, setShowDiverInfo] = useState(false);
+  const [showCruiseInfo, setShowCruiseInfo] = useState(false);
   const [selectedDateStr, setSelectedDateStr] = useState(""); // State variable to store the formatted date string
   const [selectedDate, setSelectedDate] = useState(null); // State variable to store the Date object
   const [googleEvents, setGoogleEvents] = useState([]);
@@ -23,7 +25,13 @@ const CalendarComponent = () => {
     try {
       const response = await axios.get(`${serverUrl}/api/google-calendar-events`); // Endpoint on your backend
       const data = response.data;
-      setGoogleEvents(data);
+
+      // Filter events to include only those with titles "Dive Booked", "Dive", "1 Dive Seat", or "Cruise" or "Cruise Booked"
+      const filteredEvents = data.filter(event =>
+        ["Dive Booked", "Dive", "1 Dive Seat", "Cruise", "Cruise Booked"].includes(event.title),
+      );
+
+      setGoogleEvents(filteredEvents);
       setLoading(false);
     } catch (error) {
       console.error("Failed to fetch events from backend:", error);
@@ -59,19 +67,28 @@ const CalendarComponent = () => {
     const clickedEvent = arg.event; // Get the clicked event object
     const selectedDate = clickedEvent.start; // Get the selected event date
     const formattedDate = formatDate(selectedDate); // Format the selected date
-    setSelectedDate(selectedDate); // Store the selected date in state
-    setSelectedDateStr(formattedDate); // Store the formatted selected date string in state
-    setShowDiverInfo(true);
 
-    if (clickedEvent.title === "Booked") {
+    if (
+      (clickedEvent.title === "Dive Booked" && clickedEvent.title === "Cruise Booked") ||
+      (clickedEvent.title !== "Dive" &&
+        clickedEvent.title !== "1 Dive Seat" &&
+        clickedEvent.title !== "Cruise")
+    ) {
       setShowDiverInfo(false);
       setSelectedDate(null);
       return; // Stop further execution
     }
-    if (clickedEvent.title === "1 Spot Available") {
+    if (clickedEvent.title === "Dive" || clickedEvent.title === "1 Dive Seat") {
       setSelectedDate(selectedDate); // Store the selected date in state
       setSelectedDateStr(formattedDate); // Store the formatted selected date string in state
       setShowDiverInfo(true);
+      setEventTitle(clickedEvent.title);
+    }
+
+    if (clickedEvent.title === "Cruise") {
+      setSelectedDate(selectedDate); // Store the selected date in state
+      setSelectedDateStr(formattedDate); // Store the formatted selected date string in state
+      setShowCruiseInfo(true);
       setEventTitle(clickedEvent.title);
     }
   };
@@ -80,6 +97,7 @@ const CalendarComponent = () => {
   const clearSelectedDate = () => {
     setSelectedDate(null);
     setShowDiverInfo(false);
+    setShowCruiseInfo(false);
   };
 
   // Function to get the name of the day corresponding to the selected date
@@ -88,22 +106,27 @@ const CalendarComponent = () => {
     const dayIndex = new Date(date).getDay();
     return days[dayIndex];
   };
+
   const eventContent = arg => {
     // Customize the rendering of each event based on its title
     let eventClasses = ""; // Initialize event classes
 
     // Apply Tailwind classes based on event title
-    if (arg.event.title === "Available") {
-      eventClasses = "bg-green-500"; // Blue background for "Available" events
-    } else if (arg.event.title === "Booked") {
-      eventClasses = "bg-red-500"; // Green background for "Booked" events
-    } else if (arg.event.title === "1 Spot Available") {
-      eventClasses = "bg-green-500"; // Green background for "Booked" events
+    if (arg.event.title === "Dive") {
+      eventClasses = "bg-blue-500"; // Blue background for "Dive" events
+    } else if (arg.event.title === "Dive Booked") {
+      eventClasses = "bg-red-500"; // Red background for "Dive Booked" events
+    } else if (arg.event.title === "1 Dive Seat") {
+      eventClasses = "bg-blue-500"; // Green background for "Dive" events
+    } else if (arg.event.title === "Cruise") {
+      eventClasses = "bg-green-500"; // Green background for "Cruise" events
+    } else if (arg.event.title === "Cruise Booked") {
+      eventClasses = "bg-red-500"; // Red background for "Cruise Booked" events
     }
 
     return (
-      <div className={`p-0.5  ${eventClasses}`}>
-        {arg.event.title} {/* Render event title */}
+      <div className={`p-0.5 ${eventClasses}`}>
+        <div className="event-title">{arg.event.title}</div> {/* Render event title */}
       </div>
     );
   };
@@ -116,16 +139,30 @@ const CalendarComponent = () => {
             <p className="m-4">Loading calendar...</p>
           ) : (
             <div className="m-4 flex justify-center flex-col ">
+              <h1 className="m-auto text-2xl">Welcome!</h1>
+              <h3 className="text-xl">Diving</h3>
+
               <p>
-                Welcome! Select an <span className="font-extrabold">Available</span> or{" "}
-                <span className="font-extrabold"> 1 Spot Available</span> event then complete the
-                form and pay. The Available events have 2 spots open. Only single day selection
-                allowed.
+                Choose between <span className="font-bold">Dive</span> or{" "}
+                <span className="font-bold"> 1 Dive Seat </span> events for an underwater adventure.{" "}
+                <span className="font-bold">Dive</span> events offer two available seats, while{" "}
+                <span className="font-bold"> 1 Dive Seat </span> events have only one. When
+                selecting your dive, remember that only single-day reservations are permitted.
+                Additionally, for safety and enjoyment, there's a minimum and maximum of two divers
+                per outing—no solo diving allowed.
               </p>
               <br />
-              <p>There is a 2 diver maximum and minimum, no solo divers.</p>
+              <h3 className="text-xl">Cruise</h3>
+
+              <p>
+                Experience a scenic 3-hour tour from Elliot Bay to Blakely Rock by selecting
+                <span className="font-bold"> Cruise</span>. The
+                <span className="font-bold"> Cruise </span> event has 2 seats available.
+                Additionally, for safety and enjoyment, there's a maximum of two passengers per
+                cruise.
+              </p>
               <br />
-              {!showDiverInfo && (
+              {!showDiverInfo && !showCruiseInfo && (
                 <FullCalendar
                   plugins={[dayGridPlugin, googleCalendarPlugin, interactionPlugin]}
                   className="shadow-md"
@@ -157,16 +194,23 @@ const CalendarComponent = () => {
               <div>
                 {selectedDate && (
                   <div>
-                    <h1 className="text-xl">Diver Information</h1>
+                    <h1 className="text-xl">Information</h1>
                     <h3 className="mt-2">
                       Date Selected:{" "}
-                      <span className="font-extrabold ">
+                      <span className="font-bold ">
                         {getDayName(selectedDate)} - {selectedDateStr}
                       </span>
                     </h3>{" "}
-                    <h3 className="mt-1">
-                      Price: <span className="font-extrabold">$140 per diver.</span>
-                    </h3>
+                    {(eventTitle === "Dive" || eventTitle === "1 Dive Seat") && (
+                      <h3 className="mt-1">
+                        Price: <span className="font-bold">$140 per diver - 2 tank dive trip.</span>
+                      </h3>
+                    )}
+                    {eventTitle === "Cruise" && (
+                      <h3 className="mt-1">
+                        Price: <span className="font-bold">$210 for the 3 hour cruise.</span>
+                      </h3>
+                    )}{" "}
                     <div className="flex justify-between mb-2 flex-row">
                       <button
                         className="border-solid p-2  border-2 border-sky-500 mt-1 w-32"
@@ -175,27 +219,32 @@ const CalendarComponent = () => {
                         Cancel
                       </button>
                     </div>
-                    <div className="flex max-w-[1200px] mx-auto ">
-                      {showDiverInfo ? (
+                    {(eventTitle === "Dive" || eventTitle === "1 Dive Seat") && (
+                      <div className="flex max-w-[1200px] mx-auto ">
                         <DiverInfo
-                          // <DiverInfoTest
                           setSelectedDate={setSelectedDate}
-                          setShowDiverInfo={setShowDiverInfo}
-                          showDiverInfo={showDiverInfo}
                           setIsSubmitted={setIsSubmitted}
                           selectedDate={selectedDate}
-                          clearSelectedDate={clearSelectedDate}
                           eventTitle={eventTitle}
                         />
-                      ) : (
-                        <button
-                          className="border-solid p-2 border-2 border-sky-500 mt-1 w-32"
-                          onClick={() => setShowDiverInfo(true)}
-                        >
-                          Next
-                        </button>
-                      )}
-                    </div>
+                      </div>
+                    )}{" "}
+                    {eventTitle === "Cruise" && (
+                      <div className="flex max-w-[1200px] mx-auto ">
+                        {/* <CruisePassengerInfo
+                          setSelectedDate={setSelectedDate}
+                          setIsSubmitted={setIsSubmitted}
+                          selectedDate={selectedDate}
+                          eventTitle={eventTitle}
+                        /> */}
+                        <CruiseForm
+                          setSelectedDate={setSelectedDate}
+                          setIsSubmitted={setIsSubmitted}
+                          selectedDate={selectedDate}
+                          eventTitle={eventTitle}
+                        />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -209,14 +258,14 @@ const CalendarComponent = () => {
             <br />
             We will see you at the{" "}
             <a
-              className="text-blue-500 font-extrabold"
+              className="text-blue-500 font-bold"
               target="blank"
               href="https://www.google.com/maps/place/Don+Armeni+Boat+Ramp/@47.592697,-122.3848731,17z/data=!4m14!1m7!3m6!1s0x5490407498e64f5f:0x7ab08bdb66039a82!2sDon+Armeni+Boat+Ramp!8m2!3d47.592697!4d-122.3822982!16s%2Fg%2F11c3tqkqhz!3m5!1s0x5490407498e64f5f:0x7ab08bdb66039a82!8m2!3d47.592697!4d-122.3822982!16s%2Fg%2F11c3tqkqhz?entry=ttu"
             >
               Don Armeni Boat Ramp
             </a>{" "}
-            in Alki at <span className="font-extrabold">7:30 AM </span>
-            <span className="font-extrabold ">
+            in Alki at <span className="font-bold">7:30 AM </span>
+            <span className="font-bold ">
               {getDayName(selectedDate)} - {selectedDateStr}
             </span>
             <br />
@@ -225,6 +274,7 @@ const CalendarComponent = () => {
               onClick={() => {
                 setIsSubmitted(false);
                 setShowDiverInfo(false);
+                setShowCruiseInfo(false);
                 setSelectedDate(null);
                 fetchEventsFromBackend();
               }}

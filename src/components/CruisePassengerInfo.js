@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import LiabilityRelease from "./LiabilityRelease";
+import LiabilityReleaseCruise from "./LiabilityReleaseCruise";
 import axios from "axios";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
@@ -9,13 +9,14 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 function Message({ content }) {
   return <p>{content}</p>;
 }
-const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
+const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   const [clientId, setClientId] = useState("");
   const [message, setMessage] = useState("");
+  const [secondPassenger, setSecondPassenger] = useState(false);
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const errorRefs = useRef({});
   const [isPayPalSuccessful, setIsPayPalSuccessful] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const formatDateForHTMLInput = selectedDate => {
     // Create a new Date object from the selectedDate
@@ -32,6 +33,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     return formattedDate;
   };
   const today = new Date();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -40,16 +42,23 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     birthday: "",
     under18: "",
     address: "",
-    lastDive: "",
-    certifyingAgency: "",
-    certificationNumber: "",
-    danInsuranceNumber: "",
     emergencyContactName: "",
     emergencyContactPhone: "",
     divingDate: selectedDate,
     message: "",
     electronicSignature: "",
     electronicParentSignature: "",
+    firstNameSecondPassenger: "",
+    lastNameSecondPassenger: "",
+    emailSecondPassenger: "",
+    phoneSecondPassenger: "",
+    birthdaySecondPassenger: "",
+    under18SecondPassenger: "",
+    addressSecondPassenger: "",
+    emergencyContactNameSecondPassenger: "",
+    emergencyContactPhoneSecondPassenger: "",
+    electronicSignatureSecondPassenger: "",
+    electronicParentSignatureSecondPassenger: "",
     electronicSignatureDate: formatDateForHTMLInput(today),
   });
 
@@ -61,16 +70,23 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     birthday: "",
     under18: "",
     address: "",
-    lastDive: "",
-    certifyingAgency: "",
-    certificationNumber: "",
-    danInsuranceNumber: "",
     emergencyContactName: "",
     emergencyContactPhone: "",
     divingDate: "",
     message: "",
     electronicSignature: "",
     electronicParentSignature: "",
+    firstNameSecondPassenger: "",
+    lastNameSecondPassenger: "",
+    emailSecondPassenger: "",
+    phoneSecondPassenger: "",
+    birthdaySecondPassenger: "",
+    under18SecondPassenger: "",
+    addressSecondPassenger: "",
+    emergencyContactNameSecondPassenger: "",
+    emergencyContactPhoneSecondPassenger: "",
+    electronicSignatureSecondPassenger: "",
+    electronicParentSignatureSecondPassenger: "",
     electronicSignatureDate: "",
   });
   const [isButtonVisible, setIsButtonVisible] = useState(true); // State to control button visibility
@@ -134,7 +150,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     setFormOutside(form);
   };
 
-  //Handle Paypal approval
   // Function to handle form submission
   const handleFormSubmit = event => {
     event.preventDefault();
@@ -221,42 +236,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       submitButton.disabled = false; // Re-enable the submit button
       return;
     }
-    if (!validateLastDive(data.lastDive)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        lastDive: "Please enter your last diving date.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateCertifyingAgency(data.certifyingAgency)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        certifyingAgency: "Please enter a certification agency.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateCertificationNumber(data.certificationNumber)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        certificationNumber: "Please enter a certification number.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateDanInsuranceNumber(data.danInsuranceNumber)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        danInsuranceNumber: "Please enter a DAN insurance number.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
     if (!validateEmergencyContactName(data.emergencyContactName)) {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
@@ -294,6 +273,115 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       return;
     }
 
+    // Validate second passenger's if the second passenger form is rendered
+    if (!validateFirstNameSecondPassenger(data.firstNameSecondPassenger)) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        firstNameSecondPassenger: "Please enter a valid first name for the second passenger.",
+      }));
+      form.removeAttribute("data-submitting"); // Release the form from submitting state
+      submitButton.disabled = false; // Re-enable the submit button
+      return;
+    }
+    if (!validateLastNameSecondPassenger(data.lastNameSecondPassenger)) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        lastNameSecondPassenger: "Please enter a valid last name for the second passenger.",
+      }));
+      form.removeAttribute("data-submitting"); // Release the form from submitting state
+      submitButton.disabled = false; // Re-enable the submit button
+      return;
+    }
+    if (!validateEmailSecondPassenger(data.emailSecondPassenger)) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        emailSecondPassenger: "Please enter a valid email for the second passenger.",
+      }));
+      form.removeAttribute("data-submitting"); // Release the form from submitting state
+      submitButton.disabled = false; // Re-enable the submit button
+      return;
+    }
+    if (!validatePhoneSecondPassenger(data.phoneSecondPassenger)) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        phoneSecondPassenger: "Please enter a valid phone number for the second passenger.",
+      }));
+      form.removeAttribute("data-submitting"); // Release the form from submitting state
+      submitButton.disabled = false; // Re-enable the submit button
+      return;
+    }
+    if (!validateBirthdaySecondPassenger(data.birthdaySecondPassenger)) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        birthdaySecondPassenger: "Please enter a valid birthday for the second passenger.",
+      }));
+      form.removeAttribute("data-submitting"); // Release the form from submitting state
+      submitButton.disabled = false; // Re-enable the submit button
+      return;
+    }
+    if (!validateUnder18SecondPassenger(data.under18SecondPassenger)) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        under18SecondPassenger: "Please enter yes or no for second passenger.",
+      }));
+      form.removeAttribute("data-submitting"); // Release the form from submitting state
+      submitButton.disabled = false; // Re-enable the submit button
+      return;
+    }
+    if (!validateAddressSecondPassenger(data.addressSecondPassenger)) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        addressSecondPassenger: "Please enter a valid address for the second passenger.",
+      }));
+      form.removeAttribute("data-submitting"); // Release the form from submitting state
+      submitButton.disabled = false; // Re-enable the submit button
+      return;
+    }
+    if (!validateEmergencyContactNameSecondPassenger(data.emergencyContactNameSecondPassenger)) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        emergencyContactNameSecondPassenger:
+          "Please enter a valid emergency contact name for the second passenger.",
+      }));
+      form.removeAttribute("data-submitting"); // Release the form from submitting state
+      submitButton.disabled = false; // Re-enable the submit button
+      return;
+    }
+    if (!validateEmergencyContactPhoneSecondPassenger(data.emergencyContactPhoneSecondPassenger)) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        emergencyContactPhoneSecondPassenger:
+          "Please enter a valid emergency contact phone number for the second passenger.",
+      }));
+      form.removeAttribute("data-submitting"); // Release the form from submitting state
+      submitButton.disabled = false; // Re-enable the submit button
+      return;
+    }
+    if (!validateElectronicSignatureSecondPassenger(data.electronicSignatureSecondPassenger)) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        electronicSignatureSecondPassenger:
+          "Please enter a electronic signature name for the second passenger.",
+      }));
+      form.removeAttribute("data-submitting"); // Release the form from submitting state
+      submitButton.disabled = false; // Re-enable the submit button
+      return;
+    }
+    if (
+      !validateElectronicParentSignatureSecondPassenger(
+        data.electronicParentSignatureSecondPassenger,
+      )
+    ) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        electronicParentSignatureSecondPassenger:
+          "Please enter a Parent or Legal Guardian electronic signature name for the second passenger.",
+      }));
+      form.removeAttribute("data-submitting"); // Release the form from submitting state
+      submitButton.disabled = false; // Re-enable the submit button
+      return;
+    }
+
     if (!validateElectronicSignature(data.electronicSignature)) {
       setValidationErrors(prevErrors => ({
         ...prevErrors,
@@ -322,10 +410,11 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       submitButton.disabled = false; // Re-enable the submit button
       return;
     }
+    console.log(secondPassenger);
+
     setIsButtonVisible(false);
     setIsFormVisible(false);
-    setLoading(true);
-
+    setLoading(false);
     function validateFirstName(firstName) {
       return (firstName ?? "").trim() !== ""; // Check if the name is not empty
     }
@@ -343,31 +432,19 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       return !isNaN(Date.parse(birthday)); // Check if the birthday is a valid date
     }
     function validateUnder18(under18) {
-      return under18 === "yes" || under18 === "no"; // Check if the value is either "yes" or "no"
+      return under18 === "Yes" || under18 === "No"; // Check if the value is either "yes" or "no"
     }
     function validateAddress(address) {
       return address.trim() !== ""; // Check if the address is not empty
     }
-    function validateLastDive(lastDive) {
-      return !isNaN(Date.parse(lastDive)); // Check if the last dive is a valid date
-    }
-    function validateCertifyingAgency(certifyingAgency) {
-      return certifyingAgency.trim() !== ""; // Check if the name is not empty
-    }
-    function validateCertificationNumber(certificationNumber) {
-      return certificationNumber.trim() !== ""; // Check if the name is not empty
-    }
-    function validateDanInsuranceNumber(danInsuranceNumber) {
-      return danInsuranceNumber.trim() !== ""; // Check if the name is not empty
-    }
     function validateEmergencyContactName(emergencyContactName) {
       return emergencyContactName.trim() !== ""; // Check if the name is not empty
     }
-    function validateMessage(message) {
-      return message.trim() !== ""; // Check if the message is not empty
-    }
     function validateEmergencyContactPhone(emergencyContactPhone) {
       return emergencyContactPhone.trim() !== ""; // Check if the name is not empty
+    }
+    function validateMessage(message) {
+      return message.trim() !== ""; // Check if the message is not empty
     }
     function validateDivingDate(divingDate) {
       return !isNaN(Date.parse(divingDate)); // Check if the diving date is a valid date
@@ -378,10 +455,49 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     function validateElectronicParentSignature(electronicParentSignature) {
       return (electronicParentSignature ?? "").trim() !== ""; // Check if the name is not empty
     }
+
+    // Second passenger validation
+    function validateFirstNameSecondPassenger(firstNameSecondPassenger) {
+      return (firstNameSecondPassenger ?? "").trim() !== ""; // Check if the name is not empty
+    }
+    function validateLastNameSecondPassenger(lastNameSecondPassenger) {
+      return lastNameSecondPassenger.trim() !== ""; // Check if the name is not empty
+    }
+    function validateEmailSecondPassenger(emailSecondPassenger) {
+      let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(emailSecondPassenger); // Check if the email has a valid format
+    }
+    function validatePhoneSecondPassenger(phoneSecondPassenger) {
+      return phoneSecondPassenger.trim() !== ""; // Check if the name is not empty
+    }
+    function validateBirthdaySecondPassenger(birthdaySecondPassenger) {
+      return !isNaN(Date.parse(birthdaySecondPassenger)); // Check if the birthday is a valid date
+    }
+    function validateUnder18SecondPassenger(under18SecondPassenger) {
+      return under18SecondPassenger === "Yes" || under18SecondPassenger === "No"; // Check if the value is either "yes" or "no"
+    }
+    function validateAddressSecondPassenger(addressSecondPassenger) {
+      return addressSecondPassenger.trim() !== ""; // Check if the address is not empty
+    }
+    function validateEmergencyContactNameSecondPassenger(emergencyContactNameSecondPassenger) {
+      return emergencyContactNameSecondPassenger.trim() !== ""; // Check if the name is not empty
+    }
+    function validateEmergencyContactPhoneSecondPassenger(emergencyContactPhoneSecondPassenger) {
+      return emergencyContactPhoneSecondPassenger.trim() !== ""; // Check if the name is not empty
+    }
+    function validateElectronicSignatureSecondPassenger(electronicSignatureSecondPassenger) {
+      return (electronicSignatureSecondPassenger ?? "").trim() !== ""; // Check if the name is not empty
+    }
+    function validateElectronicParentSignatureSecondPassenger(
+      electronicParentSignatureSecondPassenger,
+    ) {
+      return (electronicParentSignatureSecondPassenger ?? "").trim() !== ""; // Check if the name is not empty
+    }
     function validateElectronicSignatureDate(electronicSignatureDate) {
       return !isNaN(Date.parse(electronicSignatureDate)); // Check if the signature date is a valid date
     }
   };
+
   // Handle form submission via XMLHttpRequest
   const handleGoogleSheetSubmit = () => {
     // console.log("formDataOutside inside googlesheetsubmit", formDataOutside);
@@ -431,14 +547,25 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
             birthday: "",
             under18: "",
             address: "",
-            lastDive: "",
-            certifyingAgency: "",
-            certificationNumber: "",
-            danInsuranceNumber: "",
+            // lastDive: "",
+            // certifyingAgency: "",
+            // certificationNumber: "",
+            // danInsuranceNumber: "",
             emergencyContactName: "",
             emergencyContactPhone: "",
             divingDate: "",
             message: "",
+            firstNameSecondPassenger: "",
+            lastNameSecondPassenger: "",
+            emailSecondPassenger: "",
+            phoneSecondPassenger: "",
+            birthdaySecondPassenger: "",
+            under18SecondPassenger: "",
+            addressSecondPassenger: "",
+            emergencyContactNameSecondPassenger: "",
+            emergencyContactPhoneSecondPassenger: "",
+            electronicSignatureSecondPassenger: "",
+            electronicParentSignatureSecondPassenger: "",
             electronicSignature: "",
             electronicParentSignature: "",
             electronicSignatureDate: "",
@@ -475,43 +602,17 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     }
   }, [isPayPalSuccessful]);
 
-  // Define function to update Calendar from Dive to 1 Dive Seat
-  const upDateCalendar1Seat = async formData => {
-    try {
-      const response = await axios.patch(`${serverUrl}/api/update-calendar-1seat`, {
-        formData,
-      });
-      console.log(
-        "Diving date sent to the backend to update calendar to (1 Dive Seat)",
-        response.data,
-      );
-      return response.data;
-    } catch (error) {
-      console.error(
-        "Error sending diving date to backend to update calendar to (1 Dive Seat):",
-        error,
-      );
-      throw error;
-    }
-  };
-
-  // Define function to update Calendar from 1 Dive Seat to Dive Booked
+  // Define function to update Calendar from Cruise to Booked
   const upDateCalendarBooked = async formData => {
     try {
-      const response = await axios.patch(`${serverUrl}/api/update-calendar-dive-booked`, {
+      const response = await axios.patch(`${serverUrl}/api/update-calendar-cruise-booked`, {
         formData,
       });
       // console.log(formData);
-      console.log(
-        "Diving date sent to the backend to update calendar to (Dive Booked)",
-        response.data,
-      );
+      console.log("Cruise date sent to the backend to update calendar to (booked)", response.data);
       return response.data;
     } catch (error) {
-      console.error(
-        "Error sending diving date to backend to update calendar to (Dive Booked):",
-        error,
-      );
+      console.error("Error sending cruise date to backend to update calendar to (booked):", error);
       throw error;
     }
   };
@@ -519,11 +620,11 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   // Define function to send email
   const sendEmail = async formData => {
     try {
-      const response = await axios.post(`${serverUrl}/api/send-email`, { formData });
-      console.log("Form data sent to the backend for email", response.data); // Log the response from the backend
+      const response = await axios.post(`${serverUrl}/api/send-cruise-email`, { formData });
+      console.log("Cruise form data sent to the backend for email", response.data); // Log the response from the backend
       return response.data; // Return the response data if needed
     } catch (error) {
-      console.error("Error sending form data to backend for email:", error);
+      console.error("Error sending cruise form data to backend for email:", error);
       throw error; // Throw the error to handle it in the calling code
     }
   };
@@ -563,10 +664,10 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         handleGoogleSheetSubmit();
 
         // Update Calendar
-        if (eventTitle === "1 Dive Seat") {
+        if (eventTitle === "Cruise") {
           upDateCalendarBooked(formData);
         } else {
-          upDateCalendar1Seat(formData);
+          upDateCalendar1Spot(formData);
         }
 
         // Send email
@@ -584,6 +685,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       setMessage(`Sorry, your transaction could not be processed...${error}`);
     }
   };
+
   // Function to handle input changes in the form fields
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -599,6 +701,9 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       ...prevErrors,
       [name]: "",
     }));
+
+    // Log the updated value
+    console.log(`Updated value of ${name}:`, value);
   };
 
   // Update diving date in form data when selected date changes
@@ -672,18 +777,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
     fetchClientId();
   }, []);
-
-  // Use a timeout to hide the spinner after a certain period
-  useEffect(() => {
-    if (!isButtonVisible) {
-      const timer = setTimeout(() => {
-        setLoading(false);
-      }, 2000); // Adjust the timeout duration as needed (5000ms = 5 seconds)
-
-      return () => clearTimeout(timer); // Clean up the timer on component unmount
-    }
-  }, [isButtonVisible]);
-
   return (
     <section className="max-w-[1200px] w-full">
       <form
@@ -698,7 +791,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
               <div>
                 <div className="flex-col flex">
                   <label htmlFor="divingDate" className="mt-2 flex flex-row">
-                    Diving Date: <span className="text-red-500">*</span>
+                    Cruise Date: <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="divingDate"
@@ -807,6 +900,8 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     </span>
                   )}
                 </div>
+              </div>
+              <div>
                 <div className="flex-col flex">
                   <label htmlFor="under18" className="mt-2 flex flex-row">
                     Are you under 18?
@@ -820,8 +915,8 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     onChange={handleInputChange}
                   >
                     <option value="">Select</option>
-                    <option value="no">No</option>
-                    <option value="yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
                   </select>{" "}
                   {validationErrors.under18 && (
                     <span ref={el => (errorRefs.current.under18 = el)} className="text-red-500">
@@ -847,91 +942,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     </span>
                   )}
                 </div>
-              </div>
-              <div>
-                <div className="flex-col flex">
-                  <label htmlFor="lastDive" className="mt-2 flex flex-row">
-                    Date of Last Dive: <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    id="lastDive"
-                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                    type="date"
-                    name="lastDive"
-                    value={formData.lastDive}
-                    onChange={handleInputChange}
-                  />
-                  {validationErrors.lastDive && (
-                    <span ref={el => (errorRefs.current.lastDive = el)} className="text-red-500">
-                      {validationErrors.lastDive}
-                    </span>
-                  )}
-                </div>
 
-                <div className="flex-col flex">
-                  <label htmlFor="certifyingAgency" className="mt-2 flex flex-row">
-                    Certifying Agency: <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    id="certifyingAgency"
-                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                    type="text"
-                    name="certifyingAgency"
-                    value={formData.certifyingAgency}
-                    onChange={handleInputChange}
-                  />
-                  {validationErrors.certifyingAgency && (
-                    <span
-                      ref={el => (errorRefs.current.certifyingAgency = el)}
-                      className="text-red-500"
-                    >
-                      {validationErrors.certifyingAgency}
-                    </span>
-                  )}
-                </div>
-                <div className="flex-col flex">
-                  <label htmlFor="certificationNumber" className="mt-2 flex flex-row">
-                    Certification Number: <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    id="certificationNumber"
-                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
-                    type="text"
-                    name="certificationNumber"
-                    value={formData.certificationNumber}
-                    onChange={handleInputChange}
-                  />
-                  {validationErrors.certificationNumber && (
-                    <span
-                      ref={el => (errorRefs.current.certificationNumber = el)}
-                      className="contact__error-message"
-                    >
-                      {validationErrors.certificationNumber}
-                    </span>
-                  )}
-                </div>
-                <div className="flex-col flex">
-                  <label htmlFor="danInsuranceNumber" className="mt-2 flex flex-row">
-                    DAN Insurance Number: <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    id="danInsuranceNumber"
-                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
-                    type="text"
-                    placeholder="Enter N/A if none"
-                    name="danInsuranceNumber"
-                    value={formData.danInsuranceNumber}
-                    onChange={handleInputChange}
-                  />
-                  {validationErrors.danInsuranceNumber && (
-                    <span
-                      ref={el => (errorRefs.current.danInsuranceNumber = el)}
-                      className="contact__error-message"
-                    >
-                      {validationErrors.danInsuranceNumber}
-                    </span>
-                  )}
-                </div>
                 <div className="flex-col flex">
                   <label htmlFor="emergencyContactName" className="mt-2 flex flex-row">
                     Emergency Contact Name: <span className="text-red-500">*</span>
@@ -997,11 +1008,248 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     </span>
                   )}
                 </div>
+                <br />
+                <br />
               </div>
             </div>
+            {/* <div className="flex justify-between mb-2 flex-row">
+              <button
+                className="border-solid p-2 border-2 border-sky-500 mt-1 w-32"
+                onClick={handleSecondPassenger}
+                type="button"
+              >
+                Add Second Passenger
+              </button>
+            </div> */}
+
+            {/* {secondPassenger ? ( */}
+            <div>
+              <div>
+                <h2 className="text-xl md:ml-[85px]">Second Passenger</h2>
+                <div className="  flex justify-center flex-col  md:flex-row md:justify-evenly ">
+                  <div>
+                    <div className="flex-col flex">
+                      <label htmlFor="firstNameSecondPassenger " className="mt-2 flex flex-row">
+                        First Name: <span className="text-red-500 ">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="firstNameSecondPassenger"
+                        name="firstNameSecondPassenger"
+                        placeholder="Enter N/A if none"
+                        value={formData.firstNameSecondPassenger}
+                        onChange={handleInputChange}
+                        className="border-solid p-2  border-2 border-darkBlue   md:w-64  w-full h-[46px] "
+                      />
+                      {validationErrors.firstNameSecondPassenger && (
+                        <span
+                          ref={el => (errorRefs.current.firstNameSecondPassenger = el)}
+                          className="text-red-500"
+                        >
+                          {validationErrors.firstNameSecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-col flex">
+                      <label htmlFor="lastNameSecondPassenger " className="mt-2 flex flex-row">
+                        Last Name: <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="lastNameSecondPassenger"
+                        name="lastNameSecondPassenger"
+                        placeholder="Enter N/A if none"
+                        value={formData.lastNameSecondPassenger}
+                        onChange={handleInputChange}
+                        className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                      />
+                      {validationErrors.lastNameSecondPassenger && (
+                        <span
+                          ref={el => (errorRefs.current.lastNameSecondPassenger = el)}
+                          className="text-red-500"
+                        >
+                          {validationErrors.lastNameSecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-col flex">
+                      <label htmlFor="emailSecondPassenger" className="mt-2 flex flex-row">
+                        Email: <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        id="emailSecondPassenger"
+                        className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                        type="emailSecondPassenger"
+                        name="emailSecondPassenger"
+                        placeholder="Enter N/A if none"
+                        value={formData.emailSecondPassenger}
+                        onChange={handleInputChange}
+                      />
+                      {validationErrors.emailSecondPassenger && (
+                        <span
+                          ref={el => (errorRefs.current.emailSecondPassenger = el)}
+                          className="text-red-500"
+                        >
+                          {validationErrors.emailSecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-col flex">
+                      <label htmlFor="phoneSecondPassenger" className="mt-2 flex flex-row">
+                        Phone: <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        id="phoneSecondPassenger"
+                        className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                        type="tel"
+                        name="phoneSecondPassenger"
+                        placeholder="Enter N/A if none"
+                        value={formatPhoneNumber(formData.phoneSecondPassenger)}
+                        onChange={handleInputChange}
+                      />
+                      {validationErrors.phoneSecondPassenger && (
+                        <span
+                          ref={el => (errorRefs.current.phoneSecondPassenger = el)}
+                          className="text-red-500"
+                        >
+                          {validationErrors.phoneSecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-col flex">
+                      <label htmlFor="birthdaySecondPassenger" className="mt-2 flex flex-row">
+                        Birthday: <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        id="birthdaySecondPassenger"
+                        className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                        type="date"
+                        name="birthdaySecondPassenger"
+                        placeholder="Enter N/A if none"
+                        value={formData.birthdaySecondPassenger}
+                        onChange={handleInputChange}
+                      />
+                      {validationErrors.birthdaySecondPassenger && (
+                        <span
+                          ref={el => (errorRefs.current.birthdaySecondPassenger = el)}
+                          className="text-red-500"
+                        >
+                          {validationErrors.birthdaySecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex-col flex">
+                      <label htmlFor="under18SecondPassenger" className="mt-2 flex flex-row">
+                        Are you under 18?
+                        <span className="text-red-500">*</span>
+                      </label>
+                      <select
+                        id="under18SecondPassenger"
+                        className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                        name="under18SecondPassenger"
+                        placeholder="Enter N/A if none"
+                        value={formData.under18SecondPassenger}
+                        onChange={handleInputChange}
+                      >
+                        <option value="">Select</option>
+                        <option value="">N/A</option>
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                      </select>{" "}
+                      {validationErrors.under18SecondPassenger && (
+                        <span
+                          ref={el => (errorRefs.current.under18SecondPassenger = el)}
+                          className="text-red-500"
+                        >
+                          {validationErrors.under18SecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-col flex">
+                      <label htmlFor="addressSecondPassenger" className="mt-2 flex flex-row">
+                        Address: <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        id="addressSecondPassenger"
+                        className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px] "
+                        type="address"
+                        placeholder="Enter N/A if none"
+                        name="addressSecondPassenger"
+                        value={formData.addressSecondPassenger}
+                        onChange={handleInputChange}
+                      />
+                      {validationErrors.addressSecondPassenger && (
+                        <span
+                          ref={el => (errorRefs.current.addressSecondPassenger = el)}
+                          className="text-red-500"
+                        >
+                          {validationErrors.addressSecondPassenger}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex-col flex">
+                      <label
+                        htmlFor="emergencyContactNameSecondPassenger"
+                        className="mt-2 flex flex-row"
+                      >
+                        Emergency Contact Name: <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        id="emergencyContactNameSecondPassenger"
+                        className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]   "
+                        type="text"
+                        placeholder="Enter N/A if none"
+                        name="emergencyContactNameSecondPassenger"
+                        value={formData.emergencyContactNameSecondPassenger}
+                        onChange={handleInputChange}
+                      />
+                      {validationErrors.emergencyContactNameSecondPassenger && (
+                        <span
+                          ref={el => (errorRefs.current.emergencyContactNameSecondPassenger = el)}
+                          className="contact__error-message"
+                        >
+                          {validationErrors.emergencyContactNameSecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-col flex">
+                      <label
+                        htmlFor="emergencyContactPhoneSecondPassenger"
+                        className="mt-2 flex flex-row"
+                      >
+                        Emergency Contact Phone: <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        id="emergencyContactPhoneSecondPassenger"
+                        className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]    "
+                        type="tel"
+                        placeholder="Enter N/A if none"
+                        name="emergencyContactPhoneSecondPassenger"
+                        value={formatPhoneNumber(formData.emergencyContactPhoneSecondPassenger)}
+                        onChange={handleInputChange}
+                      />
+                      {validationErrors.emergencyContactPhoneSecondPassenger && (
+                        <span
+                          ref={el => (errorRefs.current.emergencyContactPhoneSecondPassenger = el)}
+                          className="contact__error-message"
+                        >
+                          {validationErrors.emergencyContactPhoneSecondPassenger}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* ) : (
+              ""
+            )} */}
 
             <div className="mt-4">
-              <LiabilityRelease formData={formData} />
+              <LiabilityReleaseCruise formData={formData} secondPassenger={secondPassenger} />
               <div className="flex-col flex">
                 <p>
                   By typing your name below you are electronically signing, you acknowledge that you
@@ -1010,9 +1258,8 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   <br />
                 </p>
                 <div className="flex flex-col">
-                  {" "}
                   <label htmlFor="electronicSignature" className="mt-2 flex flex-row">
-                    Diver Electronic Signature: <span className="text-red-500">*</span>
+                    Passenger Electronic Signature: <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="electronicSignature"
@@ -1032,7 +1279,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   )}
                 </div>
                 <div className="flex flex-col">
-                  {" "}
                   <label
                     htmlFor="electronicParentSignature"
                     className="mt-2 flex flex-row md:w-[185px]"
@@ -1057,6 +1303,64 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                       {validationErrors.electronicParentSignature}
                     </span>
                   )}
+                </div>
+
+                <div>
+                  {" "}
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="electronicSignatureSecondPassenger"
+                      className="mt-2 flex flex-row md:w-[215px]"
+                    >
+                      Second Passenger Electronic Signature:
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      id="electronicSignatureSecondPassenger"
+                      className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                      type="name"
+                      placeholder="Enter N/A if none"
+                      name="electronicSignatureSecondPassenger"
+                      value={formData.electronicSignatureSecondPassenger}
+                      onChange={handleInputChange}
+                    />
+                    {validationErrors.electronicSignatureSecondPassenger && (
+                      <span
+                        ref={el => (errorRefs.current.electronicSignatureSecondPassenger = el)}
+                        className="contact__error-message"
+                      >
+                        {validationErrors.electronicSignatureSecondPassenger}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="electronicParentSignatureSecondPassenger"
+                      className="mt-2 flex flex-row md:w-[255px]"
+                    >
+                      Second Passenger Parent or Legal Guardian Electronic Signature:{" "}
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      id="electronicParentSignatureSecondPassenger"
+                      className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                      type="name"
+                      placeholder="Enter N/A if over 18"
+                      name="electronicParentSignatureSecondPassenger"
+                      value={formData.electronicParentSignatureSecondPassenger}
+                      onChange={handleInputChange}
+                    />
+                    {validationErrors.electronicParentSignatureSecondPassenger && (
+                      <span
+                        ref={el =>
+                          (errorRefs.current.electronicParentSignatureSecondPassenger = el)
+                        }
+                        className="contact__error-message"
+                      >
+                        {validationErrors.electronicParentSignatureSecondPassenger}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="flex-col flex">
@@ -1097,6 +1401,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
             ) : (
               <div>
                 {loading ? (
+                  // <p className="m-4">Loading...</p>
                   <div>
                     <Image
                       className=""
@@ -1135,7 +1440,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                               body: JSON.stringify({
                                 cart: [
                                   {
-                                    id: "Dive",
+                                    id: "Cruise Trip",
                                     quantity: "1",
                                   },
                                 ],
@@ -1175,4 +1480,4 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   );
 };
 
-export default DiverInfo;
+export default CruisePassengerInfo;

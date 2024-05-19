@@ -46,7 +46,7 @@ const MapComponent = () => {
         opacity: 0.9, // Opacity value (0 to 1)
       },
       {
-        name: "Alki Fishing Reef",
+        name: "Alki Reef",
         url: "/images/tiles/alki-rock-reef.png",
         bounds: [
           [47.55537, -122.41015],
