@@ -4,6 +4,7 @@ import LiabilityReleaseCruise from "./LiabilityReleaseCruise";
 import axios from "axios";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Image from "next/image";
+import { cartItems } from "./PayPalCart";
 
 // Renders errors or successful transactions on the screen.
 function Message({ content }) {
@@ -613,6 +614,40 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     }
   };
 
+  const createOrder = async () => {
+    try {
+      const response = await fetch(`${serverUrl}/api/orders`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        // use the "body" param to optionally pass additional order information
+        // like product ids and quantities
+        body: JSON.stringify({
+          cart: cartItems,
+        }),
+      });
+
+      const orderData = await response.json();
+      // console.log(orderData);
+
+      if (orderData.id) {
+        return orderData.id;
+      } else {
+        const errorDetail = orderData?.details?.[0];
+        const errorMessage = errorDetail
+          ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
+          : JSON.stringify(orderData);
+
+        throw new Error(errorMessage);
+      }
+    } catch (error) {
+      console.error(error);
+      setMessage(`Could not initiate PayPal Checkout...${error}`);
+    }
+  };
+
   // Define function to handle PayPal approval
   const handlePayPalOnApprove = async (data, actions) => {
     try {
@@ -741,6 +776,17 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     fetchClientId();
   }, []);
 
+  // Use a timeout to hide the spinner after a certain period
+  useEffect(() => {
+    if (!isButtonVisible) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 2000); // Adjust the timeout duration as needed (5000ms = 5 seconds)
+
+      return () => clearTimeout(timer); // Clean up the timer on component unmount
+    }
+  }, [isButtonVisible]);
+
   return (
     <section className="max-w-[1200px] w-full">
       <form
@@ -772,7 +818,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   </label>
                   <input
                     id="divingDate"
-                    className="border-solid p-2 font-extrabold border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
                     type="date"
                     name="divingDate"
                     value={formatDateForHTMLInput(formData.divingDate)}
@@ -785,7 +831,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   </label>
                   <input
                     type="text"
-                    className="border-solid p-2 font-extrabold border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
                     id="firstName"
                     name="firstName"
                     value={formData.firstName}
@@ -801,7 +847,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   </label>
                   <input
                     type="text"
-                    className="border-solid p-2 font-extrabold border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
                     id="lastName"
                     name="lastName"
                     value={formData.lastName}
@@ -817,7 +863,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   </label>
                   <input
                     type="email"
-                    className="border-solid p-2 font-extrabold border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
                     id="email"
                     name="email"
                     value={formData.email}
@@ -833,7 +879,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   </label>
                   <input
                     type="tel"
-                    className="border-solid p-2 font-extrabold border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
                     id="phone"
                     name="phone"
                     value={formatPhoneNumber(formData.phone)}
@@ -849,7 +895,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   </label>
                   <input
                     type="date"
-                    className="border-solid p-2 font-extrabold border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                    className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
                     id="birthday"
                     name="birthday"
                     value={formData.birthday}
@@ -964,7 +1010,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                       </label>
                       <input
                         type="text"
-                        className="border-solid p-2 font-extrabold border-2 border-darkBlue md:w-64 w-full h-[46px]"
+                        className="border-solid p-2  border-2 border-darkBlue md:w-64 w-full h-[46px]"
                         id="firstNameSecondPassenger"
                         name="firstNameSecondPassenger"
                         value={formData.firstNameSecondPassenger}
@@ -982,7 +1028,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                       </label>
                       <input
                         type="text"
-                        className="border-solid p-2 font-extrabold border-2 border-darkBlue md:w-64 w-full h-[46px]"
+                        className="border-solid p-2  border-2 border-darkBlue md:w-64 w-full h-[46px]"
                         id="lastNameSecondPassenger"
                         name="lastNameSecondPassenger"
                         value={formData.lastNameSecondPassenger}
@@ -1000,7 +1046,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                       </label>
                       <input
                         type="email"
-                        className="border-solid p-2 font-extrabold border-2 border-darkBlue md:w-64 w-full h-[46px]"
+                        className="border-solid p-2  border-2 border-darkBlue md:w-64 w-full h-[46px]"
                         id="emailSecondPassenger"
                         name="emailSecondPassenger"
                         value={formData.emailSecondPassenger}
@@ -1018,7 +1064,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                       </label>
                       <input
                         type="tel"
-                        className="border-solid p-2 font-extrabold border-2 border-darkBlue md:w-64 w-full h-[46px]"
+                        className="border-solid p-2  border-2 border-darkBlue md:w-64 w-full h-[46px]"
                         id="phoneSecondPassenger"
                         name="phoneSecondPassenger"
                         value={formatPhoneNumber(formData.phoneSecondPassenger)}
@@ -1036,7 +1082,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                       </label>
                       <input
                         type="date"
-                        className="border-solid p-2 font-extrabold border-2 border-darkBlue md:w-64 w-full h-[46px]"
+                        className="border-solid p-2  border-2 border-darkBlue md:w-64 w-full h-[46px]"
                         id="birthdaySecondPassenger"
                         name="birthdaySecondPassenger"
                         value={formData.birthdaySecondPassenger}
@@ -1311,49 +1357,11 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   >
                     <div className="App max-w-[750px] flex flex-col md:max-w-[256px] ">
                       <PayPalButtons
-                        onInit={setLoading(false)}
                         style={{
                           shape: "rect",
                           layout: "vertical",
                         }}
-                        createOrder={async () => {
-                          try {
-                            const response = await fetch(`${serverUrl}/api/orders`, {
-                              method: "POST",
-                              headers: {
-                                "Content-Type": "application/json",
-                              },
-
-                              // use the "body" param to optionally pass additional order information
-                              // like product ids and quantities
-                              body: JSON.stringify({
-                                cart: [
-                                  {
-                                    id: "Cruise Trip",
-                                    quantity: "1",
-                                  },
-                                ],
-                              }),
-                            });
-
-                            const orderData = await response.json();
-                            console.log(orderData);
-
-                            if (orderData.id) {
-                              return orderData.id;
-                            } else {
-                              const errorDetail = orderData?.details?.[0];
-                              const errorMessage = errorDetail
-                                ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
-                                : JSON.stringify(orderData);
-
-                              throw new Error(errorMessage);
-                            }
-                          } catch (error) {
-                            console.error(error);
-                            setMessage(`Could not initiate PayPal Checkout...${error}`);
-                          }
-                        }}
+                        createOrder={createOrder}
                         onApprove={handlePayPalOnApprove}
                       />
                       <Message content={message} />

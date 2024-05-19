@@ -15,7 +15,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const errorRefs = useRef({});
   const [isPayPalSuccessful, setIsPayPalSuccessful] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const formatDateForHTMLInput = selectedDate => {
     // Create a new Date object from the selectedDate
@@ -324,7 +324,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     }
     setIsButtonVisible(false);
     setIsFormVisible(false);
-    setLoading(false);
+    setLoading(true);
 
     function validateFirstName(firstName) {
       return (firstName ?? "").trim() !== ""; // Check if the name is not empty
@@ -672,6 +672,17 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
     fetchClientId();
   }, []);
+
+  // Use a timeout to hide the spinner after a certain period
+  useEffect(() => {
+    if (!isButtonVisible) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 2000); // Adjust the timeout duration as needed (5000ms = 5 seconds)
+
+      return () => clearTimeout(timer); // Clean up the timer on component unmount
+    }
+  }, [isButtonVisible]);
 
   return (
     <section className="max-w-[1200px] w-full">
@@ -1086,7 +1097,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
             ) : (
               <div>
                 {loading ? (
-                  // <p className="m-4">Loading...</p>
                   <div>
                     <Image
                       className=""
@@ -1125,7 +1135,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                               body: JSON.stringify({
                                 cart: [
                                   {
-                                    id: "Dive Trip",
+                                    id: "Dive",
                                     quantity: "1",
                                   },
                                 ],

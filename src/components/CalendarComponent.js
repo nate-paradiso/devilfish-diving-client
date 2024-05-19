@@ -143,21 +143,21 @@ const CalendarComponent = () => {
               <h3 className="text-xl">Diving</h3>
 
               <p>
-                Choose between <span className="font-extrabold">Dive</span> or{" "}
-                <span className="font-extrabold"> 1 Dive Seat </span> events for an underwater
-                adventure. <span className="font-extrabold">Dive</span> events offer two available
-                seats, while <span className="font-extrabold"> 1 Dive Seat </span> events have only
-                one. When selecting your dive, remember that only single-day reservations are
-                permitted. Additionally, for safety and enjoyment, there's a minimum and maximum of
-                two divers per outing—no solo diving allowed.
+                Choose between <span className="font-bold">Dive</span> or{" "}
+                <span className="font-bold"> 1 Dive Seat </span> events for an underwater adventure.{" "}
+                <span className="font-bold">Dive</span> events offer two available seats, while{" "}
+                <span className="font-bold"> 1 Dive Seat </span> events have only one. When
+                selecting your dive, remember that only single-day reservations are permitted.
+                Additionally, for safety and enjoyment, there's a minimum and maximum of two divers
+                per outing—no solo diving allowed.
               </p>
               <br />
               <h3 className="text-xl">Cruise</h3>
 
               <p>
                 Experience a scenic 3-hour tour from Elliot Bay to Blakely Rock by selecting
-                <span className="font-extrabold"> Cruise</span>. The
-                <span className="font-extrabold"> Cruise </span> event has 2 seats available.
+                <span className="font-bold"> Cruise</span>. The
+                <span className="font-bold"> Cruise </span> event has 2 seats available.
                 Additionally, for safety and enjoyment, there's a maximum of two passengers per
                 cruise.
               </p>
@@ -197,19 +197,18 @@ const CalendarComponent = () => {
                     <h1 className="text-xl">Information</h1>
                     <h3 className="mt-2">
                       Date Selected:{" "}
-                      <span className="font-extrabold ">
+                      <span className="font-bold ">
                         {getDayName(selectedDate)} - {selectedDateStr}
                       </span>
                     </h3>{" "}
                     {(eventTitle === "Dive" || eventTitle === "1 Dive Seat") && (
                       <h3 className="mt-1">
-                        Price:{" "}
-                        <span className="font-extrabold">$140 per diver - 2 tank dive trip.</span>
+                        Price: <span className="font-bold">$140 per diver - 2 tank dive trip.</span>
                       </h3>
                     )}
                     {eventTitle === "Cruise" && (
                       <h3 className="mt-1">
-                        Price: <span className="font-extrabold">$210 for the 3 hour cruise.</span>
+                        Price: <span className="font-bold">$210 for the 3 hour cruise.</span>
                       </h3>
                     )}{" "}
                     <div className="flex justify-between mb-2 flex-row">
@@ -259,14 +258,14 @@ const CalendarComponent = () => {
             <br />
             We will see you at the{" "}
             <a
-              className="text-blue-500 font-extrabold"
+              className="text-blue-500 font-bold"
               target="blank"
               href="https://www.google.com/maps/place/Don+Armeni+Boat+Ramp/@47.592697,-122.3848731,17z/data=!4m14!1m7!3m6!1s0x5490407498e64f5f:0x7ab08bdb66039a82!2sDon+Armeni+Boat+Ramp!8m2!3d47.592697!4d-122.3822982!16s%2Fg%2F11c3tqkqhz!3m5!1s0x5490407498e64f5f:0x7ab08bdb66039a82!8m2!3d47.592697!4d-122.3822982!16s%2Fg%2F11c3tqkqhz?entry=ttu"
             >
               Don Armeni Boat Ramp
             </a>{" "}
-            in Alki at <span className="font-extrabold">7:30 AM </span>
-            <span className="font-extrabold ">
+            in Alki at <span className="font-bold">7:30 AM </span>
+            <span className="font-bold ">
               {getDayName(selectedDate)} - {selectedDateStr}
             </span>
             <br />
