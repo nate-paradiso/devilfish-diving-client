@@ -1257,7 +1257,6 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                         id="electronicSignatureSecondPassenger"
                         className="border-solid p-2  border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
                         type="name"
-                        placeholder="Enter N/A if none"
                         name="electronicSignatureSecondPassenger"
                         value={formData.electronicSignatureSecondPassenger}
                         onChange={handleInputChange}
