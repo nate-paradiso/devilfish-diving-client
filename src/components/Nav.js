@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,6 +11,8 @@ export const Nav = () => {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
+  const router = useRouter();
 
   return (
     <nav className=" lg:pr-[75px] lg:pl-[75px]">
@@ -26,72 +29,135 @@ export const Nav = () => {
 
         <button className="text-white md:hidden ml-2" onClick={toggleMenu} aria-label="Toggle menu">
           <svg
-            className="w-6 h-6 hover:text-hoverColor"
+            className="w-6 h-6 text-slate-950 hover:text-hoverColor"
             fill="none"
-            stroke="black"
+            stroke="currentColor"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth="2"
+              strokeWidth="2.5"
               d="M4 6h16M4 12h16m-7 6h7"
             ></path>
           </svg>
         </button>
-        <div className="hidden md:flex space-x-4 text-[1rem]  text-black  bg-white shadow-lg border-gray rounded-md p-1.5 border-[1px] ml-[20px] pl-[15px] pr-[15px] ">
-          <Link className="transition-colors duration-200 hover:text-hoverColor" href="/">
+        <div className="hidden md:flex space-x-4 text-[1.25rem] text-slate-950 bg-white shadow-lg border-gray rounded-md p-1.5 border-[1px] ml-[20px] pl-[15px] pr-[15px]">
+          <Link
+            href="/"
+            className={`${
+              router.pathname === "/" ? "underline underline-offset-4" : ""
+            } transition-colors duration-200 hover:text-hoverColor`}
+          >
             Home
           </Link>
           <Link
-            className=" w-[67px] transition-colors duration-200 hover:text-hoverColor"
             href="/DiveMap"
+            className={`${
+              router.pathname === "/DiveMap" ? "underline underline-offset-4" : ""
+            } w-[83px] transition-colors duration-200 hover:text-hoverColor`}
           >
             Dive Map
           </Link>
-          <Link className="transition-colors duration-200 hover:text-hoverColor" href="/Services">
+          <Link
+            href="/Services"
+            className={`${
+              router.pathname === "/Services" ? "underline underline-offset-4" : ""
+            } transition-colors duration-200 hover:text-hoverColor`}
+          >
             Services
           </Link>
-          <Link className="transition-colors duration-200 hover:text-hoverColor" href="/Photos">
+          <Link
+            href="/Photos"
+            className={`${
+              router.pathname === "/Photos" ? "underline underline-offset-4" : ""
+            } transition-colors duration-200 hover:text-hoverColor`}
+          >
             Photos
           </Link>
-          <Link className="transition-colors duration-200 hover:text-hoverColor" href="/About">
+          <Link
+            href="/About"
+            className={`${
+              router.pathname === "/About" ? "underline underline-offset-4" : ""
+            } transition-colors duration-200 hover:text-hoverColor`}
+          >
             About
           </Link>
-          <Link className="transition-colors duration-200 hover:text-hoverColor" href="/Faq">
+          <Link
+            href="/Faq"
+            className={`${
+              router.pathname === "/Faq" ? "underline underline-offset-4" : ""
+            } transition-colors duration-200 hover:text-hoverColor`}
+          >
             FAQ
           </Link>
-          <Link className="transition-colors duration-200 hover:text-hoverColor" href="/Calendar">
+          <Link
+            href="/Calendar"
+            className={`${
+              router.pathname === "/Calendar" ? "underline underline-offset-4" : ""
+            } transition-colors duration-200 hover:text-hoverColor`}
+          >
             Calendar
           </Link>
         </div>
       </div>
       {isMenuOpen && (
-        <div className="md:hidden flex flex-col text-center  space-y-1 p-2 text-black text-[.89rem] ">
+        <div className="md:hidden flex flex-col text-center space-y-1 p-2 text-black text-[.89rem]">
           <Link
-            className="transition-colors duration-200 hover:text-hoverColor"
             href="/"
-            // onClick={closeMenu}
+            className={`${
+              router.pathname === "/" ? "underline underline-offset-4" : ""
+            } transition-colors duration-200 hover:text-hoverColor`}
           >
             Home
           </Link>
-          <Link className="transition-colors duration-200 hover:text-hoverColor" href="/DiveMap">
+          <Link
+            href="/DiveMap"
+            className={`${
+              router.pathname === "/DiveMap" ? "underline underline-offset-4" : ""
+            } transition-colors duration-200 hover:text-hoverColor`}
+          >
             Dive Map
           </Link>
-          <Link className="transition-colors duration-200 hover:text-hoverColor" href="/Services">
+          <Link
+            href="/Services"
+            className={`${
+              router.pathname === "/Services" ? "underline underline-offset-4" : ""
+            } transition-colors duration-200 hover:text-hoverColor`}
+          >
             Services
           </Link>
-          <Link className="transition-colors duration-200 hover:text-hoverColor" href="/Photos">
+          <Link
+            href="/Photos"
+            className={`${
+              router.pathname === "/Photos" ? "underline underline-offset-4" : ""
+            } transition-colors duration-200 hover:text-hoverColor`}
+          >
             Photos
           </Link>
-          <Link className="transition-colors duration-200 hover:text-hoverColor" href="/About">
+          <Link
+            href="/About"
+            className={`${
+              router.pathname === "/About" ? "underline underline-offset-4" : ""
+            } transition-colors duration-200 hover:text-hoverColor`}
+          >
             About
           </Link>
-          <Link className="transition-colors duration-200 hover:text-hoverColor" href="/Faq">
+          <Link
+            href="/Faq"
+            className={`${
+              router.pathname === "/Faq" ? "underline underline-offset-4" : ""
+            } transition-colors duration-200 hover:text-hoverColor`}
+          >
             FAQ
           </Link>
-          <Link className="transition-colors duration-200 hover:text-hoverColor" href="/Calendar">
+          <Link
+            href="/Calendar"
+            className={`${
+              router.pathname === "/Calendar" ? "underline underline-offset-4" : ""
+            } transition-colors duration-200 hover:text-hoverColor`}
+          >
             Calendar
           </Link>
         </div>

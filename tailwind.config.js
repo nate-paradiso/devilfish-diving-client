@@ -29,6 +29,9 @@ export const theme = {
     backgroundImage: {
       "dark-to-light": "linear-gradient(to bottom, #063168, #0a53b0)",
     },
+    maxWidth: {
+      "vw-95": "95vw", // Custom maxWidth less than 100% of the viewport width
+    },
   },
   variants: {
     extend: {},

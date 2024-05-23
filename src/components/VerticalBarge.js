@@ -51,15 +51,15 @@ const VerticalBarge = () => {
           </div>
         </div>{" "}
         {/* Display images */}
-        <div className="flex flex-wrap mb-4 justify-center m-auto">
+        <div className="flex flex-wrap  justify-center mt-2">
           {images.map((imageUrl, index) => (
-            <div key={index} className="mb-2 bg-white shadow-lg rounded-md p-4 border-[1px]">
+            <div key={index} className="md:m-2 mb-2 bg-white shadow-lg rounded-md p-4 border-[1px]">
               <Image
                 src={imageUrl}
                 alt={`Image ${index}`}
                 width={1200}
                 height={800}
-                className="w-[350px] h-auto md:w-[400px]"
+                className="w-[765] h-auto md:w-[400px]"
               />
             </div>
           ))}

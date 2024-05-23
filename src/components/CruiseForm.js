@@ -1223,7 +1223,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     htmlFor="electronicParentSignature"
                     className="mt-2 flex flex-row md:w-[185px]"
                   >
-                    Parent or Legal Guardian Electronic Signature:{" "}
+                    Parent or Legal Guardian Electronic Signature:
                     <span className="text-red-500">*</span>
                   </label>
                   <input
