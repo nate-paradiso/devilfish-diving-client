@@ -2,7 +2,7 @@ import React from "react";
 
 const LiabilityRelease = ({ formData }) => {
   return (
-    <section className="mb-2">
+    <section className="mb-2 text-left">
       {" "}
       <h2 className="text-xl mb-2">Liability Release and Assumption of Risk Agreement</h2>
       <p>

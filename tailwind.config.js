@@ -8,6 +8,7 @@ export const theme = {
   extend: {
     fontFamily: {
       sans: ["var(--font-roboto)", "sans-serif"],
+      oleoScript: ["Oleo Script", "cursive"],
     },
     fontWeight: {
       thin: 100,
@@ -22,8 +23,14 @@ export const theme = {
     colors: {
       darkBlue: "#5682c2",
       lightBlue: "#416394",
-      hoverColor: "rgb(209 213 219)",
+      hoverColor: "#929292",
       nav: "#094898",
+    },
+    backgroundImage: {
+      "dark-to-light": "linear-gradient(to bottom, #063168, #0a53b0)",
+    },
+    maxWidth: {
+      "vw-95": "95vw", // Custom maxWidth less than 100% of the viewport width
     },
   },
   variants: {

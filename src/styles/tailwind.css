@@ -2,8 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Oleo Script";
+  src: url("/fonts/OleoScript-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 body {
-  background-color: #f8fafc;
+  /* background-color: #f8fafc; */
+  background-image: url("/images/Waves Seamless Art Wallpaper iPhone-white.jpg");
+  /* background-color: #202020; */
 }
 /* CSS */
 
@@ -23,6 +31,12 @@ body {
 
 .contact__error-message {
   color: red;
+}
+
+button:hover {
+  transition-property: background-color;
+  transition-duration: 200ms;
+  background-color: #f0f4f8; /* Adjust the color as needed */
 }
 
 @layer utilities {

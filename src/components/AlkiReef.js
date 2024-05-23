@@ -6,7 +6,7 @@ const AlkiReef = () => {
   return (
     <div className=" pb-3 max-w-[1000px] m-auto ">
       <div className="m-4 flex flex-col">
-        <div className="mb-4">
+        <div className="mb-4 bg-white shadow-lg rounded-md p-4 border-[1px]">
           <h1 className="text-xl">Alki Reef</h1>
           <h3 className="text-lg">Depth: 50 to 90 ft</h3>
           <h3 className="text-lg">Level: Open Water or Advanced</h3>
@@ -18,7 +18,7 @@ const AlkiReef = () => {
             are not connected, but are visible (assuming visibility is reasonable) from one another.{" "}
           </p>
         </div>
-        <div className="flex justify-center aspect-video mb-4">
+        <div className="flex justify-center aspect-video mb-4 bg-white shadow-lg rounded-md p-4 border-[1px]">
           <div className="w-full aspect-w-16 aspect-h-9">
             <iframe
               className="w-full h-full"

@@ -133,89 +133,100 @@ const CalendarComponent = () => {
 
   return (
     <div className="max-w-[800px] mx-auto ">
+      <div className=" flex pb-3 max-w-[1000px] justify-center  m-auto flex-col text-center ">
+        <h1 className="text-3xl">Calendar</h1>
+        <p>Book your adventure here!</p>
+      </div>
       {!isSubmitted ? (
         <div>
           {loading ? (
             <p className="m-4">Loading calendar...</p>
           ) : (
-            <div className="m-4 flex justify-center flex-col ">
-              <h1 className="m-auto text-2xl">Welcome!</h1>
-              <h3 className="text-xl">Diving</h3>
+            <div className="m-4 mt-0 flex justify-center flex-col ">
+              <div className=" bg-white shadow-lg rounded-md p-4 border-[1px]">
+                <h3 className="text-xl text-center">Diving</h3>
 
-              <p>
-                Choose between <span className="font-bold">Dive</span> or{" "}
-                <span className="font-bold"> 1 Dive Seat </span> events for an underwater adventure.{" "}
-                <span className="font-bold">Dive</span> events offer two available seats, while{" "}
-                <span className="font-bold"> 1 Dive Seat </span> events have only one. For safety
-                and enjoyment, there is a minimum and maximum of two divers per outing—no solo
-                diving allowed.
-              </p>
+                <p>
+                  Choose between <span className="font-bold">Dive</span> or{" "}
+                  <span className="font-bold"> 1 Dive Seat </span> events for an underwater
+                  adventure. <span className="font-bold">Dive</span> events offer two available
+                  seats, while <span className="font-bold"> 1 Dive Seat </span> events have only
+                  one. For safety and enjoyment, there is a minimum and maximum of two divers per
+                  outing—no solo diving allowed.
+                </p>
+              </div>
               <br />
-              <h3 className="text-xl">Cruise</h3>
-
-              <p>
-                Experience a scenic 3-hour tour from Elliot Bay to Blakely Rock by selecting
-                <span className="font-bold"> Cruise</span>. The
-                <span className="font-bold"> Cruise </span> event has 2 seats available. For safety
-                and enjoyment, there is a maximum of two passengers per cruise.
-              </p>
+              <div className=" bg-white shadow-lg rounded-md p-4 border-[1px]">
+                <h3 className="text-xl text-center">Cruise</h3>
+                <p>
+                  Experience a scenic 3-hour tour from Elliot Bay to Blakely Rock by selecting
+                  <span className="font-bold"> Cruise</span>. The
+                  <span className="font-bold"> Cruise </span> event has 2 seats available. For
+                  safety and enjoyment, there is a maximum of two passengers per cruise.
+                </p>
+              </div>
               <br />
               {!showDiverInfo && !showCruiseInfo && (
-                <FullCalendar
-                  plugins={[dayGridPlugin, googleCalendarPlugin, interactionPlugin]}
-                  className="shadow-md"
-                  initialView="dayGridMonth"
-                  eventClick={handleEventClick}
-                  events={googleEvents}
-                  selectLongPressDelay={0}
-                  fixedWeekCount={false}
-                  showNonCurrentDates={true}
-                  titleFormat={{
-                    month: "short", // Display the month in short form
-                    year: "numeric",
-                  }}
-                  headerToolbar={{
-                    left: "today",
-                    center: "title",
-                    right: "prev,next",
-                  }}
-                  height="auto"
-                  eventContent={eventContent}
-                  unselectAuto={false}
-                  validRange={{
-                    start: new Date(), // Today's date
-                    end: "9999-12-31", // Far into the future
-                  }}
-                />
+                <div className=" bg-white shadow-lg rounded-md p-4 border-[1px]">
+                  <FullCalendar
+                    plugins={[dayGridPlugin, googleCalendarPlugin, interactionPlugin]}
+                    className="shadow-md"
+                    initialView="dayGridMonth"
+                    eventClick={handleEventClick}
+                    events={googleEvents}
+                    selectLongPressDelay={0}
+                    fixedWeekCount={false}
+                    showNonCurrentDates={true}
+                    titleFormat={{
+                      month: "short", // Display the month in short form
+                      year: "numeric",
+                    }}
+                    headerToolbar={{
+                      left: "today",
+                      center: "title",
+                      right: "prev,next",
+                    }}
+                    height="auto"
+                    eventContent={eventContent}
+                    unselectAuto={false}
+                    validRange={{
+                      start: new Date(), // Today's date
+                      end: "9999-12-31", // Far into the future
+                    }}
+                  />
+                </div>
               )}
 
               <div>
                 {selectedDate && (
-                  <div>
-                    <h1 className="text-xl">Information</h1>
-                    <h3 className="mt-2">
-                      Date Selected:{" "}
-                      <span className="font-bold ">
-                        {getDayName(selectedDate)} - {selectedDateStr}
-                      </span>
-                    </h3>{" "}
-                    {(eventTitle === "Dive" || eventTitle === "1 Dive Seat") && (
-                      <h3 className="mt-1">
-                        Price: <span className="font-bold">$140 per diver - 2 tank dive trip.</span>
-                      </h3>
-                    )}
-                    {eventTitle === "Cruise" && (
-                      <h3 className="mt-1">
-                        Price: <span className="font-bold">$210 for the 3 hour cruise.</span>
-                      </h3>
-                    )}{" "}
-                    <div className="flex justify-between mb-2 flex-row">
-                      <button
-                        className="border-solid p-2  border-2 border-sky-500 mt-1 w-32"
-                        onClick={clearSelectedDate}
-                      >
-                        Cancel
-                      </button>
+                  <div className="bg-white shadow-lg rounded-md p-4 border-[1px] ">
+                    <div className="text-center">
+                      <h1 className="text-xl">Selected Information</h1>
+                      <h3 className="mt-2">
+                        Date Selected:{" "}
+                        <span className="font-bold ">
+                          {getDayName(selectedDate)} - {selectedDateStr}
+                        </span>
+                      </h3>{" "}
+                      {(eventTitle === "Dive" || eventTitle === "1 Dive Seat") && (
+                        <h3 className="mt-1">
+                          Price:{" "}
+                          <span className="font-bold">$140 per diver - 2 tank dive trip.</span>
+                        </h3>
+                      )}
+                      {eventTitle === "Cruise" && (
+                        <h3 className="mt-1">
+                          Price: <span className="font-bold">$210 for the 3 hour cruise.</span>
+                        </h3>
+                      )}{" "}
+                      <div className="flex justify-center mb-2 flex-row ">
+                        <button
+                          className="border-solid p-2  border-2 border-sky-500 mt-1 w-32"
+                          onClick={clearSelectedDate}
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
                     {(eventTitle === "Dive" || eventTitle === "1 Dive Seat") && (
                       <div className="flex max-w-[1200px] mx-auto ">
@@ -250,7 +261,7 @@ const CalendarComponent = () => {
           )}
         </div>
       ) : (
-        <div className="m-8 flex justify-center ">
+        <div className="m-8 flex justify-center bg-white shadow-lg rounded-md p-4 border-[1px]   ">
           <div className="contact__success text-center">
             <h1 className="text-xl font-bold">Thank you!</h1>
             <br />

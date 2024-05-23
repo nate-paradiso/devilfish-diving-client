@@ -696,7 +696,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
           <div>
             <div className="  flex justify-center flex-col  md:flex-row md:justify-evenly ">
               <div>
-                <div className="flex-col flex">
+                <div className="flex-col flex ">
                   <label htmlFor="divingDate" className="mt-2 flex flex-row">
                     Diving Date: <span className="text-red-500">*</span>
                   </label>
@@ -1000,10 +1000,10 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
               </div>
             </div>
 
-            <div className="mt-4">
+            <div className="mt-4 ">
               <LiabilityRelease formData={formData} />
               <div className="flex-col flex">
-                <p>
+                <p className="text-left">
                   By typing your name below you are electronically signing, you acknowledge that you
                   have read, understand, and agree to the terms of the Liability Release and
                   Assumption of Risk Agreement.
@@ -1095,7 +1095,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 Next to Payment
               </button>
             ) : (
-              <div>
+              <div className="flex justify-center ">
                 {loading ? (
                   <div>
                     <Image

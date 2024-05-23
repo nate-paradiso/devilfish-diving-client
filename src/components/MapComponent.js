@@ -245,13 +245,16 @@ const MapComponent = () => {
 
   return (
     <div className="mb-2 flex flex-col ">
+      <div className=" flex pb-3 max-w-[1000px] justify-start  m-auto flex-col text-center ">
+        <h1 className="text-3xl">Dive Map</h1>
+        <p> Explore the dive sites. </p>
+      </div>
       <div className="flex pb-3 max-w-[1000px] justify-center align-middle m-auto  ">
-        <p className="m-4">
-          Explore Devilfish Diving&rsquo;s current dive sites. Dive site visits depend on weather,
-          tides, and currents. They are subject to change by the captain at any moment. Zoom in and
-          click on a dive flag for more information, and use the layers button to switch background
-          maps. The Nautical Chart reveals depths, while the bathymetry overlay unveils the
-          underwater topography.
+        <p className="m-4 bg-white shadow-lg rounded-md p-4 border-[1px]">
+          Zoom in and click on a dive flag for more information, and use the layers button to switch
+          background maps. The Nautical Chart reveals depths, while the bathymetry overlay unveils
+          the underwater topography. Dive site visits depend on weather, tides, and currents. They
+          are subject to change by the captain at any moment.
         </p>
       </div>
       <div className="flex justify-center flex-col  ">
