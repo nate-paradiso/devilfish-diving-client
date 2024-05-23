@@ -798,7 +798,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       >
         {isFormVisible ? (
           <div>
-            <div>
+            <div className="text-center">
               {!showSecondPassengerForm && (
                 <button
                   className="border-solid p-2 border-2 border-sky-500 mb-2 w-32"
@@ -961,7 +961,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     </span>
                   )}
                 </div>
-                <div className="flex-col flex">
+                <div className="flex-col flex ">
                   <label htmlFor="emergencyContactPhone" className="mt-2 flex flex-row">
                     Emergency Contact Phone:<span className="text-red-500">*</span>
                   </label>
@@ -974,7 +974,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     onChange={handleInputChange}
                   />
                   {validationErrors.emergencyContactPhone && (
-                    <span className="error text-red-500">
+                    <span className="error text-red-500 whitespace-wrap">
                       {validationErrors.emergencyContactPhone}
                     </span>
                   )}
@@ -1001,7 +1001,9 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
             {showSecondPassengerForm && (
               <div>
-                <h2 className="text-xl  md:ml-[85px] mt-12">Second Passenger Form</h2>
+                <div className="text-center">
+                  <h2 className="text-xl   mt-12">Second Passenger Form</h2>
+                </div>
                 <div className="  flex justify-center flex-col  md:flex-row md:justify-evenly ">
                   <div>
                     <div className="flex-col flex">

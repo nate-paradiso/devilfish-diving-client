@@ -4,7 +4,7 @@ const ChinaWall = () => {
   return (
     <div className=" pb-3 max-w-[1000px] m-auto ">
       <div className="m-4 flex flex-col">
-        <div className="mb-4">
+        <div className="mb-4 bg-white shadow-lg rounded-md p-4 border-[1px]">
           <h1 className="text-xl">China Wall</h1>
           <h3 className="text-lg">Depth: 60 to 100 ft</h3>
           <h3 className="text-lg">Level: Advanced</h3>
@@ -20,7 +20,7 @@ const ChinaWall = () => {
             recommended.
           </p>
         </div>
-        <div className="flex justify-center flex-col m-auto">
+        <div className="flex justify-center flex-col m-auto bg-white shadow-lg rounded-md p-4 border-[1px]">
           <h3 className="text-xl">Typical Dive Profile with Air</h3>
           <Image
             src={"/images/china-wall-profile.jpg"}

@@ -778,7 +778,7 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     fetchClientId();
   }, []);
   return (
-    <section className="max-w-[1200px] w-full">
+    <section className="max-w-[1200px] w-full ">
       <form
         className="gform "
         method="POST"
@@ -1250,8 +1250,8 @@ const CruisePassengerInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
             <div className="mt-4">
               <LiabilityReleaseCruise formData={formData} secondPassenger={secondPassenger} />
-              <div className="flex-col flex">
-                <p>
+              <div className="flex-col flex ">
+                <p className="text-left">
                   By typing your name below you are electronically signing, you acknowledge that you
                   have read, understand, and agree to the terms of the Liability Release and
                   Assumption of Risk Agreement.

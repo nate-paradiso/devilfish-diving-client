@@ -4,7 +4,7 @@ const BlakeIsland = () => {
   return (
     <div className=" pb-3 max-w-[1000px] m-auto ">
       <div className="m-4 flex flex-col">
-        <div className="mb-4">
+        <div className="mb-4 bg-white shadow-lg rounded-md p-4 border-[1px]">
           <h1 className="text-xl">Blake Island Reef</h1>
           <h3 className="text-lg">Depth: 50 to 110 ft</h3>
           <h3 className="text-lg">Level: Advanced</h3>

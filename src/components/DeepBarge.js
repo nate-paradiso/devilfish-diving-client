@@ -5,7 +5,7 @@ const DeepBarge = () => {
   return (
     <div className=" pb-3 max-w-[1000px] m-auto ">
       <div className="m-4 flex flex-col">
-        <div className="mb-4">
+        <div className="mb-4 bg-white shadow-lg rounded-md p-4 border-[1px]">
           <h1 className="text-xl">Deep Barge aka Horizontal Barge</h1>
           <h3 className="text-lg">Depth: 100 ft</h3>
           <h3 className="text-lg">Level: Advanced</h3>
@@ -17,7 +17,7 @@ const DeepBarge = () => {
             offers similar marine life to the Vertical Barge but the wreck itself is not penetrable.
           </p>
         </div>
-        <div className="flex justify-center flex-col m-auto">
+        <div className="flex justify-center flex-col m-auto bg-white shadow-lg rounded-md p-4 border-[1px]">
           <h3 className="text-xl">Typical Dive Profile with EAN36</h3>
           <Image
             src={"/images/deep-barge-profile.jpg"}
