@@ -2,23 +2,27 @@ import React from "react";
 import Image from "next/image";
 const Hero = () => {
   return (
-    <section className="relative bg-white bg-opacity-60 shadow-md rounded-md p-3 m-4 ">
+    <section className="relative  m-4 ">
       {/* Container for the text */}
       <div
         className="absolute top-[5px] right-[10px] z-10 pr-2 md:p-4 text-white text-end max-w-[350px] 
       md:max-w-[800px] md:top-[20px] md:right-[50px] xl:max-w-[1000px] xl:top-[50px]  "
       >
-        <h1 className="text-[2.8em] md:text-8xl xl:text-[11rem] font-oleoScript drop-shadow-xl leading-[1] pt-5 pr-3">
+        <h1
+          className="text-[2.8em] md:text-8xl xl:text-[11rem] font-oleoScript drop-shadow-xl 
+        leading-[1] pt-5 pr-3"
+        >
           A Seattle Dive Charter
         </h1>
       </div>
-      <div className="mx-auto opacity-90 w-full flex justify-center">
+      <div className="mx-auto opacity-90 w-full flex justify-center  ">
         <div style={{ maxWidth: "100%", height: "auto" }}>
           <Image
             src="https://res.cloudinary.com/hrdoqhgcp/image/upload/v1715708314/home-page/wabzvj162adeutt3fu8y.jpg"
             alt="The Boat"
             width={2560}
             height={1440}
+            className="rounded-md shadow-md "
           />
         </div>
       </div>
