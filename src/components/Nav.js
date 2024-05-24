@@ -12,6 +12,13 @@ export const Nav = () => {
     setIsMenuOpen(false);
   };
 
+  // Track the state of the submenu
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+
+  // Handle opening and closing of the submenu
+  const toggleSubMenu = () => {
+    setIsSubMenuOpen(!isSubMenuOpen);
+  };
   const router = useRouter();
 
   return (
@@ -68,14 +75,41 @@ export const Nav = () => {
           >
             Services
           </Link>
-          <Link
-            href="/Photos"
-            className={`${
-              router.pathname === "/Photos" ? "underline underline-offset-4" : ""
-            } transition-colors duration-200 hover:text-hoverColor`}
+          <div
+            className="relative cursor-pointer"
+            onMouseEnter={toggleSubMenu}
+            onMouseLeave={toggleSubMenu}
           >
             Photos
-          </Link>
+            {isSubMenuOpen && (
+              <div className="absolute top-full left-0 bg-white shadow-lg rounded-md p-2 flex flex-col">
+                <Link
+                  href="/BoatPhotos"
+                  className={`${
+                    router.pathname === "/Photos" ? "underline underline-offset-4" : ""
+                  } transition-colors duration-200 hover:text-hoverColor`}
+                >
+                  Boat
+                </Link>
+                <Link
+                  href="/DivingPhotos"
+                  className={`${
+                    router.pathname === "/Photos" ? "underline underline-offset-4" : ""
+                  } transition-colors duration-200 hover:text-hoverColor`}
+                >
+                  Diving
+                </Link>
+                <Link
+                  href="/SightsPhotos"
+                  className={`${
+                    router.pathname === "/Photos" ? "underline underline-offset-4" : ""
+                  } transition-colors duration-200 hover:text-hoverColor`}
+                >
+                  Sights
+                </Link>
+              </div>
+            )}
+          </div>{" "}
           <Link
             href="/About"
             className={`${

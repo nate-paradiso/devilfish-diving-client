@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
 
-const Photos = () => {
+const BoatPhotos = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -76,4 +76,4 @@ const Photos = () => {
   );
 };
 
-export default Photos;
+export default BoatPhotos;

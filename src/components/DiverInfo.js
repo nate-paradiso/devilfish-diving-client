@@ -702,7 +702,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   </label>
                   <input
                     id="divingDate"
-                    className="border-solid p-2 font-extrabold border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
+                    className="border-solid p-2 font-bold border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
                     type="date"
                     name="divingDate"
                     value={formatDateForHTMLInput(formData.divingDate)}
@@ -1111,7 +1111,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     options={{
                       intent: "capture",
                       "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT,
-                      "enable-funding": "venmo,card",
+                      "enable-funding": "card",
                       "disable-funding": "paylater",
                       "data-sdk-integration-source": "integrationbuilder_sc",
                     }}

@@ -144,7 +144,7 @@ const CalendarComponent = () => {
           ) : (
             <div className="m-4 mt-0 flex justify-center flex-col ">
               <div className=" bg-white shadow-lg rounded-md p-4 border-[1px]">
-                <h3 className="text-xl text-center">Diving</h3>
+                <h3 className="text-xl mb-1 text-center">Diving</h3>
 
                 <p>
                   Choose between <span className="font-bold">Dive</span> or{" "}
@@ -157,7 +157,7 @@ const CalendarComponent = () => {
               </div>
               <br />
               <div className=" bg-white shadow-lg rounded-md p-4 border-[1px]">
-                <h3 className="text-xl text-center">Cruise</h3>
+                <h3 className="text-xl text-center mb-1 ">Cruise</h3>
                 <p>
                   Experience a scenic 3-hour tour from Elliot Bay to Blakely Rock by selecting
                   <span className="font-bold"> Cruise</span>. The
