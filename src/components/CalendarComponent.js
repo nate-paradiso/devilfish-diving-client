@@ -143,8 +143,8 @@ const CalendarComponent = () => {
             <p className="m-4">Loading calendar...</p>
           ) : (
             <div className="m-4 mt-0 flex justify-center flex-col ">
-              <div className=" bg-white shadow-lg rounded-md p-4 border-[1px]">
-                <h3 className="text-xl text-center">Diving</h3>
+              <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px]">
+                <h3 className="text-xl mb-1 text-center">Diving</h3>
 
                 <p>
                   Choose between <span className="font-bold">Dive</span> or{" "}
@@ -156,8 +156,8 @@ const CalendarComponent = () => {
                 </p>
               </div>
               <br />
-              <div className=" bg-white shadow-lg rounded-md p-4 border-[1px]">
-                <h3 className="text-xl text-center">Cruise</h3>
+              <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px]">
+                <h3 className="text-xl text-center mb-1 ">Cruise</h3>
                 <p>
                   Experience a scenic 3-hour tour from Elliot Bay to Blakely Rock by selecting
                   <span className="font-bold"> Cruise</span>. The
@@ -167,10 +167,10 @@ const CalendarComponent = () => {
               </div>
               <br />
               {!showDiverInfo && !showCruiseInfo && (
-                <div className=" bg-white shadow-lg rounded-md p-4 border-[1px]">
+                <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px]">
                   <FullCalendar
                     plugins={[dayGridPlugin, googleCalendarPlugin, interactionPlugin]}
-                    className="shadow-md"
+                    className="shadow-md "
                     initialView="dayGridMonth"
                     eventClick={handleEventClick}
                     events={googleEvents}
@@ -199,7 +199,7 @@ const CalendarComponent = () => {
 
               <div>
                 {selectedDate && (
-                  <div className="bg-white shadow-lg rounded-md p-4 border-[1px] ">
+                  <div className="bg-white shadow-lg bg-opacity-60 rounded-md p-4 border-[1px] ">
                     <div className="text-center">
                       <h1 className="text-xl">Selected Information</h1>
                       <h3 className="mt-2">
@@ -261,7 +261,7 @@ const CalendarComponent = () => {
           )}
         </div>
       ) : (
-        <div className="m-8 flex justify-center bg-white shadow-lg rounded-md p-4 border-[1px]   ">
+        <div className="m-8 flex justify-center bg-white shadow-lg bg-opacity-60 rounded-md p-4 border-[1px]   ">
           <div className="contact__success text-center">
             <h1 className="text-xl font-bold">Thank you!</h1>
             <br />

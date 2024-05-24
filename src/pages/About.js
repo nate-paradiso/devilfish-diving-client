@@ -8,7 +8,7 @@ const About = () => {
         <div className=" flex pb-3 max-w-[1000px] justify-start  m-auto flex-col text-center ">
           <h1 className="text-3xl">About</h1>
         </div>
-        <div className=" bg-white shadow-lg rounded-md p-4 border-[1px]">
+        <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px]">
           <p>
             This Devilfish has traversed much of the Puget Sound, Neah Bay, and the San Juan
             Islands. It is an efficient small vessel, ideal for a compact diving team or cruise.
@@ -40,7 +40,7 @@ const About = () => {
           </p>
         </div>
         <Image
-          className="bg-white shadow-lg rounded-md p-4 border-[1px] mt-4"
+          className="bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] mt-4"
           src="https://res.cloudinary.com/hrdoqhgcp/image/upload/v1715717617/about-page/d7mvwab6qpzthb9cetbq.jpg"
           alt="Anchor and Captain"
           width={1200}

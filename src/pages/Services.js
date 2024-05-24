@@ -8,7 +8,7 @@ const Services = () => {
         <h1 className="text-3xl  ">Boat Services</h1>
         <br />
 
-        <div className=" bg-white shadow-lg rounded-md p-4 border-[1px] ">
+        <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
           <h2 className="font-bold text-xl"> Two-tank Dive</h2>
           <div className="font-bold">$140 per passenger +tax - 2 person max</div>{" "}
           <p className="italic pt-2">
@@ -24,7 +24,7 @@ const Services = () => {
           </p>
         </div>
         <br />
-        <div className=" bg-white shadow-lg rounded-md p-4 border-[1px] ">
+        <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
           <h2 className="font-bold text-xl">
             3 Hour Cruise - Elliot Bay to Blakely Rock in the Puget Sound
           </h2>
@@ -43,7 +43,10 @@ const Services = () => {
         </div>
         <div className="flex justify-center m-8">
           <Link href="/Calendar">
-            <button className=" p-2 md:p-4  md:text-3xl transition-colors duration-200 hover:bg-slate-100 text-lg border-[1px] bg-white shadow-md rounded-md ">
+            <button
+              className=" p-2 md:p-4  md:text-3xl transition-colors duration-200 hover:bg-slate-100 text-lg border-[1px]
+            bg-opacity-60 bg-white shadow-md rounded-md "
+            >
               Book Now!
             </button>
           </Link>

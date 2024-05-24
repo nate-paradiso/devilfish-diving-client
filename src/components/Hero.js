@@ -2,9 +2,12 @@ import React from "react";
 import Image from "next/image";
 const Hero = () => {
   return (
-    <section className="relative bg-white shadow-md rounded-md p-3 m-4 mb-1">
+    <section className="relative bg-white bg-opacity-60 shadow-md rounded-md p-3 m-4 ">
       {/* Container for the text */}
-      <div className="absolute top-[5px] right-[10px] z-10 pr-2 md:p-4 text-white text-end max-w-[350px] md:max-w-[800px] md:top-[20px] md:right-[50px] xl:max-w-[1000px] xl:top-[50px]  ">
+      <div
+        className="absolute top-[5px] right-[10px] z-10 pr-2 md:p-4 text-white text-end max-w-[350px] 
+      md:max-w-[800px] md:top-[20px] md:right-[50px] xl:max-w-[1000px] xl:top-[50px]  "
+      >
         <h1 className="text-[2.8em] md:text-8xl xl:text-[11rem] font-oleoScript drop-shadow-xl leading-[1] pt-5 pr-3">
           A Seattle Dive Charter
         </h1>
