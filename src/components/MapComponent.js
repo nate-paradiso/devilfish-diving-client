@@ -257,11 +257,11 @@ const MapComponent = () => {
           are subject to change by the captain at any moment.
         </p>
       </div>
-      <div className="flex justify-center flex-col  ">
+      <div className="flex justify-center flex-col z-1 ">
         {/* <Script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></Script>
       <Script src="https://unpkg.com/Leaflet.TileLayer.MBTiles@1.0.0/Leaflet.TileLayer.MBTiles.js"></Script> */}
         <MapContainer
-          className="h-[550px] w-full md:h-[500px] shadow-md mb-2"
+          className="h-[550px] w-full md:h-[500px] shadow-md mb-2 "
           center={[47.605932, -122.448144]}
           zoom={10}
         >

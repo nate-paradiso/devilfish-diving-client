@@ -22,59 +22,65 @@ export const Nav = () => {
   const router = useRouter();
 
   return (
-    <nav className=" lg:pr-[75px] lg:pl-[75px]">
-      <div className="flex justify-between items-center p-4">
+    <nav className="  ">
+      <div className="flex justify-between w-full items-center p-4">
         <Link href="/">
           <Image
             className=""
             src="/images/devilfish-logo2.png"
             alt="Devilfish Logo"
-            width={300}
+            width={400}
             height={64}
           />{" "}
         </Link>
 
-        <div className="fixed top-6 right-4 z-20">
+        <div className=" opacity-0 md:hidden">cross</div>
+
+        <div className="relative z-20">
           <button
             className="text-white md:hidden ml-2"
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
             {isMenuOpen ? (
-              <svg
-                className="w-8 h-8 text-slate-950 hover:text-hoverColor"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              <div className="fixed top-5 right-4 ">
+                <svg
+                  className="w-8 h-8 text-slate-950 hover:text-hoverColor"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </div>
             ) : (
-              <svg
-                className="w-8 h-8 text-slate-950 hover:text-hoverColor"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                />
-              </svg>
+              <div className="fixed top-5 right-4 ">
+                <svg
+                  className="w-8 h-8 text-slate-950 hover:text-hoverColor"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16m-7 6h7"
+                  />
+                </svg>
+              </div>
             )}
           </button>
 
           <div
-            className="hidden md:flex space-x-4 text-[1.25rem] text-slate-950 bg-white  
+            className="hidden md:flex space-x-4 text-[1rem] font-bold text-slate-950 bg-white  
           shadow-lg border-gray rounded-md p-1.5 border-[1px] ml-[20px] pl-[15px] pr-[15px]"
           >
             <Link
@@ -89,7 +95,7 @@ export const Nav = () => {
               href="/DiveMap"
               className={`${
                 router.pathname === "/DiveMap" ? "underline underline-offset-4" : ""
-              } w-[83px] transition-colors duration-200 hover:text-hoverColor`}
+              } w-[67px] transition-colors duration-200 hover:text-hoverColor`}
             >
               Dive Map
             </Link>
