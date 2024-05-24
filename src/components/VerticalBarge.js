@@ -26,7 +26,7 @@ const VerticalBarge = () => {
   return (
     <div className=" pb-3 max-w-[1200px] m-auto ">
       <div className="m-4 flex flex-col">
-        <div className="mb-4 bg-white shadow-lg rounded-md p-4 border-[1px]">
+        <div className="mb-4 bg-white shadow-lg bg-opacity-60 rounded-md p-4 border-[1px]">
           <h1 className="text-xl">Vertical Barge</h1>
           <h3 className="text-lg">Depth: 75 ft</h3>
           <h3 className="text-lg">Level: Advanced</h3>
@@ -40,7 +40,7 @@ const VerticalBarge = () => {
             South orientation, with bow facing South. Nitrox is recommended.
           </p>
         </div>
-        <div className="flex justify-center aspect-video mb-4 bg-white shadow-lg rounded-md p-4 border-[1px]">
+        <div className="flex justify-center aspect-video mb-4 bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px]">
           <div className="w-full aspect-w-16 aspect-h-9">
             <iframe
               className="w-full h-full"
@@ -53,7 +53,10 @@ const VerticalBarge = () => {
         {/* Display images */}
         <div className="flex flex-wrap  justify-center mt-2">
           {images.map((imageUrl, index) => (
-            <div key={index} className="md:m-2 mb-2 bg-white shadow-lg rounded-md p-4 border-[1px]">
+            <div
+              key={index}
+              className="md:m-2 mb-2 bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px]"
+            >
               <Image
                 src={imageUrl}
                 alt={`Image ${index}`}
@@ -64,7 +67,7 @@ const VerticalBarge = () => {
             </div>
           ))}
         </div>{" "}
-        <div className="flex justify-center flex-col m-auto bg-white shadow-lg rounded-md p-4 border-[1px]">
+        <div className="flex justify-center flex-col m-auto bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px]">
           <h3 className="text-xl">Typical Dive Profile with Air</h3>
           <Image
             src={"/images/vertical-barge-profile.jpg"}

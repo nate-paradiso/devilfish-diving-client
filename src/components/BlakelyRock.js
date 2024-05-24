@@ -5,7 +5,7 @@ const BlakelyRock = () => {
   return (
     <div className=" pb-3 max-w-[1000px] m-auto ">
       <div className="m-4 flex flex-col">
-        <div className="mb-4 bg-white shadow-lg rounded-md p-4 border-[1px]">
+        <div className="mb-4 bg-white shadow-lg rounded-md p-4 border-[1px] bg-opacity-60">
           <h1 className="text-xl">Blakely Rock - Shangri-La</h1>
           <h3 className="text-lg">Depth: 20 to 100+ ft</h3>
           <h3 className="text-lg">Level: Advanced</h3>
@@ -23,7 +23,7 @@ const BlakelyRock = () => {
             to over 100 feet (30 meters) or more.
           </p>
         </div>
-        <div className="flex justify-center flex-col m-auto bg-white shadow-lg rounded-md p-4 border-[1px]">
+        <div className="flex justify-center flex-col m-auto bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px]">
           <h3 className="text-xl">Typical Dive Profile with Air</h3>
           <Image
             src={"/images/blakely-rock-profile.jpg"}

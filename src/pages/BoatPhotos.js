@@ -52,7 +52,7 @@ const BoatPhotos = () => {
   return (
     <div className="w-full flex m-auto flex-col ">
       <div className=" flex pb-3 max-w-[1000px] justify-start  m-auto flex-col text-center ">
-        <h1 className="text-3xl">Photos</h1>
+        <h1 className="text-3xl">The Boat</h1>
         <p>Adventures Captured</p>
       </div>
       {loading ? (
@@ -60,7 +60,10 @@ const BoatPhotos = () => {
       ) : (
         <div className="flex  m-auto mb-4 flex-wrap justify-center ">
           {images.map((imageUrl, index) => (
-            <div key={index} className="bg-white shadow-lg rounded-md p-2 border-[1px] m-2">
+            <div
+              key={index}
+              className="bg-white  bg-opacity-60 shadow-lg rounded-md p-2 border-[1px] m-2"
+            >
               <Image
                 src={imageUrl}
                 alt={`Image ${index}`}

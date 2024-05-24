@@ -52,8 +52,8 @@ const SightsPhotos = () => {
   return (
     <div className="w-full flex m-auto flex-col ">
       <div className=" flex pb-3 max-w-[1000px] justify-start  m-auto flex-col text-center ">
-        <h1 className="text-3xl">Photos</h1>
-        <p>Adventures Captured</p>
+        <h1 className="text-3xl">Sights</h1>
+        <p>Nature from the Puget Sound</p>
       </div>
       {loading ? (
         <div className="m-4">Loading...</div>

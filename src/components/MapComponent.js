@@ -250,7 +250,7 @@ const MapComponent = () => {
         <p> Explore the dive sites. </p>
       </div>
       <div className="flex pb-3 max-w-[1000px] justify-center align-middle m-auto  ">
-        <p className="m-4 bg-white shadow-lg rounded-md p-4 border-[1px]">
+        <p className="m-4 bg-white shadow-lg rounded-md p-4 border-[1px] bg-opacity-60">
           Zoom in and click on a dive flag for more information, and use the layers button to switch
           background maps. The Nautical Chart reveals depths, while the bathymetry overlay unveils
           the underwater topography. Dive site visits depend on weather, tides, and currents. They
@@ -316,7 +316,7 @@ const MapComponent = () => {
         </MapContainer>
 
         <div className="">
-          <div className=" text-sm mt-2  justify-evenly flex flex-col border-[1px] bg-white shadow-md rounded-md p-3  w-[180px] m-auto">
+          <div className=" text-sm mt-2  justify-evenly flex flex-col border-[1px] bg-white bg-opacity-60 shadow-md rounded-md p-3  w-[180px] m-auto">
             {" "}
             <p>Latitude: {coordinates.lat.toFixed(6)}</p>
             <p>Longitude: {coordinates.lng.toFixed(6)}</p>

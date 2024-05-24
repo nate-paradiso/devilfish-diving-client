@@ -4,7 +4,7 @@ const NorandersReef = () => {
   return (
     <div className=" pb-3 max-w-[1000px] m-auto ">
       <div className="m-4 flex flex-col">
-        <div className="mb-4 bg-white shadow-lg rounded-md p-4 border-[1px]">
+        <div className="mb-4 bg-white  bg-opacity-60 shadow-lg rounded-md p-4 border-[1px]">
           <h1 className="text-xl">Noranders Reef </h1>
           <h3 className="text-lg">Depth: 35 to 85 ft</h3>
           <h3 className="text-lg">Level: Open Water or Advanced</h3>
