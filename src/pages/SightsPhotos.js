@@ -10,7 +10,7 @@ const SightsPhotos = () => {
     // Fetch images from backend endpoint
     const getImages = async () => {
       try {
-        const response = await axios.get(`${serverUrl}/api/cloudinary/photos-page/images`);
+        const response = await axios.get(`${serverUrl}/api/cloudinary/sights-page/images`);
         if (response.status === 200) {
           // Extract creation date from image URLs and sort the images
           const sortedImages = response.data.images.sort((a, b) => {
