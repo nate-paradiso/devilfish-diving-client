@@ -17,10 +17,7 @@ const Services = () => {
             into the depths where you’ll encounter quintessential species like the Giant Pacific
             Octopus, Wolf Eel, Lingcod, Cabezon, Nudibranchs, schooling Rockfish and many more!
             Explore shipwrecks that tell tales of the past, now home to diverse marine ecosystems,
-            and traverse rocky reefs bustling with colorful marine species. Our diving expeditions
-            offer unparalleled access to the most pristine and secluded dive sites, providing an
-            extraordinary opportunity to witness the rich biodiversity and captivating beauty of
-            Seattle’s aquatic realm.
+            and traverse rocky reefs bustling with colorful marine species.
           </p>
         </div>
         <br />
