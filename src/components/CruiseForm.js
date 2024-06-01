@@ -781,17 +781,17 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     if (!isButtonVisible) {
       const timer = setTimeout(() => {
         setLoading(false);
-      }, 2000); // Adjust the timeout duration as needed (5000ms = 5 seconds)
+      }, 5000); // Adjust the timeout duration as needed (5000ms = 5 seconds)
 
       return () => clearTimeout(timer); // Clean up the timer on component unmount
     }
   }, [isButtonVisible]);
 
   return (
-    <section className="max-w-[1200px] w-full">
+    <section className="max-w-[1200px] w-full ">
       <form
         onSubmit={handleSubmit}
-        className="gform "
+        className="gform"
         method="POST"
         data-email="example@gmail.com"
         action="https://script.google.com/macros/s/AKfycbx8TRKTZ22mPpYJ0sNgBEmM-NLEwnvIAHn3clbkiztEyR0sg5UXZmM7R3YME9k3MT7_7w/exec"
@@ -1330,17 +1330,17 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
           ""
         )}
 
-        <div className="">
+        <div className="flex flex-col justify-center align-middle mt-2">
           <div>
             {isButtonVisible ? (
               <button className="mt-4 border-solid p-2 border-2 border-sky-500  w-32" type="submit">
                 Next to Payment
               </button>
             ) : (
-              <div>
+              <div className="m-auto flex max-w-[750px]  flex-col md:max-w-[256px] justify-center ">
                 {loading ? (
                   <Image
-                    className=""
+                    className="m-auto"
                     src="/images/tube-spinner.svg"
                     alt="loading"
                     width={50}
@@ -1356,7 +1356,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                       "data-sdk-integration-source": "integrationbuilder_sc",
                     }}
                   >
-                    <div className="App max-w-[750px] flex flex-col md:max-w-[256px] ">
+                    <div className="App">
                       <PayPalButtons
                         style={{
                           shape: "rect",

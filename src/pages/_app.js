@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="description" content={metadata.description} />
         <link rel="icon" href="/octocon.ico" sizes="any" />
       </Head>
-      <main className={`${roboto.variable} font-sans font-normal max-w-[1600px] m-auto`}>
+      <main className={`${roboto.variable} font-sans font-normal  m-auto`}>
         <Header />
         <Component {...pageProps} />
         <Footer />
