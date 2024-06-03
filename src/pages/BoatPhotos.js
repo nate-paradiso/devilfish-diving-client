@@ -60,10 +60,7 @@ const BoatPhotos = () => {
       ) : (
         <div className="flex  m-auto mb-4 flex-wrap justify-center ">
           {images.map((imageUrl, index) => (
-            <div
-              key={index}
-              className="bg-white  bg-opacity-60 shadow-lg rounded-md p-2 border-[1px] m-2"
-            >
+            <div key={index} className="bg-white  shadow-lg rounded-md p-2 border-[1px] m-2">
               <Image
                 src={imageUrl}
                 alt={`Image ${index}`}

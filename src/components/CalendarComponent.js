@@ -211,12 +211,12 @@ const CalendarComponent = () => {
                       {(eventTitle === "Dive" || eventTitle === "1 Dive Seat") && (
                         <h3 className="mt-1">
                           Price:{" "}
-                          <span className="font-bold">$140 per diver - 2 tank dive trip.</span>
+                          <span className="font-bold">$145 per diver - 2 tank dive trip.</span>
                         </h3>
                       )}
                       {eventTitle === "Cruise" && (
                         <h3 className="mt-1">
-                          Price: <span className="font-bold">$210 for the 3 hour cruise.</span>
+                          Price: <span className="font-bold">$210 for the 2.5 hour cruise.</span>
                         </h3>
                       )}{" "}
                       <div className="flex justify-center mb-2 flex-row ">

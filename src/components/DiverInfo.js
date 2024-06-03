@@ -1095,11 +1095,11 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 Next to Payment
               </button>
             ) : (
-              <div className="flex justify-center ">
+              <div className="m-auto flex max-w-[750px]  flex-col md:max-w-[256px] justify-center ">
                 {loading ? (
                   <div>
                     <Image
-                      className=""
+                      className="m-auto"
                       src="/images/tube-spinner.svg"
                       alt="loading"
                       width={50}
