@@ -10,7 +10,7 @@ const Services = () => {
 
         <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
           <h2 className="font-bold text-xl"> Two-tank Dive</h2>
-          <div className="font-bold">$140 per passenger +tax - 2 person max</div>{" "}
+          <div className="font-bold">$145 per passenger +tax - 2 person max</div>{" "}
           <p className="italic pt-2">
             Enjoy an unforgettable adventure exploring the hidden gems of the Puget Sound. Discover
             the underwater world teeming with vibrant marine life, accessible only by boat. Dive
@@ -23,9 +23,9 @@ const Services = () => {
         <br />
         <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
           <h2 className="font-bold text-xl">
-            3 Hour Cruise - Elliot Bay to Blakely Rock in the Puget Sound
+            2.5 Hour Cruise - Elliot Bay to Blakely Rock in the Puget Sound
           </h2>
-          <div className="font-bold">$105 per passenger +tax - 2 person max</div>
+          <div className="font-bold">$210 +tax - 2 person max</div>
           <p className="italic pt-2">
             Step aboard on a picturesque cruise from Elliot Bay to Blakely Rock in the serene Puget
             Sound. Feel intimately connected to the nature as you glide through the emerald green

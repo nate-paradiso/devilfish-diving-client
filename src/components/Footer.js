@@ -18,8 +18,8 @@ const Footer = () => {
             devilfishdive.com
           </a>
           <p>
-            <Link className="hover:text-hoverColor" href="/">
-              Refund Policy
+            <Link className="hover:text-hoverColor" href="/CancelPolicy">
+              Cancellation Policy
             </Link>
           </p>
           <p>
