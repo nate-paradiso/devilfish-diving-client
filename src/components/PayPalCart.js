@@ -1,11 +1,12 @@
 export const cartItems = [
   {
-    id: "Dive", // Change the ID as needed
-    quantity: "1", // Adjust quantity as needed
+    id: "Dive",
+    name: "Dive Experience",
+    quantity: 1,
   },
   {
-    id: "Cruise", // Change the ID as needed
-    quantity: "1", // Adjust quantity as needed
+    id: "Cruise",
+    name: "Cruise Experience",
+    quantity: 1,
   },
-  // Add more items as needed
 ];
