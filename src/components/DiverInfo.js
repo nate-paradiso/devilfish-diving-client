@@ -708,14 +708,16 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formatDateForHTMLInput(formData.divingDate)}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.divingDate && (
-                    <span
-                      ref={el => (errorRefs.current.divingDate = el)}
-                      className="contact__error-message"
-                    >
-                      {validationErrors.divingDate}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.divingDate && (
+                      <span
+                        ref={el => (errorRefs.current.divingDate = el)}
+                        className="contact__error-message"
+                      >
+                        {validationErrors.divingDate}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="firstName " className="mt-2 flex flex-row">
@@ -729,11 +731,13 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     onChange={handleInputChange}
                     className="border-solid p-2  border-2 border-darkBlue   md:w-64  w-full h-[46px] "
                   />
-                  {validationErrors.firstName && (
-                    <span ref={el => (errorRefs.current.firstName = el)} className="text-red-500">
-                      {validationErrors.firstName}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.firstName && (
+                      <span ref={el => (errorRefs.current.firstName = el)} className="text-red-500">
+                        {validationErrors.firstName}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="lastName " className="mt-2 flex flex-row">
@@ -765,11 +769,13 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.email}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.email && (
-                    <span ref={el => (errorRefs.current.email = el)} className="text-red-500">
-                      {validationErrors.email}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.email && (
+                      <span ref={el => (errorRefs.current.email = el)} className="text-red-500">
+                        {validationErrors.email}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="phone" className="mt-2 flex flex-row">
@@ -783,11 +789,13 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formatPhoneNumber(formData.phone)}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.phone && (
-                    <span ref={el => (errorRefs.current.phone = el)} className="text-red-500">
-                      {validationErrors.phone}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.phone && (
+                      <span ref={el => (errorRefs.current.phone = el)} className="text-red-500">
+                        {validationErrors.phone}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="birthday" className="mt-2 flex flex-row">
@@ -801,11 +809,13 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.birthday}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.birthday && (
-                    <span ref={el => (errorRefs.current.birthday = el)} className="text-red-500">
-                      {validationErrors.birthday}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.birthday && (
+                      <span ref={el => (errorRefs.current.birthday = el)} className="text-red-500">
+                        {validationErrors.birthday}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="under18" className="mt-2 flex flex-row">
@@ -823,11 +833,13 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     <option value="no">No</option>
                     <option value="yes">Yes</option>
                   </select>{" "}
-                  {validationErrors.under18 && (
-                    <span ref={el => (errorRefs.current.under18 = el)} className="text-red-500">
-                      {validationErrors.under18}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.under18 && (
+                      <span ref={el => (errorRefs.current.under18 = el)} className="text-red-500">
+                        {validationErrors.under18}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="address" className="mt-2 flex flex-row">
@@ -841,11 +853,13 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formatAddress(formData.address)}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.address && (
-                    <span ref={el => (errorRefs.current.address = el)} className="text-red-500">
-                      {validationErrors.address}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.address && (
+                      <span ref={el => (errorRefs.current.address = el)} className="text-red-500">
+                        {validationErrors.address}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
               <div>
@@ -861,11 +875,13 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.lastDive}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.lastDive && (
-                    <span ref={el => (errorRefs.current.lastDive = el)} className="text-red-500">
-                      {validationErrors.lastDive}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.lastDive && (
+                      <span ref={el => (errorRefs.current.lastDive = el)} className="text-red-500">
+                        {validationErrors.lastDive}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <div className="flex-col flex">
@@ -880,14 +896,16 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.certifyingAgency}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.certifyingAgency && (
-                    <span
-                      ref={el => (errorRefs.current.certifyingAgency = el)}
-                      className="text-red-500"
-                    >
-                      {validationErrors.certifyingAgency}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.certifyingAgency && (
+                      <span
+                        ref={el => (errorRefs.current.certifyingAgency = el)}
+                        className="text-red-500"
+                      >
+                        {validationErrors.certifyingAgency}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="certificationNumber" className="mt-2 flex flex-row">
@@ -901,14 +919,16 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.certificationNumber}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.certificationNumber && (
-                    <span
-                      ref={el => (errorRefs.current.certificationNumber = el)}
-                      className="contact__error-message"
-                    >
-                      {validationErrors.certificationNumber}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.certificationNumber && (
+                      <span
+                        ref={el => (errorRefs.current.certificationNumber = el)}
+                        className="contact__error-message"
+                      >
+                        {validationErrors.certificationNumber}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="danInsuranceNumber" className="mt-2 flex flex-row">
@@ -923,14 +943,16 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.danInsuranceNumber}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.danInsuranceNumber && (
-                    <span
-                      ref={el => (errorRefs.current.danInsuranceNumber = el)}
-                      className="contact__error-message"
-                    >
-                      {validationErrors.danInsuranceNumber}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.danInsuranceNumber && (
+                      <span
+                        ref={el => (errorRefs.current.danInsuranceNumber = el)}
+                        className="contact__error-message"
+                      >
+                        {validationErrors.danInsuranceNumber}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="emergencyContactName" className="mt-2 flex flex-row">
@@ -944,14 +966,16 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.emergencyContactName}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.emergencyContactName && (
-                    <span
-                      ref={el => (errorRefs.current.emergencyContactName = el)}
-                      className="contact__error-message"
-                    >
-                      {validationErrors.emergencyContactName}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.emergencyContactName && (
+                      <span
+                        ref={el => (errorRefs.current.emergencyContactName = el)}
+                        className="contact__error-message"
+                      >
+                        {validationErrors.emergencyContactName}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="emergencyContactPhone" className="mt-2 flex flex-row">
@@ -965,14 +989,16 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formatPhoneNumber(formData.emergencyContactPhone)}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.emergencyContactPhone && (
-                    <span
-                      ref={el => (errorRefs.current.emergencyContactPhone = el)}
-                      className="contact__error-message"
-                    >
-                      {validationErrors.emergencyContactPhone}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.emergencyContactPhone && (
+                      <span
+                        ref={el => (errorRefs.current.emergencyContactPhone = el)}
+                        className="contact__error-message"
+                      >
+                        {validationErrors.emergencyContactPhone}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <div className="flex-col flex">
@@ -988,14 +1014,16 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.message}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.message && (
-                    <span
-                      ref={el => (errorRefs.current.message = el)}
-                      className="contact__error-message"
-                    >
-                      {validationErrors.message}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.message && (
+                      <span
+                        ref={el => (errorRefs.current.message = el)}
+                        className="contact__error-message"
+                      >
+                        {validationErrors.message}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -1022,14 +1050,16 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.electronicSignature}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.electronicSignature && (
-                    <span
-                      ref={el => (errorRefs.current.electronicSignature = el)}
-                      className="contact__error-message"
-                    >
-                      {validationErrors.electronicSignature}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.electronicSignature && (
+                      <span
+                        ref={el => (errorRefs.current.electronicSignature = el)}
+                        className="contact__error-message"
+                      >
+                        {validationErrors.electronicSignature}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex flex-col">
                   {" "}
@@ -1049,14 +1079,16 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.electronicParentSignature}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.electronicParentSignature && (
-                    <span
-                      ref={el => (errorRefs.current.electronicParentSignature = el)}
-                      className="contact__error-message"
-                    >
-                      {validationErrors.electronicParentSignature}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.electronicParentSignature && (
+                      <span
+                        ref={el => (errorRefs.current.electronicParentSignature = el)}
+                        className="contact__error-message"
+                      >
+                        {validationErrors.electronicParentSignature}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="flex-col flex">
@@ -1071,14 +1103,16 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   value={formData.electronicSignatureDate}
                   onChange={handleInputChange}
                 />
-                {validationErrors.electronicSignatureDate && (
-                  <span
-                    ref={el => (errorRefs.current.electronicSignatureDate = el)}
-                    className="contact__error-message"
-                  >
-                    {validationErrors.electronicSignatureDate}
-                  </span>
-                )}
+                <div className="md:w-64">
+                  {validationErrors.electronicSignatureDate && (
+                    <span
+                      ref={el => (errorRefs.current.electronicSignatureDate = el)}
+                      className="contact__error-message"
+                    >
+                      {validationErrors.electronicSignatureDate}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           </div>

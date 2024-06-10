@@ -837,9 +837,11 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.firstName}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.firstName && (
-                    <span className="error text-red-500">{validationErrors.firstName}</span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.firstName && (
+                      <span className="error text-red-500">{validationErrors.firstName}</span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="lastName" className="mt-2 flex flex-row">
@@ -853,9 +855,11 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.lastName}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.lastName && (
-                    <span className="error text-red-500">{validationErrors.lastName}</span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.lastName && (
+                      <span className="error text-red-500">{validationErrors.lastName}</span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="email" className="mt-2 flex flex-row">
@@ -869,9 +873,11 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.email}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.email && (
-                    <span className="error text-red-500">{validationErrors.email}</span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.email && (
+                      <span className="error text-red-500">{validationErrors.email}</span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="phone" className="mt-2 flex flex-row">
@@ -885,9 +891,11 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formatPhoneNumber(formData.phone)}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.phone && (
-                    <span className="error text-red-500">{validationErrors.phone}</span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.phone && (
+                      <span className="error text-red-500">{validationErrors.phone}</span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="birthday" className="mt-2 flex flex-row">
@@ -901,9 +909,11 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.birthday}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.birthday && (
-                    <span className="error text-red-500">{validationErrors.birthday}</span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.birthday && (
+                      <span className="error text-red-500">{validationErrors.birthday}</span>
+                    )}
+                  </div>
                 </div>
                 {/* second column */}
               </div>
@@ -923,9 +933,11 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                   </select>{" "}
-                  {validationErrors.under18 && (
-                    <span className="error text-red-500">{validationErrors.under18}</span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.under18 && (
+                      <span className="error text-red-500">{validationErrors.under18}</span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="address" className="mt-2 flex flex-row">
@@ -939,9 +951,11 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.address}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.address && (
-                    <span className="error text-red-500">{validationErrors.address}</span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.address && (
+                      <span className="error text-red-500">{validationErrors.address}</span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="emergencyContactName" className="mt-2 flex flex-row">
@@ -955,11 +969,13 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.emergencyContactName}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.emergencyContactName && (
-                    <span className="error text-red-500">
-                      {validationErrors.emergencyContactName}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.emergencyContactName && (
+                      <span className="error text-red-500">
+                        {validationErrors.emergencyContactName}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex ">
                   <label htmlFor="emergencyContactPhone" className="mt-2 flex flex-row">
@@ -973,11 +989,13 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formatPhoneNumber(formData.emergencyContactPhone)}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.emergencyContactPhone && (
-                    <span className="error text-red-500 whitespace-wrap">
-                      {validationErrors.emergencyContactPhone}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.emergencyContactPhone && (
+                      <span className="error text-red-500 whitespace-wrap">
+                        {validationErrors.emergencyContactPhone}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex-col flex">
                   <label htmlFor="message" className="mt-2 flex flex-row">
@@ -992,9 +1010,11 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.message}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.message && (
-                    <span className="error text-red-500">{validationErrors.message}</span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.message && (
+                      <span className="error text-red-500">{validationErrors.message}</span>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -1018,11 +1038,13 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                         value={formData.firstNameSecondPassenger}
                         onChange={handleInputChange}
                       />
-                      {validationErrors.firstNameSecondPassenger && (
-                        <span className="error text-red-500">
-                          {validationErrors.firstNameSecondPassenger}
-                        </span>
-                      )}
+                      <div className="md:w-64">
+                        {validationErrors.firstNameSecondPassenger && (
+                          <span className="error text-red-500">
+                            {validationErrors.firstNameSecondPassenger}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <div className="flex-col flex">
                       <label htmlFor="lastNameSecondPassenger" className="mt-2 flex flex-row">
@@ -1036,11 +1058,13 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                         value={formData.lastNameSecondPassenger}
                         onChange={handleInputChange}
                       />
-                      {validationErrors.lastNameSecondPassenger && (
-                        <span className="error text-red-500">
-                          {validationErrors.lastNameSecondPassenger}
-                        </span>
-                      )}
+                      <div className="md:w-64">
+                        {validationErrors.lastNameSecondPassenger && (
+                          <span className="error text-red-500">
+                            {validationErrors.lastNameSecondPassenger}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <div className="flex-col flex">
                       <label htmlFor="emailSecondPassenger" className="mt-2 flex flex-row">
@@ -1054,11 +1078,13 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                         value={formData.emailSecondPassenger}
                         onChange={handleInputChange}
                       />
-                      {validationErrors.emailSecondPassenger && (
-                        <span className="error text-red-500">
-                          {validationErrors.emailSecondPassenger}
-                        </span>
-                      )}
+                      <div className="md:w-64">
+                        {validationErrors.emailSecondPassenger && (
+                          <span className="error text-red-500">
+                            {validationErrors.emailSecondPassenger}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <div className="flex-col flex">
                       <label htmlFor="phoneSecondPassenger" className="mt-2 flex flex-row">
@@ -1072,11 +1098,13 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                         value={formatPhoneNumber(formData.phoneSecondPassenger)}
                         onChange={handleInputChange}
                       />
-                      {validationErrors.phoneSecondPassenger && (
-                        <span className="error text-red-500">
-                          {validationErrors.phoneSecondPassenger}
-                        </span>
-                      )}
+                      <div className="md:w-64">
+                        {validationErrors.phoneSecondPassenger && (
+                          <span className="error text-red-500">
+                            {validationErrors.phoneSecondPassenger}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <div className="flex-col flex">
                       <label htmlFor="birthdaySecondPassenger" className="mt-2 flex flex-row">
@@ -1090,11 +1118,13 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                         value={formData.birthdaySecondPassenger}
                         onChange={handleInputChange}
                       />
-                      {validationErrors.birthdaySecondPassenger && (
-                        <span className="error text-red-500">
-                          {validationErrors.birthdaySecondPassenger}
-                        </span>
-                      )}
+                      <div className="md:w-64">
+                        {validationErrors.birthdaySecondPassenger && (
+                          <span className="error text-red-500">
+                            {validationErrors.birthdaySecondPassenger}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     {/* second column */}
                   </div>
@@ -1114,11 +1144,13 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                         <option value="No">No</option>
                         <option value="Yes">Yes</option>
                       </select>
-                      {validationErrors.under18SecondPassenger && (
-                        <span className="error text-red-500">
-                          {validationErrors.under18SecondPassenger}
-                        </span>
-                      )}
+                      <div className="md:w-64">
+                        {validationErrors.under18SecondPassenger && (
+                          <span className="error text-red-500">
+                            {validationErrors.under18SecondPassenger}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <div className="flex-col flex">
                       <label htmlFor="addressSecondPassenger" className="mt-2 flex flex-row">
@@ -1132,11 +1164,13 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                         value={formData.addressSecondPassenger}
                         onChange={handleInputChange}
                       />
-                      {validationErrors.addressSecondPassenger && (
-                        <span className="error text-red-500">
-                          {validationErrors.addressSecondPassenger}
-                        </span>
-                      )}
+                      <div className="md:w-64">
+                        {validationErrors.addressSecondPassenger && (
+                          <span className="error text-red-500">
+                            {validationErrors.addressSecondPassenger}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <div className="flex-col flex">
                       <label
@@ -1153,11 +1187,13 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                         value={formData.emergencyContactNameSecondPassenger}
                         onChange={handleInputChange}
                       />
-                      {validationErrors.emergencyContactNameSecondPassenger && (
-                        <span className="error text-red-500">
-                          {validationErrors.emergencyContactNameSecondPassenger}
-                        </span>
-                      )}
+                      <div className="md:w-64">
+                        {validationErrors.emergencyContactNameSecondPassenger && (
+                          <span className="error text-red-500">
+                            {validationErrors.emergencyContactNameSecondPassenger}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <div className="flex-col flex">
                       <label
@@ -1174,11 +1210,13 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                         value={formatPhoneNumber(formData.emergencyContactPhoneSecondPassenger)}
                         onChange={handleInputChange}
                       />
-                      {validationErrors.emergencyContactPhoneSecondPassenger && (
-                        <span className="error text-red-500">
-                          {validationErrors.emergencyContactPhoneSecondPassenger}
-                        </span>
-                      )}
+                      <div className="md:w-64">
+                        {validationErrors.emergencyContactPhoneSecondPassenger && (
+                          <span className="error text-red-500">
+                            {validationErrors.emergencyContactPhoneSecondPassenger}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1209,14 +1247,16 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.electronicSignature}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.electronicSignature && (
-                    <span
-                      ref={el => (errorRefs.current.electronicSignature = el)}
-                      className="contact__error-message"
-                    >
-                      {validationErrors.electronicSignature}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.electronicSignature && (
+                      <span
+                        ref={el => (errorRefs.current.electronicSignature = el)}
+                        className="contact__error-message"
+                      >
+                        {validationErrors.electronicSignature}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex flex-col">
                   <label
@@ -1235,14 +1275,16 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     value={formData.electronicParentSignature}
                     onChange={handleInputChange}
                   />
-                  {validationErrors.electronicParentSignature && (
-                    <span
-                      ref={el => (errorRefs.current.electronicParentSignature = el)}
-                      className="contact__error-message"
-                    >
-                      {validationErrors.electronicParentSignature}
-                    </span>
-                  )}
+                  <div className="md:w-64">
+                    {validationErrors.electronicParentSignature && (
+                      <span
+                        ref={el => (errorRefs.current.electronicParentSignature = el)}
+                        className="contact__error-message"
+                      >
+                        {validationErrors.electronicParentSignature}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 {showSecondPassengerForm && (
                   <div>
@@ -1263,14 +1305,16 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                         value={formData.electronicSignatureSecondPassenger}
                         onChange={handleInputChange}
                       />
-                      {validationErrors.electronicSignatureSecondPassenger && (
-                        <span
-                          ref={el => (errorRefs.current.electronicSignatureSecondPassenger = el)}
-                          className="contact__error-message"
-                        >
-                          {validationErrors.electronicSignatureSecondPassenger}
-                        </span>
-                      )}
+                      <div className="md:w-64">
+                        {validationErrors.electronicSignatureSecondPassenger && (
+                          <span
+                            ref={el => (errorRefs.current.electronicSignatureSecondPassenger = el)}
+                            className="contact__error-message"
+                          >
+                            {validationErrors.electronicSignatureSecondPassenger}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <div className="flex flex-col">
                       <label
@@ -1289,16 +1333,18 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                         value={formData.electronicParentSignatureSecondPassenger}
                         onChange={handleInputChange}
                       />
-                      {validationErrors.electronicParentSignatureSecondPassenger && (
-                        <span
-                          ref={el =>
-                            (errorRefs.current.electronicParentSignatureSecondPassenger = el)
-                          }
-                          className="contact__error-message"
-                        >
-                          {validationErrors.electronicParentSignatureSecondPassenger}
-                        </span>
-                      )}
+                      <div className="md:w-64">
+                        {validationErrors.electronicParentSignatureSecondPassenger && (
+                          <span
+                            ref={el =>
+                              (errorRefs.current.electronicParentSignatureSecondPassenger = el)
+                            }
+                            className="contact__error-message"
+                          >
+                            {validationErrors.electronicParentSignatureSecondPassenger}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 )}
@@ -1315,14 +1361,16 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                   value={formData.electronicSignatureDate}
                   onChange={handleInputChange}
                 />
-                {validationErrors.electronicSignatureDate && (
-                  <span
-                    ref={el => (errorRefs.current.electronicSignatureDate = el)}
-                    className="contact__error-message"
-                  >
-                    {validationErrors.electronicSignatureDate}
-                  </span>
-                )}
+                <div className="md:w-64">
+                  {validationErrors.electronicSignatureDate && (
+                    <span
+                      ref={el => (errorRefs.current.electronicSignatureDate = el)}
+                      className="contact__error-message"
+                    >
+                      {validationErrors.electronicSignatureDate}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           </div>
