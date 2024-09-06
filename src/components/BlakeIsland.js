@@ -13,8 +13,9 @@ const BlakeIsland = () => {
             reef program, it consists of concrete debris scattered across the ocean floor,
             resembling the remnants of an old bridge. This scattered debris forms a complex habitat,
             attracting a variety of marine creatures and providing ample opportunities for
-            exploration.
+            exploration. Nitrox recommended.
           </p>
+          <br />
           <p>
             Diving at Blake Island Reef requires careful consideration of the current, as the site
             experiences significant water movement at times. It is recommended to dive here during
