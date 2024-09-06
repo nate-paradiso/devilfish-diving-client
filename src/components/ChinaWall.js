@@ -14,8 +14,8 @@ const ChinaWall = () => {
             Rock. Renowned for its dramatic underwater rock formation resembling a towering wall,
             this site offers an exhilarating dive experience for advanced divers. Starting between
             60 and 70 feet the rock wall is adorned with an abundance of Puget Sound marine fauna.
-            Rockfish dart among the crevices, while giant pacific octopus hide amidst the nooks and
-            crannies. The depths of China Wall can reach over 100 feet (30 meters) a typical dive
+            Rockfish hide in the crevices, while giant pacific octopus camoflouge themselve along
+            the wall. The depths of China Wall can reach over 100 feet (30 meters) a typical dive
             profile has a maximum operating depth of 85 to 95 feet depending on the tide. Nitrox is
             recommended.
           </p>
