@@ -11,7 +11,7 @@ const AlkiReef = () => {
           <h3 className="text-lg">Depth: 50 to 90 ft</h3>
           <h3 className="text-lg">Level: Open Water or Advanced</h3>
           <p>
-            Alki Reef is full of life making a epic dive site. Schools of rockfish and perch swim
+            Alki Reef is full of life making an epic dive site. Schools of rockfish and perch swim
             about, giant lingcod patrol the boulders and giant pacific octopus hide in the rubble.
             Multiple large rock piles make up this site. Each pile is about 15 to 20 feet high and
             up to 100 feet in diameter. The rock piles are situated close to one another. Some piles
