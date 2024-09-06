@@ -15,8 +15,7 @@ const AlkiReef = () => {
             about, giant lingcod patrol the boulders and giant pacific octopus hide in the rubble.
             Multiple large rock piles make up this site. Each pile is about 15 to 20 feet high and
             up to 100 feet in diameter. The rock piles are situated close to one another. Some piles
-            run together while others are not connected, but are visible (assuming visibility is
-            reasonable) from one another.{" "}
+            run together while others are not connected, but are visible from one another.{" "}
           </p>
         </div>
         <div className="flex justify-center aspect-video mb-4 bg-white  bg-opacity-60 shadow-lg rounded-md p-4 border-[1px]">
