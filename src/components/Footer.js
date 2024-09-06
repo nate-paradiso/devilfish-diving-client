@@ -30,7 +30,7 @@ const Footer = () => {
           <p>Copyright Devilfish Diving LLC 2024</p>
         </div>
         <div>
-          <a href="https://www.instagram.com/" target="blank">
+          <a href="https://www.instagram.com/devilfish__diving/" target="blank">
             <Image
               className="w-8 mr-2 md:mr-6"
               src="/images/icons8-instagram.svg"
