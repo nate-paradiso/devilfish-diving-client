@@ -102,7 +102,7 @@ const CalendarComponent = () => {
 
   // Function to get the name of the day corresponding to the selected date
   const getDayName = date => {
-    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const dayIndex = new Date(date).getDay();
     return days[dayIndex];
   };
