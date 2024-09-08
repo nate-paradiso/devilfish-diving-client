@@ -10,7 +10,7 @@ const Services = () => {
 
         <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
           <h2 className="font-bold text-xl"> Two-tank Dive</h2>
-          <div className="font-bold">$145 per passenger +tax - 2 person max</div>{" "}
+          <div className="font-bold">$145 per diver +tax - 2 person max</div>{" "}
           <p className="italic pt-2">
             Enjoy an unforgettable adventure exploring the hidden gems of the Puget Sound. Discover
             the underwater world teeming with vibrant marine life, accessible only by boat. Dive
