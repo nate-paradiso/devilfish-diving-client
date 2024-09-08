@@ -60,7 +60,7 @@ const FAQ = () => {
         <h2 className="text-lg">How many dives should I have completed within the last year?</h2>
         <p className="italic text-gray-800">
           For safety reasons, we recommend that divers have completed at least four dives within the
-          last year. If you haven't dived recently, we suggest a refresher course before your trip.
+          last year. If you have not dived recently, we suggest a refresher course before your trip.
         </p>
         <br />
         <h2 className="text-lg">Is there a toilet on the dive boat?</h2>
