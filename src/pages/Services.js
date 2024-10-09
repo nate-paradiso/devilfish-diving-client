@@ -12,12 +12,14 @@ const Services = () => {
           <h2 className="font-bold text-xl"> Two-tank Dive</h2>
           <div className="font-bold">$145 per diver +tax - 2 person max</div>{" "}
           <p className="italic pt-2">
-            Enjoy an unforgettable adventure exploring the hidden gems of the Puget Sound. Discover
-            the underwater world teeming with vibrant marine life, accessible only by boat. Dive
-            into the depths where you’ll encounter quintessential species like the Giant Pacific
-            Octopus, Wolf Eel, Lingcod, Cabezon, Nudibranchs, schooling Rockfish and many more!
-            Explore shipwrecks that tell tales of the past, now home to diverse marine ecosystems,
-            and traverse rocky reefs bustling with colorful marine species.
+            Enjoy an adventure exploring the hidden gems of the Puget Sound and the wrecks of Lake
+            Washington. Discover an underwater world teeming with vibrant marine life, accessible
+            only by boat. Dive into the depths where you will encounter iconic species like the
+            Giant Pacific Octopus, Wolf Eel, Lingcod, Cabezon, Nudibranchs, schooling Rockfish, and
+            many more! Explore shipwrecks that tell tales of the past—now home to diverse marine
+            ecosystems—and traverse rocky reefs bustling with colorful marine species. Whether
+            you're diving in the Puget Sound or exploring the wrecks of Lake Washington, each dive
+            offers a unique experience waiting to be discovered.{" "}
           </p>
         </div>
         <br />
