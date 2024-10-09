@@ -267,14 +267,14 @@ const CalendarComponent = () => {
             <h1 className="text-xl font-bold">Thank you!</h1>
             <br />
             We will see you at the{" "}
-            <a
+            {/* <a
               className="text-blue-500 font-bold"
               target="blank"
               href="https://www.google.com/maps/place/Don+Armeni+Boat+Ramp/@47.592697,-122.3848731,17z/data=!4m14!1m7!3m6!1s0x5490407498e64f5f:0x7ab08bdb66039a82!2sDon+Armeni+Boat+Ramp!8m2!3d47.592697!4d-122.3822982!16s%2Fg%2F11c3tqkqhz!3m5!1s0x5490407498e64f5f:0x7ab08bdb66039a82!8m2!3d47.592697!4d-122.3822982!16s%2Fg%2F11c3tqkqhz?entry=ttu"
             >
               Don Armeni Boat Ramp
-            </a>{" "}
-            in Alki at <span className="font-bold">7:30 AM </span>
+            </a>{" "} */}
+            Boat Ramp at <span className="font-bold">7:30 AM </span>
             <span className="font-bold ">
               {getDayName(selectedDate)} - {selectedDateStr}
             </span>
