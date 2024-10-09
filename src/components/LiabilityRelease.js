@@ -60,13 +60,15 @@ const LiabilityRelease = ({ formData }) => {
       </p>
       <br />
       <p>
-        If diving from a boat, I will be present at and attentive to the briefing given by the boat
+        If diving from a boat, I will be attentive to and present at the briefing given by the boat
         crew. If there is anything I do not understand, I will notify the boat crew or captain
-        immediately. I acknowledge it is my responsibility to plan my dives as no-decompression
-        dives and within parameters that allow me to make a safety stop before ascending to the
-        surface, arriving on board the vessel with gas remaining in my cylinder as a measure of
-        safety. If I become distressed on the surface, I will immediately drop my weights and
-        inflate my BCD (orally or with low pressure inflator) to establish buoyancy on the surface.
+        immediately. I acknowledge that it is my responsibility to plan and conduct my dives within
+        the limits of my training and certification, ensuring they remain no-decompression dives
+        unless I am specifically trained for decompression procedures. I will also ensure my dive
+        allows for a safety stop before ascending and that I return to the boat with sufficient gas
+        remaining in my cylinder as a safety measure. If I become distressed on the surface, I will
+        immediately drop my weights and inflate my BCD (orally or with a low-pressure inflator) to
+        establish buoyancy.{" "}
       </p>
       <br />
       <p>
