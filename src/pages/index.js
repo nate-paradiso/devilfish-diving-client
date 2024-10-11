@@ -63,7 +63,7 @@ export default function Home() {
         </div>
         <div>
           <h1 className="bg-white bg-opacity-60 shadow-md text-center rounded-md p-3 border-[1px] m-8 md:text-2xl text-lg">
-            Discover the Puget Sound!
+            Discover the Puget Sound and Lake Washington!
           </h1>
         </div>
         <div
@@ -74,7 +74,7 @@ export default function Home() {
         >
           <div>
             <h2 className="m-10 lg:m-16 text-xl text-center text-#0E1111 border-[1px] bg-white bg-opacity-90 shadow-md rounded-md p-2">
-              Launching from Alki
+              Launching at Alki and Lake Washington
             </h2>
           </div>
         </div>

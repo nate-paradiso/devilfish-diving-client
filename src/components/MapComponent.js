@@ -213,7 +213,15 @@ const MapComponent = () => {
     { name: "Deep Barge", position: [47.674, -122.423] },
     { name: "Alki Reef", position: [47.557, -122.408] },
     { name: "Blake Island Reef", position: [47.5295, -122.494] },
+    { name: "Possession Point Ferry", position: [47.897, -122.3932] },
+    { name: "YMS359", position: [47.66289027, -122.24050778] },
+    { name: "PBM Mariner", position: [47.50560736, -122.21399939] },
+    { name: "PV2 Harpoon", position: [47.69425, -122.25866667] },
+    { name: "PB4Y", position: [47.67621733, -122.24121458] },
+    { name: "Wolf Bay Wreck", position: [47.66498528, -122.25984639] },
+    { name: "Wheeler", position: [47.5260778, -122.24347482] },
     { name: "Don Armeni Boat Launch", position: [47.5928, -122.38203] },
+    { name: "Atlantic City Boat Launch", position: [47.5227802048354, -122.26314582769103] },
 
     // Add more pins as needed
   ];
@@ -262,7 +270,7 @@ const MapComponent = () => {
       <Script src="https://unpkg.com/Leaflet.TileLayer.MBTiles@1.0.0/Leaflet.TileLayer.MBTiles.js"></Script> */}
         <MapContainer
           className="h-[550px] w-full md:h-[500px] shadow-md mb-2 "
-          center={[47.605932, -122.448144]}
+          center={[47.69532618372522, -122.39365052155932]}
           zoom={10}
         >
           <LayersControl position="topright">
@@ -273,7 +281,12 @@ const MapComponent = () => {
               <Marker
                 key={index}
                 position={marker.position}
-                icon={marker.name === "Don Armeni Boat Launch" ? customIcon2 : customIcon}
+                icon={
+                  marker.name === "Don Armeni Boat Launch" ||
+                  marker.name === "Atlantic City Boat Launch"
+                    ? customIcon2
+                    : customIcon
+                }
               >
                 <Popup>
                   <button
