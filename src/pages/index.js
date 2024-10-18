@@ -74,7 +74,7 @@ export default function Home() {
         >
           <div>
             <h2 className="m-10 lg:m-16 text-xl text-center text-#0E1111 border-[1px] bg-white bg-opacity-90 shadow-md rounded-md p-2">
-              Launching at Alki and Lake Washington
+              Launching at Alki and Rainier Beach
             </h2>
           </div>
         </div>

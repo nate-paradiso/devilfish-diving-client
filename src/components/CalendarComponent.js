@@ -189,9 +189,16 @@ const CalendarComponent = () => {
                     height="auto"
                     eventContent={eventContent}
                     unselectAuto={false}
-                    validRange={{
-                      start: new Date(), // Today's date
-                      end: "9999-12-31", // Far into the future
+                    // validRange={{
+                    //   start: new Date(), // Today's date
+                    //   end: "9999-12-31", // Far into the future
+                    // }}
+                    eventClassNames={arg => {
+                      // Check if the event's end date is before today
+                      if (new Date(arg.event.end || arg.event.start) < new Date()) {
+                        return ["past-event"]; // Apply the class for past events
+                      }
+                      return [];
                     }}
                   />
                 </div>
