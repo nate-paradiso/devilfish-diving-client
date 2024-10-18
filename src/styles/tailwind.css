@@ -39,6 +39,11 @@ button:hover {
   background-color: #f0f4f8; /* Adjust the color as needed */
 }
 
+.past-event {
+  opacity: 0.5;
+  optional: Make it semi-transparent;
+}
+
 @layer utilities {
   .font-thin {
     font-weight: 100;
