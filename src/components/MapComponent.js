@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 // import MarkerClusterGroup from "react-leaflet-markercluster";
 import {
   MapContainer,
@@ -190,6 +191,15 @@ const MapComponent = () => {
         ],
         opacity: 0.8,
       },
+      {
+        name: "Elliot Bay Pier",
+        url: "/images/tiles/Elliot-bay-pier.png",
+        bounds: [
+          [47.625, -122.37592], // Top-left corner
+          [47.62628, -122.37266],
+        ],
+        opacity: 0.8,
+      },
       // Add more PNG images as needed
     ];
     return pngImages.map((image, index) => (
@@ -255,10 +265,17 @@ const MapComponent = () => {
   };
 
   return (
-    <div className="mb-2 flex flex-col ">
-      <div className=" flex pb-3 max-w-[1000px] justify-start  m-auto flex-col text-center ">
+    <div className="mb-2 flex flex-col mt-4 ">
+      <div className=" flex max-w-[1000px] justify-center items-center  m-auto flex-col text-center ">
         <h1 className="text-3xl">Dive Map</h1>
         <p> Explore the dive sites. </p>
+        <Image
+          className="h-auto w-[125px] md:w-[200px] p-1" // Consistent responsive sizing
+          src="/images/gpologo-invert.png"
+          alt="Devilfish Logo"
+          width={200} // The largest size (matches md:w-[200px])
+          height={91} // Keep the correct aspect ratio
+        />{" "}
       </div>
       <div className="flex pb-3 max-w-[1000px] justify-center align-middle m-auto  ">
         <p className="m-4 bg-white shadow-lg rounded-md p-4 border-[1px] bg-opacity-60">
