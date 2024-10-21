@@ -11,6 +11,7 @@ const Contact = () => {
   });
   const [status, setStatus] = useState(""); // For form submission status
   const [errors, setErrors] = useState({}); // For validation errors
+  const [loading, setLoading] = useState(false); // For spinner
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -55,7 +56,7 @@ const Contact = () => {
       setStatus("Please fix the errors before submitting.");
       return; // Stop form submission if validation fails
     }
-
+    setLoading(true); // Show spinner
     try {
       const response = await axios.post(`${serverUrl}/api/contact`, formData, {
         headers: {
@@ -72,6 +73,8 @@ const Contact = () => {
     } catch (error) {
       console.error("Error sending message:", error.response ? error.response.data : error.message);
       setStatus("Failed to send message. Please try again.");
+    } finally {
+      setLoading(false); // Hide spinner after request is done
     }
   };
 
@@ -126,12 +129,25 @@ const Contact = () => {
               />
               {errors.message && <p className="text-red-500">{errors.message}</p>}
             </label>
-            <button
-              type="submit"
-              className="bg-blue-500 text-white rounded p-2 transition duration-200 hover:bg-blue-600"
-            >
-              Send Message
-            </button>
+            {/* Spinner or submit button */}
+            {loading ? (
+              <div className="flex justify-center">
+                {/* Display the external tub-spinner SVG */}
+                <Image
+                  src="/images/tube-spinner.svg"
+                  alt="Loading Spinner"
+                  width={40}
+                  height={40}
+                />
+              </div>
+            ) : (
+              <button
+                type="submit"
+                className="bg-blue-500 text-white rounded p-2 transition duration-200 hover:bg-blue-600"
+              >
+                Send Message
+              </button>
+            )}
             {status && <p className="mt-2">{status}</p>} {/* Status message */}
           </form>
         </div>
