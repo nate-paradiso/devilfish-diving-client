@@ -4,9 +4,16 @@ import Image from "next/image";
 const About = () => {
   return (
     <div className=" flex flex-col m-4 ">
-      <div className="flex pb-3 max-w-[1000px] justify-start  m-auto flex-col ">
+      <div className=" flex pb-3 max-w-[1000px] justify-center items-center  m-auto flex-col text-center ">
         <div className=" flex pb-3 max-w-[1000px] justify-start  m-auto flex-col text-center ">
           <h1 className="text-3xl">About</h1>
+          <Image
+            className="h-auto w-[125px] md:w-[200px] p-1" // Consistent responsive sizing
+            src="/images/gpologo-invert.png"
+            alt="Devilfish Logo"
+            width={200} // The largest size (matches md:w-[200px])
+            height={64} // Keep the correct aspect ratio
+          />{" "}
         </div>
         <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px]">
           <p>

@@ -1,10 +1,19 @@
 import React from "react";
-
+import Image from "next/image";
 const PrivacyPolicy = () => {
   return (
-    <div className="flex justify-center">
+    <div className=" flex flex-col items-center mt-4">
+      <div className=" flex max-w-[1000px] justify-center items-center  m-auto flex-col text-center ">
+        <h1 className="text-3xl">Privacy Policy</h1>
+        <Image
+          className="h-auto w-[125px] md:w-[200px] p-1" // Consistent responsive sizing
+          src="/images/gpologo-invert.png"
+          alt="Devilfish Logo"
+          width={200} // The largest size (matches md:w-[200px])
+          height={91} // Keep the correct aspect ratio
+        />{" "}
+      </div>
       <div className="max-w-[800px] p-4 flex flex-col bg-white bg-opacity-60 shadow-md rounded-md m-4">
-        <h1 className="text-xl">Privacy Policy</h1>
         <p>Last updated: May 9, 2024</p>
         <p>
           At Devilfish Diving LLC, we take your privacy seriously. This Privacy Policy outlines the

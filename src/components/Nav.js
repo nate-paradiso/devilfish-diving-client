@@ -34,11 +34,11 @@ export const Nav = () => {
           />{" "}
         </Link>
 
-        <div className=" opacity-0 md:hidden">cross</div>
+        <div className=" opacity-0 lg:hidden">cross</div>
 
         <div className="relative z-20">
           <button
-            className="text-white md:hidden ml-2"
+            className="text-white lg:hidden ml-2"
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
@@ -80,7 +80,7 @@ export const Nav = () => {
           </button>
 
           <div
-            className="hidden md:flex space-x-4 text-[1rem] font-bold text-slate-950 bg-white  
+            className="hidden lg:flex space-x-4 text-[1rem] font-bold text-slate-950 bg-white  
           shadow-lg border-gray rounded-md p-1.5 border-[1px] ml-[20px] pl-[15px] pr-[15px]"
           >
             <Link
@@ -162,13 +162,29 @@ export const Nav = () => {
             >
               Calendar
             </Link>
+            <Link
+              href="/Friends"
+              className={`${
+                router.pathname === "/Friends" ? "underline underline-offset-4" : ""
+              } transition-colors duration-200 hover:text-hoverColor`}
+            >
+              Friends
+            </Link>
+            <Link
+              href="/Contact"
+              className={`${
+                router.pathname === "/Contact" ? "underline underline-offset-4" : ""
+              } transition-colors duration-200 hover:text-hoverColor`}
+            >
+              Contact
+            </Link>
           </div>
         </div>
       </div>
       <div className="fixed z-20 top-[65px] right-0">
         {isMenuOpen && (
           <div
-            className="md:hidden flex top-0 sticky z-30  text-right flex-col space-y-1 p-4 text-black text-[1rem]
+            className="lg:hidden flex top-0 sticky z-30  text-right flex-col space-y-1 p-4 text-black text-[1rem]
          bg-white  shadow-lg  rounded-bl-md rounded-tl-md  mb-4 w-[100px]"
           >
             <div>
@@ -271,6 +287,26 @@ export const Nav = () => {
                 } transition-colors duration-200 hover:text-hoverColor`}
               >
                 Calendar
+              </Link>
+            </div>
+            <div>
+              <Link
+                href="/Friends"
+                className={`${
+                  router.pathname === "/Friends" ? "underline underline-offset-4" : ""
+                } transition-colors duration-200 hover:text-hoverColor`}
+              >
+                Friends
+              </Link>
+            </div>
+            <div>
+              <Link
+                href="/Contact"
+                className={`${
+                  router.pathname === "/Contact" ? "underline underline-offset-4" : ""
+                } transition-colors duration-200 hover:text-hoverColor`}
+              >
+                Contact
               </Link>
             </div>
           </div>

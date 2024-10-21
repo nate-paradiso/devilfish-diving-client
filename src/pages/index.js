@@ -18,12 +18,29 @@ export default function Home() {
     <>
       <Hero />
 
-      <div className="flex justify-center m-8 bg-cover bg-center">
+      <div className="flex justify-center items-center m-8 bg-cover bg-center">
+        <Image
+          className="h-auto w-[140px] md:w-[200px] p-1" // Consistent responsive sizing
+          src="/images/gpologo-invert.png"
+          alt="Devilfish Logo"
+          width={200} // The largest size (matches md:w-[200px])
+          height={91} // Keep the correct aspect ratio
+        />
         <Link href="/Calendar">
-          <button className="p-3 md:p-4 md:text-3xl transition-colors duration-200 hover:bg-slate-100 text-2xl border-[1px] bg-white bg-opacity-90 shadow-md rounded-md">
+          <button
+            className="p-3 md:p-4 md:text-3xl transition-colors duration-200 hover:bg-slate-100 
+          text-xl text-center border-[1px] font-bold bg-white bg-opacity-90 shadow-md rounded-md"
+          >
             Book Now!
           </button>
         </Link>
+        <Image
+          className="h-auto w-[140px] md:w-[200px] p-1 transform scale-x-[-1]" // Consistent responsive sizing and mirror effect
+          src="/images/gpologo-invert.png"
+          alt="Devilfish Logo"
+          width={200} // The largest size (matches md:w-[200px])
+          height={91} // Keep the correct aspect ratio
+        />
       </div>
 
       <section className="flex justify-center items-center flex-col ml-4 mr-4">

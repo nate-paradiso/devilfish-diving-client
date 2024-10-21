@@ -7,6 +7,7 @@ import DiverInfo from "./DiverInfo";
 import CruisePassengerInfo from "./CruisePassengerInfo";
 import CruiseForm from "./CruiseForm";
 import axios from "axios";
+import Image from "next/image";
 
 const CalendarComponent = () => {
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -132,10 +133,17 @@ const CalendarComponent = () => {
   };
 
   return (
-    <div className="max-w-[800px] mx-auto ">
-      <div className=" flex pb-3 max-w-[1000px] justify-center  m-auto flex-col text-center ">
+    <div className="max-w-[800px] mx-auto mt-4">
+      <div className=" flex pb-3 max-w-[1000px] justify-center items-center  m-auto flex-col text-center ">
         <h1 className="text-3xl">Calendar</h1>
         <p>Book your adventure here!</p>
+        <Image
+          className="h-auto w-[125px] md:w-[200px] p-1" // Consistent responsive sizing
+          src="/images/gpologo-invert.png"
+          alt="Devilfish Logo"
+          width={200} // The largest size (matches md:w-[200px])
+          height={64} // Keep the correct aspect ratio
+        />{" "}
       </div>
       {!isSubmitted ? (
         <div>
