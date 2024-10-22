@@ -87,8 +87,8 @@ const Contact = () => {
             className="h-auto w-[125px] md:w-[200px] p-1"
             src="/images/gpologo-invert.png"
             alt="Devilfish Logo"
-            width={200}
-            height={64}
+            width={600}
+            height={272}
           />
         </div>
         <br />

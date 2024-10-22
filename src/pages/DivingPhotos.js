@@ -53,13 +53,13 @@ const DivingPhotos = () => {
     <div className="w-full flex m-auto flex-col mt-4 ">
       <div className=" flex pb-3 max-w-[1000px] justify-center items-center  m-auto flex-col text-center ">
         <h1 className="text-3xl">Diving</h1>
-        <p>Underwater Imagery</p>
+        <p>Underwater Photos</p>
         <Image
           className="h-auto w-[125px] md:w-[200px] p-1" // Consistent responsive sizing
           src="/images/gpologo-invert.png"
           alt="Devilfish Logo"
-          width={200} // The largest size (matches md:w-[200px])
-          height={64} // Keep the correct aspect ratio
+          width={600}
+          height={272}
         />{" "}
       </div>
       {loading ? (

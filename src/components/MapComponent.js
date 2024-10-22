@@ -273,8 +273,8 @@ const MapComponent = () => {
           className="h-auto w-[125px] md:w-[200px] p-1" // Consistent responsive sizing
           src="/images/gpologo-invert.png"
           alt="Devilfish Logo"
-          width={200} // The largest size (matches md:w-[200px])
-          height={91} // Keep the correct aspect ratio
+          width={600}
+          height={272}
         />{" "}
       </div>
       <div className="flex pb-3 max-w-[1000px] justify-center align-middle m-auto  ">

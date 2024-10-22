@@ -12,8 +12,8 @@ const Services = () => {
             className="h-auto w-[125px] md:w-[200px] p-1" // Consistent responsive sizing
             src="/images/gpologo-invert.png"
             alt="Devilfish Logo"
-            width={200} // The largest size (matches md:w-[200px])
-            height={64} // Keep the correct aspect ratio
+            width={600}
+            height={272}
           />
         </div>
         <br />

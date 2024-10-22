@@ -3,16 +3,16 @@ import Image from "next/image";
 
 const FAQ = () => {
   return (
-    <div className=" flex flex-col items-center m-4">
+    <div className=" flex flex-col items-center">
       <div className=" flex max-w-[1000px] justify-center items-center  m-auto flex-col text-center ">
         <h1 className="text-3xl">FAQ</h1>
-        <p>Frequently Asked Questions (FAQ)</p>
+        <p>Frequently Asked Questions</p>
         <Image
           className="h-auto w-[125px] md:w-[200px] p-1" // Consistent responsive sizing
           src="/images/gpologo-invert.png"
           alt="Devilfish Logo"
-          width={200} // The largest size (matches md:w-[200px])
-          height={91} // Keep the correct aspect ratio
+          width={600}
+          height={272}
         />{" "}
       </div>
       <div className="max-w-[800px] p-4 flex flex-col  bg-white bg-opacity-60 shadow-md rounded-md m-4">

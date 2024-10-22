@@ -23,8 +23,8 @@ export default function Home() {
           className="h-auto w-[140px] md:w-[200px] p-1" // Consistent responsive sizing
           src="/images/gpologo-invert.png"
           alt="Devilfish Logo"
-          width={200} // The largest size (matches md:w-[200px])
-          height={91} // Keep the correct aspect ratio
+          width={600}
+          height={272}
         />
         <Link href="/Calendar">
           <button
@@ -38,8 +38,8 @@ export default function Home() {
           className="h-auto w-[140px] md:w-[200px] p-1 transform scale-x-[-1]" // Consistent responsive sizing and mirror effect
           src="/images/gpologo-invert.png"
           alt="Devilfish Logo"
-          width={200} // The largest size (matches md:w-[200px])
-          height={91} // Keep the correct aspect ratio
+          width={600}
+          height={272}
         />
       </div>
 
