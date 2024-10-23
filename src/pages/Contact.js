@@ -9,7 +9,7 @@ const Contact = () => {
     email: "",
     message: "",
   });
-  const [status, setStatus] = useState(""); // For form submission status
+  const [status, setStatus] = useState({ message: "", type: "" }); // For form submission status and type (success/fail)
   const [errors, setErrors] = useState({}); // For validation errors
   const [loading, setLoading] = useState(false); // For spinner
 
@@ -53,9 +53,12 @@ const Contact = () => {
     e.preventDefault();
 
     if (!validateForm()) {
-      setStatus("Please fix the errors before submitting.");
-      return; // Stop form submission if validation fails
+      return; // Stop form submission if validation fails, but do not show any error status
     }
+
+    // Reset status before making the request
+    setStatus({ message: "", type: "" });
+
     setLoading(true); // Show spinner
     try {
       const response = await axios.post(`${serverUrl}/api/contact`, formData, {
@@ -65,14 +68,14 @@ const Contact = () => {
       });
 
       if (response.status === 200) {
-        setStatus("Message sent successfully!");
+        setStatus({ message: "Message sent successfully. Thank you!", type: "success" });
         setFormData({ name: "", email: "", message: "" });
       } else {
-        setStatus("Failed to send message. Please try again.");
+        setStatus({ message: "Failed to send message. Please try again.", type: "error" });
       }
     } catch (error) {
       console.error("Error sending message:", error.response ? error.response.data : error.message);
-      setStatus("Failed to send message. Please try again.");
+      setStatus({ message: "Failed to send message. Please try again.", type: "error" });
     } finally {
       setLoading(false); // Hide spinner after request is done
     }
@@ -83,6 +86,7 @@ const Contact = () => {
       <div className="flex pb-3 w-full justify-center items-center m-auto flex-col">
         <div className="flex justify-center items-center m-auto flex-col text-center">
           <h1 className="text-3xl">Contact</h1>
+          <p>Get in touch!</p>
           <Image
             className="h-auto w-[125px] md:w-[200px] p-1"
             src="/images/gpologo-invert.png"
@@ -148,7 +152,8 @@ const Contact = () => {
                 Send Message
               </button>
             )}
-            {status && <p className="mt-2">{status}</p>} {/* Status message */}
+            {/* Only show success or error status */}
+            {status.type === "success" && <p className="mt-2 text-green-500">{status.message}</p>}
           </form>
         </div>
       </div>
