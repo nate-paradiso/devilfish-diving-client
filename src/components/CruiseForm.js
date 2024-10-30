@@ -626,6 +626,7 @@ const CruiseForm = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         // like product ids and quantities
         body: JSON.stringify({
           cart: cartItems,
+          eventTitle: eventTitle,
         }),
       });
 

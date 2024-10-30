@@ -29,7 +29,15 @@ const CalendarComponent = () => {
 
       // Filter events to include only those with titles "Dive Booked", "Dive", "1 Dive Seat", or "Cruise" or "Cruise Booked"
       const filteredEvents = data.filter(event =>
-        ["Dive Booked", "Dive", "1 Dive Seat", "Cruise", "Cruise Booked"].includes(event.title),
+        [
+          "Dive Booked",
+          "Dive",
+          "1 Dive Seat",
+          "Cruise",
+          "Cruise Booked",
+          "3rd Diver",
+          "3rd Booked",
+        ].includes(event.title),
       );
 
       setGoogleEvents(filteredEvents);
@@ -73,13 +81,18 @@ const CalendarComponent = () => {
       (clickedEvent.title === "Dive Booked" && clickedEvent.title === "Cruise Booked") ||
       (clickedEvent.title !== "Dive" &&
         clickedEvent.title !== "1 Dive Seat" &&
-        clickedEvent.title !== "Cruise")
+        clickedEvent.title !== "Cruise" &&
+        clickedEvent.title !== "3rd Diver")
     ) {
       setShowDiverInfo(false);
       setSelectedDate(null);
       return; // Stop further execution
     }
-    if (clickedEvent.title === "Dive" || clickedEvent.title === "1 Dive Seat") {
+    if (
+      clickedEvent.title === "Dive" ||
+      clickedEvent.title === "1 Dive Seat" ||
+      clickedEvent.title === "3rd Diver"
+    ) {
       setSelectedDate(selectedDate); // Store the selected date in state
       setSelectedDateStr(formattedDate); // Store the formatted selected date string in state
       setShowDiverInfo(true);
@@ -123,6 +136,10 @@ const CalendarComponent = () => {
       eventClasses = "bg-green-500"; // Green background for "Cruise" events
     } else if (arg.event.title === "Cruise Booked") {
       eventClasses = "bg-red-500"; // Red background for "Cruise Booked" events
+    } else if (arg.event.title === "3rd Diver") {
+      eventClasses = "bg-orange-500"; // Orange background for "3rd Diver" events
+    } else if (arg.event.title === "3rd Booked") {
+      eventClasses = "bg-red-500";
     }
 
     return (
@@ -225,8 +242,12 @@ const CalendarComponent = () => {
                       </h3>{" "}
                       {(eventTitle === "Dive" || eventTitle === "1 Dive Seat") && (
                         <h3 className="mt-1">
-                          Price:{" "}
-                          <span className="font-bold">$145 per diver +tax - 2 tank dive trip.</span>
+                          Price: <span className="font-bold">$145 per diver +tax.</span>
+                        </h3>
+                      )}
+                      {eventTitle === "3rd Diver" && (
+                        <h3 className="mt-1">
+                          Price: <span className="font-bold">$100 per diver +tax.</span>
                         </h3>
                       )}
                       {eventTitle === "Cruise" && (
@@ -244,7 +265,9 @@ const CalendarComponent = () => {
                         </button>
                       </div>
                     </div>
-                    {(eventTitle === "Dive" || eventTitle === "1 Dive Seat") && (
+                    {(eventTitle === "Dive" ||
+                      eventTitle === "1 Dive Seat" ||
+                      eventTitle === "3rd Diver") && (
                       <div className="flex max-w-[1200px] mx-auto ">
                         <DiverInfo
                           setSelectedDate={setSelectedDate}
