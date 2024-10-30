@@ -224,7 +224,7 @@ const MapComponent = () => {
     { name: "Alki Reef", position: [47.557, -122.408] },
     { name: "Blake Island Reef", position: [47.5295, -122.494] },
     { name: "Waterman Wall", position: [47.585167, -122.570667] },
-    { name: "UNKNOWN WRECK", position: [47.505297, -122.392454] },
+    { name: "The General", position: [47.505297, -122.392454] },
     { name: "Elliot Bay Pier", position: [47.626, -122.374] },
     { name: "Possession Point Ferry", position: [47.897, -122.3932] },
     { name: "YMS359", position: [47.66289027, -122.24050778] },
