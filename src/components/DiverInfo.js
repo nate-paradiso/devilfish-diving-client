@@ -4,6 +4,7 @@ import Image from "next/image";
 import LiabilityRelease from "./LiabilityRelease";
 import axios from "axios";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { cartItems } from "./PayPalCart";
 
 // Renders errors or successful transactions on the screen.
 function Message({ content }) {
@@ -516,6 +517,26 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     }
   };
 
+  // Define function to update Calendar from 3rd Diver to 3rd Booked
+  const upDateCalendar3rdBooked = async formData => {
+    try {
+      const response = await axios.patch(`${serverUrl}/api/update-calendar-3rd-booked`, {
+        formData,
+      });
+      console.log(
+        "Diving date sent to the backend to update calendar to (3rd Booked)",
+        response.data,
+      );
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error sending diving date to backend to update calendar to (3rd Booked):",
+        error,
+      );
+      throw error;
+    }
+  };
+
   // Define function to send email
   const sendEmail = async formData => {
     try {
@@ -564,9 +585,11 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
         // Update Calendar
         if (eventTitle === "1 Dive Seat") {
-          upDateCalendarBooked(formData);
+          await upDateCalendarBooked(formData); // Ensure to await if you want to handle the response properly
+        } else if (eventTitle === "3rd Diver") {
+          await upDateCalendar3rdBooked(formData); // Call the new function for 3rd Diver
         } else {
-          upDateCalendar1Seat(formData);
+          await upDateCalendar1Seat(formData);
         }
 
         // Send email
@@ -1167,12 +1190,8 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                               // use the "body" param to optionally pass additional order information
                               // like product ids and quantities
                               body: JSON.stringify({
-                                cart: [
-                                  {
-                                    id: "Dive",
-                                    quantity: "1",
-                                  },
-                                ],
+                                cart: cartItems,
+                                eventTitle: eventTitle,
                               }),
                             });
 
