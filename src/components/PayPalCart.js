@@ -27,4 +27,18 @@ export const cartItems = [
     price: 100, // Price for 3rd Diver
     description: "Dive trip with Devilfish Diving - 3rd Diver", // Add description here
   },
+  {
+    id: "Full Charter",
+    name: "Full Charter",
+    quantity: 1,
+    price: 290, // Price full charter
+    description: "Dive trip with Devilfish Diving - Full Charter", // Add description here
+  },
+  {
+    id: "Full Charter - 3 Divers",
+    name: "Full Charter - 3 Divers",
+    quantity: 1,
+    price: 390, // Price full charter
+    description: "Dive trip with Devilfish Diving - Full Charter - 3 Divers", // Add description here
+  },
 ];
