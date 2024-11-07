@@ -371,6 +371,8 @@ const DiverLiability = () => {
             if (thankYouMessage) {
               thankYouMessage.style.display = "block";
             }
+            upDateCalendarDescription(data);
+            sendEmail(data);
           } else {
             console.error("Form submission failed.");
           }
@@ -443,22 +445,38 @@ const DiverLiability = () => {
     for (let i = 0; i < forms.length; i++) {
       forms[i].addEventListener("submit", handleFormSubmit, false);
     }
-    sendEmail(formData);
   }, []);
 
-  // Send email
-
-  //  ***************************** runHandleFormSubmit();
-
   // Define function to send email
-  const sendEmail = async formData => {
+  const sendEmail = async data => {
     try {
-      const response = await axios.post(`${serverUrl}/api/send-email`, { formData });
+      const response = await axios.post(`${serverUrl}/api/send-email-liability`, { data });
       console.log("Form data sent to the backend for email", response.data); // Log the response from the backend
       return response.data; // Return the response data if needed
     } catch (error) {
       console.error("Error sending form data to backend for email:", error);
       throw error; // Throw the error to handle it in the calling code
+    }
+  };
+
+  // Define function to update Calendar from 1 Dive Seat to Dive Booked
+  const upDateCalendarDescription = async data => {
+    try {
+      const response = await axios.patch(`${serverUrl}/api/update-calendar-description`, {
+        data,
+      });
+      // console.log(formData);
+      console.log(
+        "Diving date sent to the backend to update calendar to (Dive Booked)",
+        response.data,
+      );
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error sending diving date to backend to update calendar to (Dive Booked):",
+        error,
+      );
+      throw error;
     }
   };
 
@@ -534,9 +552,13 @@ const DiverLiability = () => {
         action="https://script.google.com/macros/s/AKfycbx8TRKTZ22mPpYJ0sNgBEmM-NLEwnvIAHn3clbkiztEyR0sg5UXZmM7R3YME9k3MT7_7w/exec"
       >
         {isSubmitted ? (
-          <p>Thanks</p>
+          <div className="contact__success text-center">
+            <h1 className="text-xl font-bold">Thank you!</h1>
+            <br />
+            We will see you at the Boat Ramp at <span className="font-bold">7:30 AM </span>
+          </div>
         ) : (
-          <div>
+          <>
             <div className="  flex justify-center flex-col  md:flex-row md:justify-evenly ">
               <div>
                 <div className="flex-col flex ">
@@ -548,7 +570,7 @@ const DiverLiability = () => {
                     className="border-solid p-2 font-bold border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
                     type="date"
                     name="divingDate"
-                    value={formatDateForHTMLInput(formData.divingDate)}
+                    value={formData.divingDate}
                     onChange={handleInputChange}
                   />
                   <div className="md:w-64">
@@ -958,33 +980,33 @@ const DiverLiability = () => {
                 </div>
               </div>
             </div>
-          </div>
-        )}
 
-        <div className="mt-4">
-          <div>
-            {isButtonVisible ? (
-              <button
-                className="mt-4 border-solid p-2 border-2 border-sky-500 w-[150px]"
-                type="submit"
-              >
-                Submit
-              </button>
-            ) : (
-              <div className="m-auto flex max-w-[750px]  flex-col md:max-w-[256px] justify-center ">
-                <div>
-                  <Image
-                    className="m-auto"
-                    src="/images/tube-spinner.svg"
-                    alt="loading"
-                    width={50}
-                    height={50}
-                  />
-                </div>
+            <div className="mt-4">
+              <div>
+                {isButtonVisible ? (
+                  <button
+                    className="mt-4 border-solid p-2 border-2 border-sky-500 w-[150px]"
+                    type="submit"
+                  >
+                    Submit
+                  </button>
+                ) : (
+                  <div className="m-auto flex max-w-[750px]  flex-col md:max-w-[256px] justify-center ">
+                    <div>
+                      <Image
+                        className="m-auto"
+                        src="/images/tube-spinner.svg"
+                        alt="loading"
+                        width={50}
+                        height={50}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </div>
+            </div>
+          </>
+        )}
       </form>
     </section>
   );
