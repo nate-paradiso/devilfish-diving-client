@@ -3,22 +3,12 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import LiabilityRelease from "./LiabilityRelease";
 import axios from "axios";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { cartItems } from "./PayPalCart";
 
-// Renders errors or successful transactions on the screen.
-function Message({ content }) {
-  return <p>{content}</p>;
-}
-const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
-  const [clientId, setClientId] = useState("");
-  const [message, setMessage] = useState("");
+const DiverLiability = () => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isButtonVisible, setIsButtonVisible] = useState(true); // State to control button visibility
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const errorRefs = useRef({});
-  const [isPayPalSuccessful, setIsPayPalSuccessful] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  console.log(selectedDate);
   const formatDateForHTMLInput = selectedDate => {
     // Create a new Date object from the selectedDate
     const dateObj = new Date(selectedDate);
@@ -33,7 +23,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
     return formattedDate;
   };
-
   const today = new Date();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -49,7 +38,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     danInsuranceNumber: "",
     emergencyContactName: "",
     emergencyContactPhone: "",
-    divingDate: selectedDate,
+    divingDate: "",
     message: "",
     electronicSignature: "",
     electronicParentSignature: "",
@@ -76,259 +65,305 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     electronicParentSignature: "",
     electronicSignatureDate: "",
   });
-  const [isButtonVisible, setIsButtonVisible] = useState(true); // State to control button visibility
-  const [isFormVisible, setIsFormVisible] = useState(true); // State to control button visibility
-  const [formDataOutside, setFormDataOutside] = useState({}); // State to control button visibility
-  const [formOutside, setFormOutside] = useState({}); // State to control button visibility
 
-  // Format the selectedDate to type=date for the form
+  useEffect(() => {
+    function getFormData(form) {
+      let elements = form.elements;
+      let honeypot;
+      // Extracting field names from form elements
+      let fields = Object.keys(elements)
+        .map(function (k) {
+          if (elements[k].name !== undefined) {
+            return elements[k].name;
+          } else if (elements[k].length > 0) {
+            return elements[k].item(0).name;
+          }
+          return null;
+        })
+        .filter(function (item, pos, self) {
+          return self.indexOf(item) === pos && item;
+        });
 
-  // get all data in form and return object
-  function getFormData(form) {
-    let elements = form.elements;
+      // Creating formData object with field values
+      let formData = {};
+      fields.forEach(function (name) {
+        let element = elements[name];
 
-    // Extracting field names from form elements
-    let fields = Object.keys(elements)
-      .map(function (k) {
-        if (elements[k].name !== undefined) {
-          return elements[k].name;
-        } else if (elements[k].length > 0) {
-          return elements[k].item(0).name;
+        // Singular form elements just have one value
+        formData[name] = element.value;
+
+        // For elements with multiple items, get their values
+        if (element.length) {
+          let data = [];
+          for (let i = 0; i < element.length; i++) {
+            let item = element.item(i);
+            if (item.checked || item.selected) {
+              data.push(item.value);
+            }
+          }
+          formData[name] = data.join(", ");
         }
-        return null;
-      })
-      .filter(function (item, pos, self) {
-        return self.indexOf(item) === pos && item;
       });
 
-    // Creating formData object with field values
-    let formData = {};
-    fields.forEach(function (name) {
-      let element = elements[name];
+      // Adding form-specific values into the data
+      formData.formDataNameOrder = JSON.stringify(fields);
+      formData.formGoogleSheetName = form.dataset.sheet || "responses"; // Default sheet name
+      formData.formGoogleSendEmail = form.dataset.email || ""; // No email by default
 
-      // Singular form elements just have one value
-      formData[name] = element.value;
+      return { data: formData, honeypot: honeypot };
+    }
 
-      // For elements with multiple items, get their values
-      if (element.length) {
-        let data = [];
-        for (let i = 0; i < element.length; i++) {
-          let item = element.item(i);
-          if (item.checked || item.selected) {
-            data.push(item.value);
+    // Function to handle form submission
+    const handleFormSubmit = event => {
+      event.preventDefault();
+
+      let form = event.target;
+
+      // Check if the form is already submitting
+      if (form.getAttribute("data-submitting") === "true") {
+        return;
+      }
+
+      form.setAttribute("data-submitting", "true"); // Mark the form as submitting
+
+      let submitButton = form.querySelector("button[type=submit]");
+      submitButton.disabled = true; // Disable the submit button
+
+      let formData = getFormData(form);
+      let data = formData.data;
+
+      // Pass data to another function
+      // handleFormSubmitData(formData, form);
+
+      if (formData.honeypot) {
+        // If a honeypot field is filled, assume it was done so by a spam bot.
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return false;
+      }
+      // Basic form field validation
+      if (!validateFirstName(data.firstName)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          firstName: "Please enter a valid first name.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateLastName(data.lastName)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          lastName: "Please enter a valid last name.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateEmail(data.email)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          email: "Please enter a valid email address.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validatePhone(data.phone)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          phone: "Please enter a valid phone number.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateBirthday(data.birthday)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          birthday: "Please enter a birthday.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateUnder18(data.under18)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          under18: "Please enter yes or no.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateAddress(data.address)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          address: "Please enter a address.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateLastDive(data.lastDive)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          lastDive: "Please enter your last diving date.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateCertifyingAgency(data.certifyingAgency)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          certifyingAgency: "Please enter a certification agency.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateCertificationNumber(data.certificationNumber)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          certificationNumber: "Please enter a certification number.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateDanInsuranceNumber(data.danInsuranceNumber)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          danInsuranceNumber: "Please enter a DAN insurance number.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateEmergencyContactName(data.emergencyContactName)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          emergencyContactName: "Please enter an emergency contact name.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateDivingDate(data.divingDate)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          divingDate: "Please enter the diving date.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateEmergencyContactPhone(data.emergencyContactPhone)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          emergencyContactPhone: "Please enter an emergency contact phone number.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateMessage(data.message)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          message: "Please enter a message.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateElectronicSignature(data.electronicSignature)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          electronicSignature: "Please enter a electronic signature name.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateElectronicParentSignature(data.electronicParentSignature)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          electronicParentSignature:
+            "Please enter a Parent or Legal Guardian electronic signature name.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      if (!validateElectronicSignatureDate(data.electronicSignatureDate)) {
+        setValidationErrors(prevErrors => ({
+          ...prevErrors,
+          electronicSignatureDate: "Please a valid date.",
+        }));
+        form.removeAttribute("data-submitting"); // Release the form from submitting state
+        submitButton.disabled = false; // Re-enable the submit button
+        return;
+      }
+      setIsButtonVisible(false);
+
+      let url = form.action;
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", url);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          form.removeAttribute("data-submitting"); // Release the form from submitting state
+
+          if (xhr.status === 200) {
+            console.log("Form submission successful.");
+            // Reset form validation data
+            setValidationErrors({
+              firstName: "",
+              lastName: "",
+              email: "",
+              phone: "",
+              birthday: "",
+              under18: "",
+              address: "",
+              lastDive: "",
+              certifyingAgency: "",
+              certificationNumber: "",
+              danInsuranceNumber: "",
+              emergencyContactName: "",
+              emergencyContactPhone: "",
+              divingDate: "",
+              message: "",
+              electronicSignature: "",
+              electronicParentSignature: "",
+              electronicSignatureDate: "",
+            });
+            setIsSubmitted(true);
+            // Reset form
+            form.reset();
+            let formElements = form.querySelector(".form-elements");
+            if (formElements) {
+              formElements.style.display = "none";
+            }
+            let thankYouMessage = form.querySelector(".thankyou_message");
+            if (thankYouMessage) {
+              thankYouMessage.style.display = "block";
+            }
+            upDateCalendarDescription(data);
+            sendEmail(data);
+          } else {
+            console.error("Form submission failed.");
           }
         }
-        formData[name] = data.join(", ");
-      }
-    });
-
-    // Adding form-specific values into the data
-    formData.formDataNameOrder = JSON.stringify(fields);
-    formData.formGoogleSheetName = form.dataset.sheet || "responses"; // Default sheet name
-    formData.formGoogleSendEmail = form.dataset.email || ""; // No email by default
-
-    return { data: formData };
-  }
-
-  // Function to handle form data outside of handleFormSubmit
-  const handleFormSubmitData = (formData, form) => {
-    // Store or process the form data as needed
-    setFormDataOutside(formData);
-    setFormOutside(form);
-  };
-
-  //Handle Paypal approval
-  // Function to handle form submission
-  const handleFormSubmit = event => {
-    event.preventDefault();
-
-    let form = event.target;
-
-    // Check if the form is already submitting
-    if (form.getAttribute("data-submitting") === "true") {
-      return;
-    }
-
-    form.setAttribute("data-submitting", "true"); // Mark the form as submitting
-
-    let submitButton = form.querySelector("button[type=submit]");
-    submitButton.disabled = true; // Disable the submit button
-
-    let formData = getFormData(form);
-    let data = formData.data;
-
-    // Pass data to another function
-    handleFormSubmitData(formData, form);
-
-    // Basic form field validation
-    if (!validateFirstName(data.firstName)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        firstName: "Please enter a valid first name.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateLastName(data.lastName)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        lastName: "Please enter a valid last name.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateEmail(data.email)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        email: "Please enter a valid email address.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validatePhone(data.phone)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        phone: "Please enter a valid phone number.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateBirthday(data.birthday)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        birthday: "Please enter a birthday.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateUnder18(data.under18)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        under18: "Please enter yes or no.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateAddress(data.address)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        address: "Please enter a address.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateLastDive(data.lastDive)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        lastDive: "Please enter your last diving date.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateCertifyingAgency(data.certifyingAgency)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        certifyingAgency: "Please enter a certification agency.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateCertificationNumber(data.certificationNumber)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        certificationNumber: "Please enter a certification number.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateDanInsuranceNumber(data.danInsuranceNumber)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        danInsuranceNumber: "Please enter a DAN insurance number.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateEmergencyContactName(data.emergencyContactName)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        emergencyContactName: "Please enter an emergency contact name.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateDivingDate(data.divingDate)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        divingDate: "Please enter the diving date.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateEmergencyContactPhone(data.emergencyContactPhone)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        emergencyContactPhone: "Please enter an emergency contact phone number.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateMessage(data.message)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        message: "Please enter a message.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-
-    if (!validateElectronicSignature(data.electronicSignature)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        electronicSignature: "Please enter a electronic signature name.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateElectronicParentSignature(data.electronicParentSignature)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        electronicParentSignature:
-          "Please enter a Parent or Legal Guardian electronic signature name.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    if (!validateElectronicSignatureDate(data.electronicSignatureDate)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        electronicSignatureDate: "Please a valid date.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
-    setIsButtonVisible(false);
-    setIsFormVisible(false);
-    setLoading(true);
-
+      };
+      let encoded = Object.keys(data)
+        .map(function (k) {
+          return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
+        })
+        .join("&");
+      xhr.send(encoded);
+    };
     function validateFirstName(firstName) {
       return (firstName ?? "").trim() !== ""; // Check if the name is not empty
     }
@@ -384,125 +419,30 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     function validateElectronicSignatureDate(electronicSignatureDate) {
       return !isNaN(Date.parse(electronicSignatureDate)); // Check if the signature date is a valid date
     }
-  };
-  // Handle form submission via XMLHttpRequest
-  const handleGoogleSheetSubmit = () => {
-    // console.log("formDataOutside inside googlesheetsubmit", formDataOutside);
-    let data = formDataOutside.data;
-    // console.log(data);
-    let form = formOutside;
-    // console.log(form);
 
-    let url = form.action;
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        form.removeAttribute("data-submitting"); // Release the form from submitting state
-
-        if (xhr.status === 200) {
-          console.log("Form submission successful.");
-          // Reset form
-          // setFormData({
-          //   firstName: "",
-          //   lastName: "",
-          //   email: "",
-          //   phone: "",
-          //   birthday: "",
-          // under18: "",
-          //   address: "",
-          //   lastDive: "",
-          //   certifyingAgency: "",
-          //   certificationNumber: "",
-          //   danInsuranceNumber: "",
-          //   emergencyContactName: "",
-          //   emergencyContactPhone: "",
-          //   divingDate: "",
-          // message: "",
-          //   electronicSignature: "",
-          // electronicParentSignature:"",
-          //   electronicSignatureDate: "",
-          // });
-          // Reset form validation data
-          setValidationErrors({
-            firstName: "",
-            lastName: "",
-            email: "",
-            phone: "",
-            birthday: "",
-            under18: "",
-            address: "",
-            lastDive: "",
-            certifyingAgency: "",
-            certificationNumber: "",
-            danInsuranceNumber: "",
-            emergencyContactName: "",
-            emergencyContactPhone: "",
-            divingDate: "",
-            message: "",
-            electronicSignature: "",
-            electronicParentSignature: "",
-            electronicSignatureDate: "",
-          });
-
-          // Reset form
-          form.reset();
-          let formElements = form.querySelector(".form-elements");
-          if (formElements) {
-            formElements.style.display = "none";
-          }
-          let thankYouMessage = form.querySelector(".thankyou_message");
-          if (thankYouMessage) {
-            thankYouMessage.style.display = "block";
-          }
-        } else {
-          console.error("Form submission failed.");
-        }
-      }
-    };
-    let encoded = Object.keys(data)
-      .map(function (k) {
-        return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
-      })
-      .join("&");
-    xhr.send(encoded);
-  };
-
-  // Send to google sheet - bind to the submit event of our form
-  useEffect(() => {
     let forms = document.querySelectorAll("form.gform");
     for (let i = 0; i < forms.length; i++) {
       forms[i].addEventListener("submit", handleFormSubmit, false);
     }
-  }, [isPayPalSuccessful]);
+  }, []);
 
-  // Define function to update Calendar from Dive to 1 Dive Seat
-  const upDateCalendar1Seat = async formData => {
+  // Define function to send email
+  const sendEmail = async data => {
     try {
-      const response = await axios.patch(`${serverUrl}/api/update-calendar-1seat`, {
-        formData,
-      });
-      console.log(
-        "Diving date sent to the backend to update calendar to (1 Dive Seat)",
-        response.data,
-      );
-      return response.data;
+      const response = await axios.post(`${serverUrl}/api/send-email-liability`, { data });
+      console.log("Form data sent to the backend for email", response.data); // Log the response from the backend
+      return response.data; // Return the response data if needed
     } catch (error) {
-      console.error(
-        "Error sending diving date to backend to update calendar to (1 Dive Seat):",
-        error,
-      );
-      throw error;
+      console.error("Error sending form data to backend for email:", error);
+      throw error; // Throw the error to handle it in the calling code
     }
   };
 
   // Define function to update Calendar from 1 Dive Seat to Dive Booked
-  const upDateCalendarBooked = async formData => {
+  const upDateCalendarDescription = async data => {
     try {
-      const response = await axios.patch(`${serverUrl}/api/update-calendar-dive-booked`, {
-        formData,
+      const response = await axios.patch(`${serverUrl}/api/update-calendar-description`, {
+        data,
       });
       // console.log(formData);
       console.log(
@@ -519,140 +459,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     }
   };
 
-  // Define function to update Calendar from 3rd Diver to 3rd Booked
-  const upDateCalendar3rdBooked = async formData => {
-    try {
-      const response = await axios.patch(`${serverUrl}/api/update-calendar-3rd-booked`, {
-        formData,
-      });
-      console.log(
-        "Diving date sent to the backend to update calendar to (3rd Booked)",
-        response.data,
-      );
-      return response.data;
-    } catch (error) {
-      console.error(
-        "Error sending diving date to backend to update calendar to (3rd Booked):",
-        error,
-      );
-      throw error;
-    }
-  };
-
-  // Define function to update Calendar from Entire Charter to Dive Booked
-  const upDateCalendarFullCharter = async formData => {
-    try {
-      const response = await axios.patch(`${serverUrl}/api/update-calendar-full-charter`, {
-        formData,
-      });
-      console.log(
-        "Diving date sent to the backend to update calendar to (Entire Charter to Dive Booked)",
-        response.data,
-      );
-      return response.data;
-    } catch (error) {
-      console.error(
-        "Error sending diving date to backend to update calendar to (Entire Charter to Dive Booked):",
-        error,
-      );
-      throw error;
-    }
-  };
-
-  // Define function to update Calendar from Entire Charter - 3 Divers to Dive Booked
-  const upDateCalendarFullCharter3Divers = async formData => {
-    try {
-      const response = await axios.patch(`${serverUrl}/api/update-calendar-full-charter`, {
-        formData,
-      });
-      console.log(
-        "Diving date sent to the backend to update calendar to (Entire Charter - 3 Divers to Dive Booked)",
-        response.data,
-      );
-      return response.data;
-    } catch (error) {
-      console.error(
-        "Error sending diving date to backend to update calendar to (Entire Charter - 3 Divers to Dive Booked):",
-        error,
-      );
-      throw error;
-    }
-  };
-
-  // Define function to send email
-  const sendEmail = async formData => {
-    try {
-      const response = await axios.post(`${serverUrl}/api/send-email`, { formData });
-      console.log("Form data sent to the backend for email", response.data); // Log the response from the backend
-      return response.data; // Return the response data if needed
-    } catch (error) {
-      console.error("Error sending form data to backend for email:", error);
-      throw error; // Throw the error to handle it in the calling code
-    }
-  };
-
-  // Define function to handle PayPal approval
-  const handlePayPalOnApprove = async (data, actions) => {
-    try {
-      const response = await fetch(`${serverUrl}/api/orders/${data.orderID}/capture`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const orderData = await response.json();
-      // Three cases to handle:
-      //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-      //   (2) Other non-recoverable errors -> Show a failure message
-      //   (3) Successful transaction -> Show confirmation or thank you message
-
-      const errorDetail = orderData?.details?.[0];
-
-      if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
-        // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-        // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
-        actions.restart();
-      } else if (errorDetail) {
-        // (2) Other non-recoverable errors -> Show a failure message
-        throw new Error(`${errorDetail.description} (${orderData.debug_id})`);
-      } else {
-        // (3) Successful transaction -> Show confirmation or thank you message
-        // Or go to another URL:  actions.redirect('thank_you.html');
-
-        // Submit form data to google sheet
-        setIsPayPalSuccessful(true);
-
-        // Send form data to googlesheet
-        handleGoogleSheetSubmit();
-
-        // Update Calendar
-        if (eventTitle === "1 Dive Seat") {
-          await upDateCalendarBooked(formData); // Ensure to await if you want to handle the response properly
-        } else if (eventTitle === "Entire Charter") {
-          await upDateCalendarFullCharter(formData); // Ensure to await if you want to handle the response properly
-        } else if (eventTitle === "Entire Charter - 3 Divers") {
-          await upDateCalendarFullCharter3Divers(formData); // Ensure to await if you want to handle the response properly
-        } else if (eventTitle === "3rd Diver") {
-          await upDateCalendar3rdBooked(formData); // Call the new function for 3rd Diver
-        } else {
-          await upDateCalendar1Seat(formData);
-        }
-
-        // Send email
-        sendEmail(formData);
-
-        // Set submitted state to true
-        setIsSubmitted(true);
-
-        setMessage("Payment Successful. Thank you!");
-
-        // console.log("Capture result", orderData, JSON.stringify(orderData, null, 2));
-      }
-    } catch (error) {
-      console.error(error);
-      setMessage(`Sorry, your transaction could not be processed...${error}`);
-    }
-  };
   // Function to handle input changes in the form fields
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -669,16 +475,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       [name]: "",
     }));
   };
-
-  // Update diving date in form data when selected date changes
-  useEffect(() => {
-    if (selectedDate) {
-      setFormData(prevState => ({
-        ...prevState,
-        divingDate: selectedDate,
-      }));
-    }
-  }, [selectedDate]);
 
   // Function to format phone number as (123) 456-7890
   const formatPhoneNumber = phoneNumber => {
@@ -726,33 +522,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     scrollToError();
   }, [validationErrors]);
 
-  // Paypal get client id for payment
-  useEffect(() => {
-    const fetchClientId = async () => {
-      try {
-        const response = await fetch(`${serverUrl}/api/paypal/client-id`);
-        const data = await response.json();
-        setClientId(data.clientId);
-      } catch (error) {
-        console.error(error);
-        setMessage("Error fetching PayPal client ID.");
-      }
-    };
-
-    fetchClientId();
-  }, []);
-
-  // Use a timeout to hide the spinner after a certain period
-  useEffect(() => {
-    if (!isButtonVisible) {
-      const timer = setTimeout(() => {
-        setLoading(false);
-      }, 2000); // Adjust the timeout duration as needed (5000ms = 5 seconds)
-
-      return () => clearTimeout(timer); // Clean up the timer on component unmount
-    }
-  }, [isButtonVisible]);
-
   return (
     <section className="max-w-[1200px] w-full">
       <form
@@ -761,8 +530,14 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         data-email="example@gmail.com"
         action="https://script.google.com/macros/s/AKfycbx8TRKTZ22mPpYJ0sNgBEmM-NLEwnvIAHn3clbkiztEyR0sg5UXZmM7R3YME9k3MT7_7w/exec"
       >
-        {isFormVisible ? (
-          <div>
+        {isSubmitted ? (
+          <div className="contact__success text-center">
+            <h1 className="text-xl font-bold">Thank you!</h1>
+            <br />
+            We will see you at the Boat Ramp at <span className="font-bold">7:30 AM </span>
+          </div>
+        ) : (
+          <>
             <div className="  flex justify-center flex-col  md:flex-row md:justify-evenly ">
               <div>
                 <div className="flex-col flex ">
@@ -1184,94 +959,36 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                 </div>
               </div>
             </div>
-          </div>
-        ) : (
-          ""
-        )}
-        <div className="mt-4">
-          <div>
-            {isButtonVisible ? (
-              <button
-                className="mt-4 border-solid p-2 border-2 border-sky-500 w-[150px]"
-                type="submit"
-              >
-                Next to Payment
-              </button>
-            ) : (
-              <div className="m-auto flex max-w-[750px]  flex-col md:max-w-[256px] justify-center ">
-                {loading ? (
-                  <div>
-                    <Image
-                      className="m-auto"
-                      src="/images/tube-spinner.svg"
-                      alt="loading"
-                      width={50}
-                      height={50}
-                    />
-                  </div>
-                ) : (
-                  <PayPalScriptProvider
-                    options={{
-                      intent: "capture",
-                      "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT,
-                      "enable-funding": "card",
-                      "disable-funding": "paylater",
-                      "data-sdk-integration-source": "integrationbuilder_sc",
-                    }}
+
+            <div className="mt-4">
+              <div>
+                {isButtonVisible ? (
+                  <button
+                    className="mt-4 border-solid p-2 border-2 border-sky-500 w-[150px]"
+                    type="submit"
                   >
-                    <div className="App max-w-[750px] flex flex-col md:max-w-[256px] ">
-                      <PayPalButtons
-                        style={{
-                          shape: "rect",
-                          layout: "vertical",
-                        }}
-                        createOrder={async () => {
-                          try {
-                            const response = await fetch(`${serverUrl}/api/orders`, {
-                              method: "POST",
-                              headers: {
-                                "Content-Type": "application/json",
-                              },
-
-                              // use the "body" param to optionally pass additional order information
-                              // like product ids and quantities
-                              body: JSON.stringify({
-                                cart: cartItems,
-                                eventTitle: eventTitle,
-                              }),
-                            });
-
-                            const orderData = await response.json();
-                            // console.log(orderData);
-
-                            if (orderData.id) {
-                              return orderData.id;
-                            } else {
-                              const errorDetail = orderData?.details?.[0];
-                              const errorMessage = errorDetail
-                                ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
-                                : JSON.stringify(orderData);
-
-                              throw new Error(errorMessage);
-                            }
-                          } catch (error) {
-                            console.error(error);
-                            setMessage(`Could not initiate PayPal Checkout...${error}`);
-                          }
-                        }}
-                        onApprove={handlePayPalOnApprove}
+                    Submit
+                  </button>
+                ) : (
+                  <div className="m-auto flex max-w-[750px]  flex-col md:max-w-[256px] justify-center ">
+                    <div>
+                      <Image
+                        className="m-auto"
+                        src="/images/tube-spinner.svg"
+                        alt="loading"
+                        width={50}
+                        height={50}
                       />
-                      <Message content={message} />
                     </div>
-                  </PayPalScriptProvider>
+                  </div>
                 )}
               </div>
-            )}
-          </div>
-        </div>
+            </div>
+          </>
+        )}
       </form>
     </section>
   );
 };
 
-export default DiverInfo;
+export default DiverLiability;
