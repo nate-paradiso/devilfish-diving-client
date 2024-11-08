@@ -18,20 +18,22 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   const [isPayPalSuccessful, setIsPayPalSuccessful] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  console.log(selectedDate);
   const formatDateForHTMLInput = selectedDate => {
     // Create a new Date object from the selectedDate
     const dateObj = new Date(selectedDate);
 
-    // Extract year, month, and day
-    const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
-    const day = String(dateObj.getDate()).padStart(2, "0");
+    // Extract year, month, and day in UTC to avoid local time zone issues
+    const year = dateObj.getUTCFullYear();
+    const month = String(dateObj.getUTCMonth() + 1).padStart(2, "0"); // Get UTC month
+    const day = String(dateObj.getUTCDate()).padStart(2, "0"); // Get UTC day
 
     // Format the date as yyyy-mm-dd
     const formattedDate = `${year}-${month}-${day}`;
 
     return formattedDate;
   };
+
   const today = new Date();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -537,40 +539,40 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     }
   };
 
-  // Define function to update Calendar from Full Charter to Dive Booked
+  // Define function to update Calendar from Entire Charter to Dive Booked
   const upDateCalendarFullCharter = async formData => {
     try {
       const response = await axios.patch(`${serverUrl}/api/update-calendar-full-charter`, {
         formData,
       });
       console.log(
-        "Diving date sent to the backend to update calendar to (Full Charter to Dive Booked)",
+        "Diving date sent to the backend to update calendar to (Entire Charter to Dive Booked)",
         response.data,
       );
       return response.data;
     } catch (error) {
       console.error(
-        "Error sending diving date to backend to update calendar to (Full Charter to Dive Booked):",
+        "Error sending diving date to backend to update calendar to (Entire Charter to Dive Booked):",
         error,
       );
       throw error;
     }
   };
 
-  // Define function to update Calendar from Full Charter - 3 Divers to Dive Booked
+  // Define function to update Calendar from Entire Charter - 3 Divers to Dive Booked
   const upDateCalendarFullCharter3Divers = async formData => {
     try {
       const response = await axios.patch(`${serverUrl}/api/update-calendar-full-charter`, {
         formData,
       });
       console.log(
-        "Diving date sent to the backend to update calendar to (Full Charter - 3 Divers to Dive Booked)",
+        "Diving date sent to the backend to update calendar to (Entire Charter - 3 Divers to Dive Booked)",
         response.data,
       );
       return response.data;
     } catch (error) {
       console.error(
-        "Error sending diving date to backend to update calendar to (Full Charter - 3 Divers to Dive Booked):",
+        "Error sending diving date to backend to update calendar to (Entire Charter - 3 Divers to Dive Booked):",
         error,
       );
       throw error;
@@ -626,9 +628,9 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         // Update Calendar
         if (eventTitle === "1 Dive Seat") {
           await upDateCalendarBooked(formData); // Ensure to await if you want to handle the response properly
-        } else if (eventTitle === "Full Charter") {
+        } else if (eventTitle === "Entire Charter") {
           await upDateCalendarFullCharter(formData); // Ensure to await if you want to handle the response properly
-        } else if (eventTitle === "Full Charter - 3 Divers") {
+        } else if (eventTitle === "Entire Charter - 3 Divers") {
           await upDateCalendarFullCharter3Divers(formData); // Ensure to await if you want to handle the response properly
         } else if (eventTitle === "3rd Diver") {
           await upDateCalendar3rdBooked(formData); // Call the new function for 3rd Diver

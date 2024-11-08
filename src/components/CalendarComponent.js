@@ -37,8 +37,8 @@ const CalendarComponent = () => {
           "Cruise Booked",
           "3rd Diver",
           "3rd Booked",
-          "Full Charter",
-          "Full Charter - 3 Divers",
+          "Entire Charter",
+          "Entire Charter - 3 Divers",
         ].includes(event.title),
       );
 
@@ -85,8 +85,8 @@ const CalendarComponent = () => {
         clickedEvent.title !== "1 Dive Seat" &&
         clickedEvent.title !== "Cruise" &&
         clickedEvent.title !== "3rd Diver" &&
-        clickedEvent.title !== "Full Charter - 3 Divers" &&
-        clickedEvent.title !== "Full Charter")
+        clickedEvent.title !== "Entire Charter - 3 Divers" &&
+        clickedEvent.title !== "Entire Charter")
     ) {
       setShowDiverInfo(false);
       setSelectedDate(null);
@@ -95,8 +95,8 @@ const CalendarComponent = () => {
     if (
       clickedEvent.title === "Dive" ||
       clickedEvent.title === "1 Dive Seat" ||
-      clickedEvent.title === "Full Charter" ||
-      clickedEvent.title === "Full Charter - 3 Divers" ||
+      clickedEvent.title === "Entire Charter" ||
+      clickedEvent.title === "Entire Charter - 3 Divers" ||
       clickedEvent.title === "3rd Diver"
     ) {
       setSelectedDate(selectedDate); // Store the selected date in state
@@ -144,10 +144,10 @@ const CalendarComponent = () => {
       eventClasses = "bg-red-500"; // Red background for "Cruise Booked" events
     } else if (arg.event.title === "3rd Diver") {
       eventClasses = "bg-orange-500"; // Orange background for "3rd Diver" events
-    } else if (arg.event.title === "Full Charter") {
-      eventClasses = "bg-blue-500"; // blue background for "Full Charter" events
-    } else if (arg.event.title === "Full Charter - 3 Divers") {
-      eventClasses = "bg-orange-500"; // Orange background for "Full Charter - 3 Divers" events
+    } else if (arg.event.title === "Entire Charter") {
+      eventClasses = "bg-blue-500"; // blue background for "Entire Charter" events
+    } else if (arg.event.title === "Entire Charter - 3 Divers") {
+      eventClasses = "bg-orange-500"; // Orange background for "Entire Charter - 3 Divers" events
     } else if (arg.event.title === "3rd Booked") {
       eventClasses = "bg-red-500";
     }
@@ -260,12 +260,12 @@ const CalendarComponent = () => {
                           Price: <span className="font-bold">$100 per diver +tax.</span>
                         </h3>
                       )}
-                      {eventTitle === "Full Charter" && (
+                      {eventTitle === "Entire Charter" && (
                         <h3 className="mt-1">
                           Price: <span className="font-bold">$290 +tax.</span>
                         </h3>
                       )}
-                      {eventTitle === "Full Charter - 3 Divers" && (
+                      {eventTitle === "Entire Charter - 3 Divers" && (
                         <h3 className="mt-1">
                           Price: <span className="font-bold">$390 +tax.</span>
                         </h3>
@@ -288,8 +288,8 @@ const CalendarComponent = () => {
                     {(eventTitle === "Dive" ||
                       eventTitle === "1 Dive Seat" ||
                       eventTitle === "3rd Diver" ||
-                      eventTitle === "Full Charter - 3 Divers" ||
-                      eventTitle === "Full Charter") && (
+                      eventTitle === "Entire Charter - 3 Divers" ||
+                      eventTitle === "Entire Charter") && (
                       <div className="flex max-w-[1200px] mx-auto ">
                         <DiverInfo
                           setSelectedDate={setSelectedDate}

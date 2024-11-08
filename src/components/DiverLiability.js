@@ -13,10 +13,10 @@ const DiverLiability = () => {
     // Create a new Date object from the selectedDate
     const dateObj = new Date(selectedDate);
 
-    // Extract year, month, and day
-    const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
-    const day = String(dateObj.getDate()).padStart(2, "0");
+    // Extract year, month, and day in UTC to avoid local time zone issues
+    const year = dateObj.getUTCFullYear();
+    const month = String(dateObj.getUTCMonth() + 1).padStart(2, "0"); // Get UTC month
+    const day = String(dateObj.getUTCDate()).padStart(2, "0"); // Get UTC day
 
     // Format the date as yyyy-mm-dd
     const formattedDate = `${year}-${month}-${day}`;
@@ -65,12 +65,6 @@ const DiverLiability = () => {
     electronicParentSignature: "",
     electronicSignatureDate: "",
   });
-  // const [formDataOutside, setFormDataOutside] = useState({}); // State to control button visibility
-  // const [formOutside, setFormOutside] = useState({}); // State to control button visibility
-
-  // Format the selectedDate to type=date for the form
-
-  // get all data in form and return object
 
   useEffect(() => {
     function getFormData(form) {
@@ -118,21 +112,6 @@ const DiverLiability = () => {
 
       return { data: formData, honeypot: honeypot };
     }
-
-    // Function to handle form data outside of handleFormSubmit
-    // const handleFormSubmitData = (formData, form) => {
-    //   // Store or process the form data as needed
-    //   setFormDataOutside(formData);
-    //   setFormOutside(form);
-    // };
-
-    // // Send to google sheet - bind to the submit event of our form
-    // const runHandleFormSubmit = () => {
-    //   let forms = document.querySelectorAll("form.gform");
-    //   for (let i = 0; i < forms.length; i++) {
-    //     forms[i].addEventListener("submit", handleFormSubmit, false);
-    //   }
-    // };
 
     // Function to handle form submission
     const handleFormSubmit = event => {
@@ -570,7 +549,7 @@ const DiverLiability = () => {
                     className="border-solid p-2 font-bold border-2 border-darkBlue  md:w-64  w-full h-[46px]  "
                     type="date"
                     name="divingDate"
-                    value={formData.divingDate}
+                    value={formatDateForHTMLInput(formData.divingDate)}
                     onChange={handleInputChange}
                   />
                   <div className="md:w-64">
