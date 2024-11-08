@@ -31,14 +31,14 @@ export const cartItems = [
     id: "Entire Charter",
     name: "Entire Charter",
     quantity: 1,
-    price: 0.01, // Price Entire Charter
+    price: 290, // Price Entire Charter
     description: "Dive trip with Devilfish Diving - Entire Charter", // Add description here
   },
   {
     id: "Entire Charter - 3 Divers",
     name: "Entire Charter - 3 Divers",
     quantity: 1,
-    price: 0.01, // Price Entire Charter
+    price: 390, // Price Entire Charter
     description: "Dive trip with Devilfish Diving - Entire Charter - 3 Divers", // Add description here
   },
 ];
