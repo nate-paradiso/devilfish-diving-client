@@ -9,6 +9,7 @@ const DiverLiability = () => {
   const [isButtonVisible, setIsButtonVisible] = useState(true); // State to control button visibility
   const serverUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const errorRefs = useRef({});
+
   const formatDateForHTMLInput = selectedDate => {
     // Create a new Date object from the selectedDate
     const dateObj = new Date(selectedDate);
@@ -23,6 +24,18 @@ const DiverLiability = () => {
 
     return formattedDate;
   };
+
+  const formaTodaysDateForHTMLInput = selectedDate => {
+    const dateObj = new Date(selectedDate);
+
+    // Extract year, month, and day in local time zone
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const day = String(dateObj.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
+
   const today = new Date();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -42,7 +55,7 @@ const DiverLiability = () => {
     message: "",
     electronicSignature: "",
     electronicParentSignature: "",
-    electronicSignatureDate: formatDateForHTMLInput(today),
+    electronicSignatureDate: formaTodaysDateForHTMLInput(today),
   });
 
   const [validationErrors, setValidationErrors] = useState({

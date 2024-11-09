@@ -19,6 +19,8 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   const [loading, setLoading] = useState(false);
 
   console.log(selectedDate);
+  const today = new Date();
+  console.log("today", today);
   const formatDateForHTMLInput = selectedDate => {
     // Create a new Date object from the selectedDate
     const dateObj = new Date(selectedDate);
@@ -34,7 +36,17 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     return formattedDate;
   };
 
-  const today = new Date();
+  const formaTodaysDateForHTMLInput = selectedDate => {
+    const dateObj = new Date(selectedDate);
+
+    // Extract year, month, and day in local time zone
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const day = String(dateObj.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -53,7 +65,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     message: "",
     electronicSignature: "",
     electronicParentSignature: "",
-    electronicSignatureDate: formatDateForHTMLInput(today),
+    electronicSignatureDate: formaTodaysDateForHTMLInput(today),
   });
 
   const [validationErrors, setValidationErrors] = useState({
