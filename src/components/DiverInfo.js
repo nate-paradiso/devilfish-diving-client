@@ -37,7 +37,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     return formattedDate;
   };
 
-  const formaTodaysDateForHTMLInput = selectedDate => {
+  const formatTodaysDateForHTMLInput = selectedDate => {
     const dateObj = new Date(selectedDate);
 
     // Extract year, month, and day in local time zone
@@ -66,9 +66,9 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     message: "",
     electronicSignature: "",
     electronicParentSignature: "",
-    electronicSignatureDate: formatDateForHTMLInput(today),
+    electronicSignatureDate: formatTodaysDateForHTMLInput(today),
   });
-  console.log("signiture", formaTodaysDateForHTMLInput(today));
+  console.log("signature", formatTodaysDateForHTMLInput(today));
   const [validationErrors, setValidationErrors] = useState({
     firstName: "",
     lastName: "",
