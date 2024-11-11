@@ -19,6 +19,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
   const [loading, setLoading] = useState(false);
 
   console.log(selectedDate);
+
   const today = new Date();
   console.log("today", today);
   const formatDateForHTMLInput = selectedDate => {
@@ -46,7 +47,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
     return `${year}-${month}-${day}`;
   };
-
+  console.log("selected Date is ", formatDateForHTMLInput(selectedDate));
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -65,9 +66,9 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     message: "",
     electronicSignature: "",
     electronicParentSignature: "",
-    electronicSignatureDate: formaTodaysDateForHTMLInput(today),
+    electronicSignatureDate: formatDateForHTMLInput(today),
   });
-
+  console.log("signiture", formaTodaysDateForHTMLInput(today));
   const [validationErrors, setValidationErrors] = useState({
     firstName: "",
     lastName: "",
