@@ -24,7 +24,30 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
   useEffect(() => {
-    // Initialize Google Analytics
+    // Load Google Analytics script dynamically
+    const loadGAScript = () => {
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
+      document.head.appendChild(script);
+
+      script.onload = () => {
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          window.dataLayer.push(arguments);
+        }
+        window.gtag = gtag;
+        gtag("js", new Date());
+        gtag("config", GA_TRACKING_ID);
+      };
+    };
+
+    // Initialize Google Analytics if not already loaded
+    if (!window.gtag) {
+      loadGAScript();
+    }
+
+    // Track route changes
     const handleRouteChange = url => {
       if (typeof window.gtag !== "undefined") {
         window.gtag("config", GA_TRACKING_ID, {
@@ -38,31 +61,16 @@ function MyApp({ Component, pageProps }) {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
   }, [router.events]);
+
   return (
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
         <link rel="icon" href="/octocon.ico" sizes="any" />
-        {/* Google Analytics Script */}
-        <script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
-        ></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${GA_TRACKING_ID}');
-            `,
-          }}
-        />
       </Head>
-      <main className={`${roboto.variable} font-sans font-normal  m-auto`}>
+      <main className={`${roboto.variable} font-sans font-normal m-auto`}>
         <Header />
         <Component {...pageProps} />
         <Footer />
