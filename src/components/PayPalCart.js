@@ -8,7 +8,7 @@ export const cartItems = [
   },
   {
     id: "1 Dive Seat",
-    name: "Dive",
+    name: "1 Dive Seat",
     quantity: 1,
     price: 145, // Price for Dive
     description: "Dive trip with Devilfish Diving - 2nd Diver", // Add description here
