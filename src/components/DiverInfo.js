@@ -631,7 +631,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       } else {
         // (3) Successful transaction -> Show confirmation or thank you message
         // Or go to another URL:  actions.redirect('thank_you.html');
-
         // Submit form data to google sheet
         setIsPayPalSuccessful(true);
 
@@ -639,25 +638,33 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         handleGoogleSheetSubmit();
 
         // Update Calendar
+        // Update Calendar for various event titles
         if (eventTitle === "1 Dive Seat") {
-          await upDateCalendarBooked(formData); // Ensure to await if you want to handle the response properly
+          upDateCalendarBooked(formData);
+          console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
         } else if (eventTitle === "Entire Charter") {
-          await upDateCalendarFullCharter(formData); // Ensure to await if you want to handle the response properly
+          upDateCalendarFullCharter(formData);
+          console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
         } else if (eventTitle === "Entire Charter - 3 Divers") {
-          await upDateCalendarFullCharter3Divers(formData); // Ensure to await if you want to handle the response properly
+          upDateCalendarFullCharter3Divers(formData);
+          console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
         } else if (eventTitle === "3rd Diver") {
-          await upDateCalendar3rdBooked(formData); // Call the new function for 3rd Diver
-        } else {
-          await upDateCalendar1Seat(formData);
+          upDateCalendar3rdBooked(formData);
+          console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
+        } else if (eventTitle === "Dive") {
+          upDateCalendar1Seat(formData);
+          console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
         }
 
         // Send email
         sendEmail(formData);
+        console.log("sent email...");
 
         // Set submitted state to true
         setIsSubmitted(true);
-
+        console.log("submitted is true...");
         setMessage("Payment Successful. Thank you!");
+        console.log("successful...");
 
         // console.log("Capture result", orderData, JSON.stringify(orderData, null, 2));
       }
@@ -1227,15 +1234,15 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     options={{
                       intent: "capture",
                       "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT,
-                      "enable-funding": "card",
-                      "disable-funding": "paylater",
+                      "enable-funding": "card,venmo,paylater",
                       "data-sdk-integration-source": "integrationbuilder_sc",
                     }}
                   >
                     <div className="App max-w-[750px] flex flex-col md:max-w-[256px] ">
                       <PayPalButtons
                         style={{
-                          shape: "rect",
+                          shape: "pill",
+                          color: "blue",
                           layout: "vertical",
                         }}
                         createOrder={async () => {

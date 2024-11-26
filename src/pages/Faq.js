@@ -51,11 +51,6 @@ const FAQ = () => {
           <a href="mailto:devilfishdiving@gmail.com" className="text-blue-500 underline">
             devilfishdiving@gmail.com
           </a>{" "}
-          or by phone at{" "}
-          <a href="tel:+13035256924" className="text-blue-500 underline">
-            (303) 525-6924
-          </a>
-          .
         </p>
         <br />
         <h2 className="text-lg">What is the minimum diver requirement?</h2>
