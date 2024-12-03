@@ -1234,7 +1234,8 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                     options={{
                       intent: "capture",
                       "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT,
-                      "enable-funding": "card,venmo,paylater",
+                      "enable-funding": "card,venmo",
+                      "disable-funding": "paylater",
                       "data-sdk-integration-source": "integrationbuilder_sc",
                     }}
                   >
