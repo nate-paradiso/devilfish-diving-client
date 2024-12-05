@@ -572,6 +572,26 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     }
   };
 
+  // Define function to update Calendar from Class - 3 Diver to Dive Booked
+  const upDateCalendarClass = async formData => {
+    try {
+      const response = await axios.patch(`${serverUrl}/api/update-calendar-class`, {
+        formData,
+      });
+      console.log(
+        "Diving date sent to the backend to update calendar to (Class - 3 Divers to Dive Booked)",
+        response.data,
+      );
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error sending diving date to backend to update calendar to (Class - 3 Divers to Dive Booked):",
+        error,
+      );
+      throw error;
+    }
+  };
+
   // Define function to update Calendar from Entire Charter - 3 Divers to Dive Booked
   const upDateCalendarFullCharter3Divers = async formData => {
     try {
@@ -637,7 +657,6 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         // Send form data to googlesheet
         handleGoogleSheetSubmit();
 
-        // Update Calendar
         // Update Calendar for various event titles
         if (eventTitle === "1 Dive Seat") {
           upDateCalendarBooked(formData);
@@ -653,6 +672,9 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
           console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
         } else if (eventTitle === "Dive") {
           upDateCalendar1Seat(formData);
+          console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
+        } else if (eventTitle === "Class - 3 Divers") {
+          upDateCalendarClass(formData);
           console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
         }
 
