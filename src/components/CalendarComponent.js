@@ -39,6 +39,7 @@ const CalendarComponent = () => {
           "3rd Booked",
           "Entire Charter",
           "Entire Charter - 3 Divers",
+          "Class - 3 Divers",
         ].includes(event.title),
       );
 
@@ -86,6 +87,7 @@ const CalendarComponent = () => {
         clickedEvent.title !== "Cruise" &&
         clickedEvent.title !== "3rd Diver" &&
         clickedEvent.title !== "Entire Charter - 3 Divers" &&
+        clickedEvent.title !== "Class - 3 Divers" &&
         clickedEvent.title !== "Entire Charter")
     ) {
       setShowDiverInfo(false);
@@ -97,6 +99,7 @@ const CalendarComponent = () => {
       clickedEvent.title === "1 Dive Seat" ||
       clickedEvent.title === "Entire Charter" ||
       clickedEvent.title === "Entire Charter - 3 Divers" ||
+      clickedEvent.title === "Class - 3 Divers" ||
       clickedEvent.title === "3rd Diver"
     ) {
       setSelectedDate(selectedDate); // Store the selected date in state
@@ -145,6 +148,8 @@ const CalendarComponent = () => {
     } else if (arg.event.title === "3rd Diver") {
       eventClasses = "bg-orange-500"; // Orange background for "3rd Diver" events
     } else if (arg.event.title === "Entire Charter") {
+      eventClasses = "bg-blue-500"; // blue background for "Entire Charter" events
+    } else if (arg.event.title === "Class - 3 Divers") {
       eventClasses = "bg-blue-500"; // blue background for "Entire Charter" events
     } else if (arg.event.title === "Entire Charter - 3 Divers") {
       eventClasses = "bg-orange-500"; // Orange background for "Entire Charter - 3 Divers" events
@@ -270,6 +275,11 @@ const CalendarComponent = () => {
                           Price: <span className="font-bold">$390 +tax.</span>
                         </h3>
                       )}
+                      {eventTitle === "Class - 3 Divers" && (
+                        <h3 className="mt-1">
+                          Price: <span className="font-bold">$495 +tax.</span>
+                        </h3>
+                      )}
                       {eventTitle === "Cruise" && (
                         <h3 className="mt-1">
                           Price:{" "}
@@ -289,6 +299,7 @@ const CalendarComponent = () => {
                       eventTitle === "1 Dive Seat" ||
                       eventTitle === "3rd Diver" ||
                       eventTitle === "Entire Charter - 3 Divers" ||
+                      eventTitle === "Class - 3 Divers" ||
                       eventTitle === "Entire Charter") && (
                       <div className="flex max-w-[1200px] mx-auto ">
                         <DiverInfo
