@@ -56,7 +56,7 @@ export default function Home() {
             }}
           >
             <Link href="/DivingPhotos">
-              <h2 className="text-white md:text-6xl text-2xl font-oleoScript tracking-wider transition-colors duration-200 hover:text-slate-300 text-center">
+              <h2 className="drop-shadow-custom text-white md:text-6xl text-2xl font-oleoScript tracking-wider transition-colors duration-200 hover:text-slate-300 text-center">
                 Diving
               </h2>
             </Link>
@@ -72,7 +72,7 @@ export default function Home() {
             }}
           >
             <Link href="/SightsPhotos">
-              <h2 className="text-white md:text-6xl text-2xl font-oleoScript tracking-wider transition-colors duration-200 hover:text-slate-300 text-center">
+              <h2 className=" drop-shadow-custom text-white md:text-6xl text-2xl font-oleoScript tracking-wider transition-colors duration-200 hover:text-slate-300 text-center">
                 Sight Seeing
               </h2>
             </Link>

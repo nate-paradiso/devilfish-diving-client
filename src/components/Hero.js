@@ -9,7 +9,7 @@ const Hero = () => {
       md:max-w-[800px] md:top-[20px] md:right-[50px] xl:max-w-[1000px] xl:top-[50px]  "
       >
         <h1
-          className="text-[2.8em] md:text-8xl xl:text-[11rem] font-oleoScript drop-shadow-xl 
+          className="text-[2.8em] md:text-8xl xl:text-[11rem] font-oleoScript drop-shadow-custom 
         leading-[1] pt-5 pr-3"
         >
           A Seattle Dive Charter
