@@ -32,6 +32,9 @@ export const theme = {
     maxWidth: {
       "vw-95": "95vw", // Custom maxWidth less than 100% of the viewport width
     },
+    dropShadow: {
+      custom: "10px 7px 5px rgba(0, 0, 0, 0.6)", // Add custom drop shadow
+    },
   },
   variants: {
     extend: {},
