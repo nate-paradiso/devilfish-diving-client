@@ -34,7 +34,22 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     // Format the date as yyyy-mm-dd
     const formattedDate = `${year}-${month}-${day}`;
 
-    return formattedDate;
+    return formattedDate; // Return both as an object
+  };
+
+  const formatDateForPayPal = selectedDate => {
+    // Create a new Date object from the selectedDate
+    const dateObj = new Date(selectedDate);
+
+    // Extract year, month, and day in UTC to avoid local time zone issues
+    const year = dateObj.getUTCFullYear();
+    const month = String(dateObj.getUTCMonth() + 1).padStart(2, "0"); // Get UTC month
+    const day = String(dateObj.getUTCDate()).padStart(2, "0"); // Get UTC day
+
+    // Format the date as yyyy-mm-dd
+    const paypalDate = `${month}-${day}-${year}`;
+
+    return paypalDate; // Return both as an object
   };
 
   const formatTodaysDateForHTMLInput = selectedDate => {
@@ -1281,6 +1296,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
                               body: JSON.stringify({
                                 cart: cartItems,
                                 eventTitle: eventTitle,
+                                selectedDate: formatDateForPayPal(selectedDate),
                               }),
                             });
 
