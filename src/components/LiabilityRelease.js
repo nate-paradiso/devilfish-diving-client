@@ -12,27 +12,33 @@ const LiabilityRelease = ({ formData }) => {
         </span>
         , hereby affirm that I am a certified scuba diver trained in safe dive practices, or a
         student diver under the control and supervision of a certified scuba instructor. I know that
-        skin diving, freediving, and scuba diving have inherent risks, including those risks
-        associated with boat travel to and from the dive site (hereinafter “Excursion”), which may
-        result in serious injury or death. I understand that scuba diving with compressed air
-        involves certain inherent risks, including but not limited to decompression sickness,
-        embolism, or other hyperbaric/air expansion injuries that require treatment in a
-        recompression chamber. If I am scuba diving with oxygen enriched air (“Enriched Air”) or
-        other gas blends including oxygen, I also understand that it involves inherent risks of
-        oxygen toxicity and/or improper mixtures of breathing gas. I acknowledge this Excursion
-        includes risks of slipping or falling while on board the boat, being cut or struck by a boat
-        while in the water, injuries occurring while getting on or off a boat, and other perils of
-        the sea. I further understand that the Excursion will be conducted at a site that is remote,
-        either by time or distance or both, from a recompression chamber. I still choose to proceed
-        with the Excursion in spite of the absence of a recompression chamber in proximity to the
-        dive site(s).
+        skin diving, freediving, and scuba diving and any/all related and/or secondary activities
+        have inherent risks which may result in serious injury or death, including those risks
+        associated with boat travel to and from the dive site (all such activities hereinafter
+        deemed an “Excursion”). I understand that scuba diving with compressed air involves certain
+        inherent risks, including but not limited to decompression sickness, embolism, or other
+        hyperbaric/air expansion injuries that require treatment in a recompression chamber. If I am
+        scuba diving with oxygen enriched air (“Enriched Air”) or other gas blends including oxygen
+        or helium, I also understand that it involves inherent risks of oxygen toxicity and/or
+        improper mixtures of breathing gas. I acknowledge this Excursion includes, without
+        limitation, risks of slipping or falling while on board the boat, being cut or struck by a
+        boat while in the water, injuries occurring while getting on or off a boat, and other perils
+        of the sea. I further understand that the Excursion will be conducted at a site that is
+        remote, either by time or distance or both, from a recompression chamber. I still choose to
+        proceed with the Excursion in spite of the absence of a recompression chamber in proximity
+        to the dive site(s).
       </p>
       <br />
       <p>
-        I understand and agree that neither
-        <span className="font-bold text-lg"> Devilfish Diving LLC</span>; nor the dive
+        I hereby agree that I am voluntarily participating in the Excursion, that I have been
+        advised of the risks and hereby assume all risks and dangers and all responsibility for any
+        losses and/or damages, whether caused in whole or in part by the negligence or other conduct
+        of the owners, agents, officers, or employees of{" "}
+        <span className="font-bold text-lg"> Devilfish Diving LLC</span>, other guests, or by any
+        other person. I understand and agree that neither{" "}
+        <span className="font-bold text-lg"> Devilfish Diving LLC</span> nor the dive
         professional(s) who may be present at the dive site, nor any of their affiliate and
-        subsidiary corporations, nor any of their respective employees, officers, agents,
+        subsidiary business entities, nor any of their respective employees, officers, agents,
         contractors, and assigns (hereinafter “Released Parties”) may be held liable or responsible
         in any way for any injury, death, or other damages to me, my family, estate, heirs, or
         assigns that may occur during the Excursion as a result of my participation in the Excursion
