@@ -40,6 +40,7 @@ const CalendarComponent = () => {
           "Entire Charter",
           "Entire Charter - 3 Divers",
           "Class - 3 Divers",
+          "Holding",
         ].includes(event.title),
       );
 
@@ -81,7 +82,9 @@ const CalendarComponent = () => {
     const formattedDate = formatDate(selectedDate); // Format the selected date
 
     if (
-      (clickedEvent.title === "Dive Booked" && clickedEvent.title === "Cruise Booked") ||
+      (clickedEvent.title === "Dive Booked" &&
+        clickedEvent.title === "Cruise Booked" &&
+        clickedEvent.title === "Holding") ||
       (clickedEvent.title !== "Dive" &&
         clickedEvent.title !== "1 Dive Seat" &&
         clickedEvent.title !== "Cruise" &&
@@ -155,6 +158,8 @@ const CalendarComponent = () => {
       eventClasses = "bg-orange-500"; // Orange background for "Entire Charter - 3 Divers" events
     } else if (arg.event.title === "3rd Booked") {
       eventClasses = "bg-red-500";
+    } else if (arg.event.title === "Holding") {
+      eventClasses = "bg-orange-500";
     }
 
     return (
