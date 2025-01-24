@@ -16,21 +16,54 @@ const Friends = () => {
             height={272}
           />
         </div>{" "}
-        {/* <br />
+        <br />
         <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
           <div className="flex justify-center">
-            <a href="https://www.pnwdiving.com" target="blank">
+            <a href="https://www.nateparadisophotography.com" target="blank">
               <Image
-                className=" hover:opacity-70 h-auto w-[125px] md:w-[200px] p-1" // Consistent responsive sizing
-                src="/images/gpologo-invert.png"
-                alt="Devilfish Logo"
-                width={200} // The largest size (matches md:w-[200px])
-                height={64} // Keep the correct aspect ratio
-              />{" "}
+                className="hover:opacity-70 duration-300 "
+                src="/images/natep.png"
+                alt="Kiliii Yuyan Photography Logo"
+                width={300}
+                height={100}
+              />
             </a>
           </div>{" "}
-          <p className="italic pt-2">Nam Sui Local Gyotaku artist. </p>
-        </div> */}
+          <p className="italic pt-2">Photographer. </p>
+        </div>
+        <br />
+        <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
+          <div className="flex justify-center">
+            <a href="https://www.tongassonthefly.com" target="blank">
+              <Image
+                className="hover:opacity-70 duration-300 "
+                src="/images/tongassonthefly.png"
+                alt="Tongass on the Fly Logo"
+                width={400}
+                height={100}
+              />
+            </a>
+          </div>{" "}
+          <p className="italic pt-2">Alaskan Fly Fishing Charter. </p>
+        </div>
+        <br />
+        <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
+          <div className="flex justify-center">
+            <a
+              href="https://corvuscrafts.printavo.com/merch/salish-sea-impressions/"
+              target="blank"
+            >
+              <Image
+                className="hover:opacity-70 duration-300 "
+                src="/images/Nam-stamp.png"
+                alt="Tongass on the Fly Logo"
+                width={60}
+                height={100}
+              />
+            </a>
+          </div>{" "}
+          <p className="italic pt-2">Salish Sea Impressions. </p>
+        </div>
         <br />
         <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
           <div className="flex justify-center">
@@ -48,36 +81,6 @@ const Friends = () => {
             A go-to resource for Pacific Northwest divers, offering visibility reports, dive site
             info, currents, tides, and more.{" "}
           </p>
-        </div>
-        <br />
-        <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
-          <div className="flex justify-center">
-            <a href="https://www.seattleaquarium.org" target="blank">
-              <Image
-                className="hover:opacity-70 duration-300 "
-                src="/images/seattleaquarium.png"
-                alt="PNW Diving Logo"
-                width={200}
-                height={100}
-              />
-            </a>
-          </div>{" "}
-          <p className="italic pt-2">Aquarium. </p>
-        </div>
-        <br />
-        <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
-          <div className="flex justify-center">
-            <a href="https://www.nateparadisophotography.com" target="blank">
-              <Image
-                className="hover:opacity-70 duration-300 "
-                src="/images/natep.png"
-                alt="Kiliii Yuyan Photography Logo"
-                width={300}
-                height={100}
-              />
-            </a>
-          </div>{" "}
-          <p className="italic pt-2">Photographer. </p>
         </div>
         <br />
         <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
@@ -127,17 +130,17 @@ const Friends = () => {
         <br />
         <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
           <div className="flex justify-center">
-            <a href="https://www.tongassonthefly.com" target="blank">
+            <a href="https://www.seattleaquarium.org" target="blank">
               <Image
                 className="hover:opacity-70 duration-300 "
-                src="/images/tongassonthefly.png"
-                alt="Tongass on the Fly Logo"
-                width={400}
+                src="/images/seattleaquarium.png"
+                alt="PNW Diving Logo"
+                width={200}
                 height={100}
               />
             </a>
           </div>{" "}
-          <p className="italic pt-2">Alaskan Fly Fishing Charter. </p>
+          <p className="italic pt-2">Aquarium. </p>
         </div>
         <br />
       </div>
