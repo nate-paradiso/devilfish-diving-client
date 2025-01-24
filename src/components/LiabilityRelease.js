@@ -110,11 +110,6 @@ const LiabilityRelease = ({ formData }) => {
       </p>
       <br />
       <p>
-        I hereby state and agree that this Agreement will be effective for all Excursions in which I
-        participate for one (1) year from the date on which I sign this Agreement.
-      </p>
-      <br />
-      <p>
         I further state that I am of lawful age and legally competent to sign this liability
         release, or that I have acquired the written consent of my parent or guardian. I understand
         the terms herein are contractual and not a mere recital, and that I have signed this
