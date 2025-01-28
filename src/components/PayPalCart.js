@@ -38,7 +38,7 @@ export const cartItems = [
     id: "Entire Charter - 3 Divers",
     name: "Entire Charter - 3 Divers",
     quantity: 1,
-    price: 390, // Price Entire Charter
+    price: 435, // Price Entire Charter
     description: "Entire Charter - 3 Divers", // Add description here
   },
   {
