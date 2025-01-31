@@ -27,7 +27,7 @@ const About = () => {
           <p>
             The C-Dory 22ft cruiser is a classic vessel known for its durability, versatility, and
             reliability. Originally built in Auburn, WA in 1987 it is a popular choice among boaters
-            due to its sturdy construction and seaworthiness.
+            due to its seaworthiness.
           </p>
 
           <br />
