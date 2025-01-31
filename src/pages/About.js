@@ -17,11 +17,11 @@ const About = () => {
         </div>
         <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px]">
           <p>
-            This Devilfish has traversed much of the Puget Sound, Neah Bay, and the San Juan
-            Islands. It is an efficient small vessel, ideal for a compact diving team or cruise.
-            Featuring an Alaskan bulkhead, passengers can seek shelter from the elements and enjoy a
-            wide-ranging view of the water. Facilities board include a Porta Potti, fresh water for
-            drinking, a dinette table and seats for two passengers and table for cameras.
+            The Devilfish has traversed much of the Puget Sound, Neah Bay, and the San Juan Islands.
+            It is an efficient small vessel, ideal for a compact diving team or cruise. Featuring an
+            Alaskan bulkhead, passengers can seek shelter from the elements and enjoy a wide-ranging
+            view of the water. Facilities board include a Porta Potti, fresh water for drinking, a
+            dinette table and seats for two passengers and table for cameras.
           </p>
           <br />
           <p>
