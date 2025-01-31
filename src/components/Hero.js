@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 const Hero = () => {
   return (
-    <section className="relative  m-4 ">
+    <section className="relative  mt-4 mb-4 ">
       {/* Container for the text */}
       <div
         className="absolute top-[5px] right-[10px] z-10 pr-2 md:p-4 text-white text-end max-w-[350px] 
@@ -22,7 +22,7 @@ const Hero = () => {
             alt="The Boat"
             width={2560}
             height={1440}
-            className="rounded-md shadow-md "
+            className=" shadow-md "
           />
         </div>
       </div>

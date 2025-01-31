@@ -16,11 +16,20 @@ const Services = () => {
             height={272}
           />
         </div>
-        <br />
 
+        <div className="flex justify-center m-4">
+          <Link href="/calendar">
+            <button
+              className="p-3 md:p-4 md:text-3xl transition-colors duration-200 hover:bg-slate-100 
+          text-xl text-center border-[1px] font-bold bg-white bg-opacity-90 shadow-md rounded-md"
+            >
+              Book Now!
+            </button>
+          </Link>
+        </div>
         <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
-          <h2 className="font-bold text-xl"> Two-tank Dive</h2>
-          <div className="font-bold">$145 per diver +tax - 2 person max</div>{" "}
+          <h2 className="font-bold text-xl"> Two-tank Rec Dive</h2>
+          <div className="font-bold">$145 per diver +tax</div>{" "}
           <p className="italic pt-2">
             Enjoy an adventure exploring the hidden gems of the Puget Sound and the wrecks of Lake
             Washington. Discover an underwater world teeming with vibrant marine life, accessible
@@ -33,10 +42,20 @@ const Services = () => {
         </div>
         <br />
         <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
+          <h2 className="font-bold text-xl"> 1 Tec Dive</h2>
+          <div className="font-bold">$145 per diver +tax</div>{" "}
+          <p className="italic pt-2">
+            Perform a single technical dive of up to two hours in the Puget Sound or Lake
+            Washington. The dive location will be determined in advance, and an SMB is required. A
+            detailed dive plan must be confirmed and communicated with the captain in advance.{" "}
+          </p>
+        </div>
+        <br />
+        <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
           <h2 className="font-bold text-xl">
             2.5 Hour Cruise - Elliot Bay to Blakely Rock in the Puget Sound
           </h2>
-          <div className="font-bold">$210 +tax - 2 person max</div>
+          <div className="font-bold">$210 +tax</div>
           <p className="italic pt-2">
             Step aboard on a picturesque cruise from Elliot Bay to Blakely Rock in the serene Puget
             Sound. Feel intimately connected to the nature as you glide through the emerald green
@@ -48,16 +67,6 @@ const Services = () => {
             natural splendor and urban beauty of the region, providing a tranquil and unforgettable
             experience on the water.{" "}
           </p>
-        </div>
-        <div className="flex justify-center m-8">
-          <Link href="/Calendar">
-            <button
-              className=" p-2 md:p-4  md:text-3xl transition-colors duration-200 hover:bg-slate-100 text-lg border-[1px]
-            bg-opacity-60 bg-white shadow-md rounded-md "
-            >
-              Book Now!
-            </button>
-          </Link>
         </div>
       </div>
     </div>

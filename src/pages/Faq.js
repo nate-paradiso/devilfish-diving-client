@@ -16,9 +16,10 @@ const FAQ = () => {
         />{" "}
       </div>
       <div className="max-w-[800px] p-4 flex flex-col  bg-white bg-opacity-60 shadow-md rounded-md m-4">
-        <h2 className="text-lg">Are doubles allowed?</h2>
+        <h2 className="text-lg">Are doubles or CCR allowed?</h2>
         <p className="italic text-gray-900">
-          Yes, doubles are allowed as long you are able to climb the dive ladder.
+          Yes, doubles and CCR are allowed as long you are able to climb the dive ladder. Please
+          communicate to the captain the gear you will be bringing on board.
         </p>
         <br />
         <h2 className="text-lg">How do I book a dive trip?</h2>
@@ -31,8 +32,27 @@ const FAQ = () => {
         <p className="italic text-gray-900">
           {" "}
           You must bring all your own dive gear. We do not provide any equipment.{" "}
-          <span className="Bold"> Do not </span>
+          <span className="Bold"> DO NOT </span>
           bring large totes, space is limited. We provide snacks and water.
+        </p>
+        <br />
+        <h2 className="text-lg">Do you rent equipment?</h2>
+        <p className="italic text-gray-900">
+          {" "}
+          No, you must bring all your own dive gear. We do not provide any equipment. If you need to
+          rent equipment, contact{" "}
+          <a href="https://www.8diving.com" target="blank" className="text-blue-600 underline">
+            Eight Diving
+          </a>{" "}
+          or{" "}
+          <a
+            href="https://www.underwatersports.com"
+            target="blank"
+            className="text-blue-600 underline"
+          >
+            Underwater Sports
+          </a>
+          .{" "}
         </p>
         <br />
         <h2 className="text-lg">What is your cancellation policy?</h2>

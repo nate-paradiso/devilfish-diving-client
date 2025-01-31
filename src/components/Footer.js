@@ -10,12 +10,12 @@ const Footer = () => {
             Devilfishdive.com
           </a>
           <p>
-            <Link className="hover:text-hoverColor" href="/CancelPolicy">
+            <Link className="hover:text-hoverColor" href="/cancel-policy">
               Cancellation Policy
             </Link>
           </p>
           <p>
-            <Link className="hover:text-hoverColor" href="/PrivacyPolicy">
+            <Link className="hover:text-hoverColor" href="/privacy-policy">
               Privacy Policy
             </Link>
           </p>
