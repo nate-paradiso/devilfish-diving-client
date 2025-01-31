@@ -92,17 +92,17 @@ export const Nav = () => {
               Home
             </Link>
             <Link
-              href="/DiveMap"
+              href="/dive-map"
               className={`${
-                router.pathname === "/DiveMap" ? "underline underline-offset-4" : ""
+                router.pathname === "/dive-map" ? "underline underline-offset-4" : ""
               } w-[67px] transition-colors duration-200 hover:text-hoverColor`}
             >
               Dive Map
             </Link>
             <Link
-              href="/Services"
+              href="/services"
               className={`${
-                router.pathname === "/Services" ? "underline underline-offset-4" : ""
+                router.pathname === "/services" ? "underline underline-offset-4" : ""
               } transition-colors duration-200 hover:text-hoverColor`}
             >
               Services
@@ -112,25 +112,25 @@ export const Nav = () => {
               {isSubMenuOpen && (
                 <div className="absolute top-full left-0 bg-white  shadow-lg rounded-md p-2 flex flex-col">
                   <Link
-                    href="/BoatPhotos"
+                    href="/boat-photos"
                     className={`${
-                      router.pathname === "/Photos" ? "underline underline-offset-4" : ""
+                      router.pathname === "/boat-photos" ? "underline underline-offset-4" : ""
                     } transition-colors duration-200 hover:text-hoverColor`}
                   >
                     Boat
                   </Link>
                   <Link
-                    href="/DivingPhotos"
+                    href="/diving-photos"
                     className={`${
-                      router.pathname === "/Photos" ? "underline underline-offset-4" : ""
+                      router.pathname === "/diving-photos" ? "underline underline-offset-4" : ""
                     } transition-colors duration-200 hover:text-hoverColor`}
                   >
                     Diving
                   </Link>
                   <Link
-                    href="/SightsPhotos"
+                    href="/sights-photos"
                     className={`${
-                      router.pathname === "/Photos" ? "underline underline-offset-4" : ""
+                      router.pathname === "/sight-photos" ? "underline underline-offset-4" : ""
                     } transition-colors duration-200 hover:text-hoverColor`}
                   >
                     Sights
@@ -139,41 +139,41 @@ export const Nav = () => {
               )}
             </div>{" "}
             <Link
-              href="/About"
+              href="/about"
               className={`${
-                router.pathname === "/About" ? "underline underline-offset-4" : ""
+                router.pathname === "/about" ? "underline underline-offset-4" : ""
               } transition-colors duration-200 hover:text-hoverColor`}
             >
               About
             </Link>
             <Link
-              href="/Faq"
+              href="/faq"
               className={`${
-                router.pathname === "/Faq" ? "underline underline-offset-4" : ""
+                router.pathname === "/faq" ? "underline underline-offset-4" : ""
               } transition-colors duration-200 hover:text-hoverColor`}
             >
               FAQ
             </Link>
             <Link
-              href="/Calendar"
+              href="/calendar"
               className={`${
-                router.pathname === "/Calendar" ? "underline underline-offset-4" : ""
+                router.pathname === "/calendar" ? "underline underline-offset-4" : ""
               } transition-colors duration-200 hover:text-hoverColor`}
             >
               Calendar
             </Link>
             <Link
-              href="/Friends"
+              href="/friends"
               className={`${
-                router.pathname === "/Friends" ? "underline underline-offset-4" : ""
+                router.pathname === "/friends" ? "underline underline-offset-4" : ""
               } transition-colors duration-200 hover:text-hoverColor`}
             >
               Friends
             </Link>
             <Link
-              href="/Contact"
+              href="/contact"
               className={`${
-                router.pathname === "/Contact" ? "underline underline-offset-4" : ""
+                router.pathname === "/contact" ? "underline underline-offset-4" : ""
               } transition-colors duration-200 hover:text-hoverColor`}
             >
               Contact
@@ -199,9 +199,9 @@ export const Nav = () => {
             </div>
             <div>
               <Link
-                href="/DiveMap"
+                href="/dive-map"
                 className={`${
-                  router.pathname === "/DiveMap" ? "underline underline-offset-4" : ""
+                  router.pathname === "/dive-map" ? "underline underline-offset-4" : ""
                 } transition-colors duration-200 hover:text-hoverColor`}
               >
                 Dive Map
@@ -209,9 +209,9 @@ export const Nav = () => {
             </div>
             <div>
               <Link
-                href="/Services"
+                href="/services"
                 className={`${
-                  router.pathname === "/Services" ? "underline underline-offset-4" : ""
+                  router.pathname === "/services" ? "underline underline-offset-4" : ""
                 } transition-colors duration-200 hover:text-hoverColor`}
               >
                 Services
@@ -225,9 +225,9 @@ export const Nav = () => {
                     <div className="mr-4"> ↓</div>
                     <div>
                       <Link
-                        href="/BoatPhotos"
+                        href="/boat-photos"
                         className={`${
-                          router.pathname === "/BoatPhotos"
+                          router.pathname === "/boat-photos"
                             ? "underline m-2 underline-offset-4 "
                             : ""
                         } transition-colors m-1 duration-200 hover:text-hoverColor`}
@@ -237,9 +237,9 @@ export const Nav = () => {
                     </div>
                     <div>
                       <Link
-                        href="/DivingPhotos"
+                        href="/diving-photos"
                         className={` ${
-                          router.pathname === "/DivingPhotos" ? "underline underline-offset-4" : ""
+                          router.pathname === "/diving-photos" ? "underline underline-offset-4" : ""
                         } transition-colors m-1 duration-200 hover:text-hoverColor`}
                       >
                         Diving
@@ -247,9 +247,9 @@ export const Nav = () => {
                     </div>
                     <div>
                       <Link
-                        href="/SightsPhotos"
+                        href="/sights-photos"
                         className={` ${
-                          router.pathname === "/SightsPhotos" ? "underline underline-offset-4" : ""
+                          router.pathname === "/sights-photos" ? "underline underline-offset-4" : ""
                         } transition-colors m-1  duration-200 hover:text-hoverColor`}
                       >
                         Sights
@@ -261,9 +261,9 @@ export const Nav = () => {
             </div>
             <div>
               <Link
-                href="/About"
+                href="/about"
                 className={`${
-                  router.pathname === "/About" ? "underline underline-offset-4" : ""
+                  router.pathname === "/about" ? "underline underline-offset-4" : ""
                 } transition-colors duration-200 hover:text-hoverColor`}
               >
                 About
@@ -271,9 +271,9 @@ export const Nav = () => {
             </div>
             <div>
               <Link
-                href="/Faq"
+                href="/faq"
                 className={`${
-                  router.pathname === "/Faq" ? "underline underline-offset-4" : ""
+                  router.pathname === "/faq" ? "underline underline-offset-4" : ""
                 } transition-colors duration-200 hover:text-hoverColor`}
               >
                 FAQ
@@ -281,9 +281,9 @@ export const Nav = () => {
             </div>
             <div>
               <Link
-                href="/Calendar"
+                href="/calendar"
                 className={`${
-                  router.pathname === "/Calendar" ? "underline underline-offset-4" : ""
+                  router.pathname === "/calendar" ? "underline underline-offset-4" : ""
                 } transition-colors duration-200 hover:text-hoverColor`}
               >
                 Calendar
@@ -291,9 +291,9 @@ export const Nav = () => {
             </div>
             <div>
               <Link
-                href="/Friends"
+                href="/friends"
                 className={`${
-                  router.pathname === "/Friends" ? "underline underline-offset-4" : ""
+                  router.pathname === "/friends" ? "underline underline-offset-4" : ""
                 } transition-colors duration-200 hover:text-hoverColor`}
               >
                 Friends
@@ -301,9 +301,9 @@ export const Nav = () => {
             </div>
             <div>
               <Link
-                href="/Contact"
+                href="/contact"
                 className={`${
-                  router.pathname === "/Contact" ? "underline underline-offset-4" : ""
+                  router.pathname === "/contact" ? "underline underline-offset-4" : ""
                 } transition-colors duration-200 hover:text-hoverColor`}
               >
                 Contact
