@@ -235,6 +235,11 @@ const MapComponent = () => {
     { name: "Wheeler", position: [47.5260778, -122.24347482] },
     { name: "Don Armeni Boat Launch", position: [47.5928, -122.38203] },
     { name: "Atlantic City Boat Launch", position: [47.5227802048354, -122.26314582769103] },
+    { name: "Magnuson Park Boat Launch", position: [47.67693572493897, -122.25001765191007] },
+    {
+      name: "Newport Shores Boat Launch",
+      position: [47.575024355970186, -122.18883747206701],
+    },
     { name: "520 Burned Hull #2", position: [47.64435, -122.27058333] },
     { name: "Atlantic City Scow", position: [47.5253072, -122.25207042] },
     { name: "Arrowhead Point Barge", position: [47.7373314, -122.26950711] },
@@ -336,6 +341,8 @@ const MapComponent = () => {
                 position={marker.position}
                 icon={
                   marker.name === "Don Armeni Boat Launch" ||
+                  marker.name === "Newport Shores Boat Launch" ||
+                  marker.name === "Magnuson Park Boat Launch" ||
                   marker.name === "Atlantic City Boat Launch"
                     ? customIcon2
                     : customIcon
