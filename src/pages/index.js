@@ -50,8 +50,8 @@ export default function Home() {
             className={`${
               hoveredDiv === "div1" ? "w-auto" : "w-full"
             } bg-cover bg-center flex justify-center items-center h-[250px] md:h-[500px] lg:h-[600px] bg-white bg-opacity-60 shadow-md  p-3 `}
-            onMouseEnter={() => handleMouseEnter("div2")}
-            onMouseLeave={handleMouseLeave}
+            // onMouseEnter={() => handleMouseEnter("div2")}
+            // onMouseLeave={handleMouseLeave}
             style={{
               backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url('https://res.cloudinary.com/hrdoqhgcp/image/upload/v1715708252/home-page/fkdpzulur1hqt7v3f6mj.jpg')`,
             }}
@@ -66,8 +66,8 @@ export default function Home() {
             className={`${
               hoveredDiv === "div2" ? "w-auto" : "w-full"
             } bg-cover bg-center flex justify-center items-center h-[250px] md:h-[500px] lg:h-[600px] bg-white bg-opacity-60 shadow-md  p-3 `}
-            onMouseEnter={() => handleMouseEnter("div1")}
-            onMouseLeave={handleMouseLeave}
+            // onMouseEnter={() => handleMouseEnter("div1")}
+            // onMouseLeave={handleMouseLeave}
             style={{
               backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url('https://res.cloudinary.com/hrdoqhgcp/image/upload/v1715721182/home-page/eh5pc2bco2fu18csvu9t.jpg')`,
             }}
@@ -84,8 +84,9 @@ export default function Home() {
             Discover the Puget Sound and Lake Washington!
           </h1>
         </div>
+        <Windy />
         <div
-          className="bg-cover bg-center w-full flex justify-center items-center bg-white bg-opacity-60 shadow-md  p-3 mr-4 ml-4 mb-4"
+          className="bg-cover bg-center w-full flex justify-center items-center bg-white bg-opacity-60 shadow-md  p-3 mr-4 ml-4 mb-4 mt-4"
           style={{
             backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url('/images/MA10-1.jpg')`,
           }}
@@ -97,7 +98,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <Windy className="mb-4" />
     </>
   );
 }
