@@ -28,7 +28,7 @@ const Footer = () => {
               Privacy Policy
             </Link>
           </p>
-          <p>Copyright Devilfish Diving LLC 2024</p>
+          <p>Copyright Devilfish Diving LLC 2025</p>
         </div>
         <div>
           <a href="https://www.instagram.com/devilfish__diving/" target="blank">

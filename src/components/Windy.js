@@ -21,14 +21,14 @@ const WindyMap = () => {
           key: "MVNRvpDJ87Ip8mjAKOoS7u62Fvjte8Vj", // Replace with your Windy API key
           lat: 47.6062, // Seattle latitude
           lon: -122.3321, // Seattle longitude
-          zoom: 8,
+          zoom: 10,
         };
 
         windyInit(options, windyAPI => {
           const { map } = windyAPI;
           L.popup()
             .setLatLng([47.6062, -122.3321])
-            .setContent("Let's check the wind before the dive!")
+            .setContent("Check the wind before the dive!")
             .openOn(map);
         });
       };
