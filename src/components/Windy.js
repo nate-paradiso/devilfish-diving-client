@@ -22,6 +22,7 @@ const WindyMap = () => {
           lat: 47.6062, // Seattle latitude
           lon: -122.3321, // Seattle longitude
           zoom: 10,
+          hourFormat: "12h",
         };
 
         windyInit(options, windyAPI => {
