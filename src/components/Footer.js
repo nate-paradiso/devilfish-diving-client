@@ -6,16 +6,25 @@ const Footer = () => {
     <footer className=" bg-sky-700 border-none ">
       <div className="flex justify-between items-center text-white text-sm md:p-6 p-4 lg:ml-32 lg:mr-32">
         <div className="">
-          <a className="hover:text-hoverColor" href="https://www.devilfishdive.com/">
+          <a
+            className="transition-colors duration-200 hover:text-hoverColor"
+            href="https://www.devilfishdive.com/"
+          >
             Devilfishdive.com
           </a>
           <p>
-            <Link className="hover:text-hoverColor" href="/cancel-policy">
+            <Link
+              className=" transition-colors duration-200 hover:text-hoverColor"
+              href="/cancel-policy"
+            >
               Cancellation Policy
             </Link>
           </p>
           <p>
-            <Link className="hover:text-hoverColor" href="/privacy-policy">
+            <Link
+              className=" transition-colors duration-200 hover:text-hoverColor"
+              href="/privacy-policy"
+            >
               Privacy Policy
             </Link>
           </p>

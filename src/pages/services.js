@@ -45,9 +45,9 @@ const Services = () => {
           <h2 className="font-bold text-xl"> 1 Tec Dive</h2>
           <div className="font-bold">$145 per diver +tax</div>{" "}
           <p className="italic pt-2">
-            Perform a single technical dive of up to two hours in the Puget Sound or Lake
-            Washington. The dive location will be determined in advance, and an SMB is required. A
-            detailed dive plan must be confirmed and communicated with the captain in advance.{" "}
+            Perform a single technical dive in the Puget Sound or Lake Washington. The dive location
+            will be determined in advance, and an SMB is required. A detailed dive plan must be
+            confirmed and communicated with the captain in advance.{" "}
           </p>
         </div>
         <br />

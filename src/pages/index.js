@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Hero from "../components/Hero";
 import Link from "next/link";
+import Windy from "../components/Windy";
 
 export default function Home() {
   const [hoveredDiv, setHoveredDiv] = useState(null);
@@ -96,6 +97,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <Windy className="mb-4" />
     </>
   );
 }
