@@ -86,7 +86,7 @@ export default function Home() {
         </div>
         <Windy />
         <div
-          className="bg-cover bg-center w-full flex justify-center items-center bg-white bg-opacity-60 shadow-md  p-3 mr-4 ml-4 mb-4 mt-4"
+          className="bg-cover bg-center w-full flex justify-center items-center bg-white bg-opacity-60 shadow-md  p-3 mr-4 ml-4 mt-4"
           style={{
             backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url('/images/MA10-1.jpg')`,
           }}
