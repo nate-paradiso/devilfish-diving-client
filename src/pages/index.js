@@ -85,15 +85,20 @@ export default function Home() {
           </h1>
         </div>
         <Windy />
+        <div>
+          <h1 className="bg-white bg-opacity-60 shadow-md text-center rounded-md p-3 border-[1px] m-8 md:text-3xl text-xl">
+            Your Next Dive Adventure Starts Here!
+          </h1>
+        </div>
         <div
-          className="bg-cover bg-center w-full flex justify-center items-center bg-white bg-opacity-60 shadow-md h-[300px] md:h-[400px] lg:h-[600px]  p-3 mr-4 ml-4 mt-4"
+          className="bg-cover bg-center w-full flex justify-center items-center bg-white bg-opacity-60 shadow-md h-[300px] md:h-[400px] lg:h-[600px]  p-3 mr-4 ml-4 m"
           style={{
             backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url('/images/boat-dive-flag.jpg')`,
           }}
         >
           <div>
             <h2 className="m-10 lg:m-16 md:text-2xl text-xl text-center text-#0E1111 border-[1px] bg-white bg-opacity-90 shadow-md rounded-md p-2">
-              Launching at Alki, Rainier Beach and Bellevue
+              Launching at Alki, Shilshole, Rainier Beach, Bellevue and Magnuson
             </h2>
           </div>
         </div>

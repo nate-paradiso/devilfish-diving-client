@@ -240,6 +240,10 @@ const MapComponent = () => {
       name: "Newport Shores Boat Launch",
       position: [47.575024355970186, -122.18883747206701],
     },
+    {
+      name: "Eddie Vine Boat Launch",
+      position: [47.68691938752875, -122.40328909825571],
+    },
     { name: "520 Burned Hull #2", position: [47.64435, -122.27058333] },
     { name: "Atlantic City Scow", position: [47.5253072, -122.25207042] },
     { name: "Arrowhead Point Barge", position: [47.7373314, -122.26950711] },
@@ -343,7 +347,8 @@ const MapComponent = () => {
                   marker.name === "Don Armeni Boat Launch" ||
                   marker.name === "Newport Shores Boat Launch" ||
                   marker.name === "Magnuson Park Boat Launch" ||
-                  marker.name === "Atlantic City Boat Launch"
+                  marker.name === "Atlantic City Boat Launch" ||
+                  marker.name === "Eddie Vine Boat Launch"
                     ? customIcon2
                     : customIcon
                 }
