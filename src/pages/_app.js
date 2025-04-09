@@ -7,7 +7,7 @@ import { Roboto } from "next/font/google";
 import "../styles/tailwind.css";
 
 const metadata = {
-  title: "Seattle Scuba Diving Boat Charters & Tours | Devilfish Diving",
+  title: "Devilfish Diving | Seattle Scuba Diving Boat Charters & Tours",
   description:
     "Scuba diving boat charters in Seattle, Washington with Devilfish Diving. Small groups, expert guides, custom boat, and unforgettable dives in Puget Sound & Lake Washington",
 };
@@ -69,7 +69,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
-        <link rel="icon" href="/octocon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
       </Head>
       <main className={`${roboto.variable} font-sans font-normal m-auto`}>
         <Header />
