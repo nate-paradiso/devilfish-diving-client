@@ -7,8 +7,9 @@ import { Roboto } from "next/font/google";
 import "../styles/tailwind.css";
 
 const metadata = {
-  title: "Devilfish Diving LLC",
-  description: "Devilfish Diving LLC is a scuba diving charter based in Seattle, Washington.",
+  title: "Seattle Scuba Diving Boat Charters & Tours | Devilfish Diving",
+  description:
+    "Scuba diving boat charters in Seattle, Washington with Devilfish Diving. Small groups, expert guides, custom boat, and unforgettable dives in Puget Sound & Lake Washington",
 };
 
 const roboto = Roboto({
