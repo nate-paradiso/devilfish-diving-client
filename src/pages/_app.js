@@ -9,7 +9,7 @@ import "../styles/tailwind.css";
 const metadata = {
   title: "Devilfish Diving | Seattle Scuba Diving Boat Charters & Tours",
   description:
-    "Scuba diving boat charters in Seattle, Washington with Devilfish Diving. Small groups, expert guides, custom boat, and unforgettable dives in Puget Sound & Lake Washington",
+    "Scuba diving boat charters in Seattle, Washington with Devilfish Diving. Small groups, expert guides, custom boat, and unforgettable dives in Puget Sound & Lake Washington. The best diving in the Pacific Northwest.",
 };
 
 const roboto = Roboto({
