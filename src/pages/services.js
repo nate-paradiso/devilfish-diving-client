@@ -29,7 +29,7 @@ const Services = () => {
         </div>
         <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
           <h2 className="font-bold text-xl"> Two-tank Rec Dive</h2>
-          <div className="font-bold">$145 per diver +tax</div>{" "}
+          <div className="font-bold">$150 per diver +tax</div>{" "}
           <p className="italic pt-2">
             Enjoy an adventure exploring the hidden gems of the Puget Sound and the wrecks of Lake
             Washington. Discover an underwater world teeming with vibrant marine life, accessible
@@ -43,7 +43,7 @@ const Services = () => {
         <br />
         <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px] ">
           <h2 className="font-bold text-xl"> 1 Tec Dive</h2>
-          <div className="font-bold">$145 per diver +tax</div>{" "}
+          <div className="font-bold">$165 per diver +tax</div>{" "}
           <p className="italic pt-2">
             Perform a single technical dive in the Puget Sound or Lake Washington. The dive location
             will be determined in advance, and an SMB is required. A detailed dive plan must be
