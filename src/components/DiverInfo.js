@@ -99,7 +99,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     emergencyContactName: "",
     emergencyContactPhone: "",
     divingDate: "",
-    message: "",
+    // message: "",
     electronicSignature: "",
     electronicParentSignature: "",
     electronicSignatureDate: "",
@@ -315,15 +315,15 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
       submitButton.disabled = false; // Re-enable the submit button
       return;
     }
-    if (!validateMessage(data.message)) {
-      setValidationErrors(prevErrors => ({
-        ...prevErrors,
-        message: "Please enter a message.",
-      }));
-      form.removeAttribute("data-submitting"); // Release the form from submitting state
-      submitButton.disabled = false; // Re-enable the submit button
-      return;
-    }
+    // if (!validateMessage(data.message)) {
+    //   setValidationErrors(prevErrors => ({
+    //     ...prevErrors,
+    //     message: "Please enter a message.",
+    //   }));
+    //   form.removeAttribute("data-submitting"); // Release the form from submitting state
+    //   submitButton.disabled = false; // Re-enable the submit button
+    //   return;
+    // }
 
     if (!validateElectronicSignature(data.electronicSignature)) {
       setValidationErrors(prevErrors => ({
@@ -526,7 +526,27 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     }
   };
 
-  // Define function to update Calendar from 1 Dive Seat to Dive Booked
+  // Define function to update Calendar from Tec to 1 Tec Dive Seat
+  const upDateCalendar1TecSeat = async formData => {
+    try {
+      const response = await axios.patch(`${serverUrl}/api/update-calendar-1tec-seat`, {
+        formData,
+      });
+      console.log(
+        "Diving date sent to the backend to update calendar to (1 Tec Dive Seat)",
+        response.data,
+      );
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error sending diving date to backend to update calendar to (1 Tec Dive Seat):",
+        error,
+      );
+      throw error;
+    }
+  };
+
+  // Define function to update Calendar from 1 Dive Seat and 1 Tec Dive Seat to Dive Booked
   const upDateCalendarBooked = async formData => {
     try {
       const response = await axios.patch(`${serverUrl}/api/update-calendar-dive-booked`, {
@@ -581,6 +601,25 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     } catch (error) {
       console.error(
         "Error sending diving date to backend to update calendar to (Entire Charter to Dive Booked):",
+        error,
+      );
+      throw error;
+    }
+  };
+  // Define function to update Calendar from Entire Charter to Dive Booked
+  const upDateCalendarFullTecCharter = async formData => {
+    try {
+      const response = await axios.patch(`${serverUrl}/api/update-calendar-full-tec-charter`, {
+        formData,
+      });
+      console.log(
+        "Diving date sent to the backend to update calendar to (Tec Entire Charter to Dive Booked)",
+        response.data,
+      );
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error sending diving date to backend to update calendar to (Tec Entire Charter to Dive Booked):",
         error,
       );
       throw error;
@@ -673,7 +712,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         handleGoogleSheetSubmit();
 
         // Update Calendar for various event titles
-        if (eventTitle === "1 Dive Seat") {
+        if (eventTitle === "1 Dive Seat" || eventTitle === "1 Tec Dive Seat") {
           upDateCalendarBooked(formData);
           console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
         } else if (eventTitle === "Entire Charter") {
@@ -687,6 +726,12 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
           console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
         } else if (eventTitle === "Dive") {
           upDateCalendar1Seat(formData);
+          console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
+        } else if (eventTitle === "Tec") {
+          upDateCalendar1TecSeat(formData);
+          console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
+        } else if (eventTitle === "Tec Entire Charter") {
+          upDateCalendarFullTecCharter(formData);
           console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
         } else if (eventTitle === "Class - 3 Divers") {
           upDateCalendarClass(formData);
@@ -1129,7 +1174,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
 
                 <div className="flex-col flex">
                   <label htmlFor="message" className="mt-2 flex flex-row">
-                    Send a Message: <span className="text-red-500">*</span>
+                    {/* Send a Message: <span className="text-red-500">*</span> */}
                   </label>
                   <textarea
                     id="message"

@@ -3,14 +3,14 @@ export const cartItems = [
     id: "Dive",
     name: "Dive",
     quantity: 1,
-    price: 145, // Price for Dive
+    price: 150, // Price for Dive
     description: "1st Diver", // Add description here
   },
   {
     id: "1 Dive Seat",
     name: "1 Dive Seat",
     quantity: 1,
-    price: 145, // Price for Dive
+    price: 150, // Price for Dive
     description: "2nd Diver", // Add description here
   },
   {
@@ -31,14 +31,14 @@ export const cartItems = [
     id: "Entire Charter",
     name: "Entire Charter",
     quantity: 1,
-    price: 290, // Price Entire Charter
+    price: 300, // Price Entire Charter
     description: "Entire Charter", // Add description here
   },
   {
     id: "Entire Charter - 3 Divers",
     name: "Entire Charter - 3 Divers",
     quantity: 1,
-    price: 435, // Price Entire Charter
+    price: 450, // Price Entire Charter
     description: "Entire Charter - 3 Divers", // Add description here
   },
   {
@@ -47,5 +47,26 @@ export const cartItems = [
     quantity: 1,
     price: 495, // Price Entire Charter
     description: "Class - 3 Divers", // Add description here
+  },
+  {
+    id: "Tec",
+    name: "Tec",
+    quantity: 1,
+    price: 165, // Price Entire Charter
+    description: "1 Tec Dive", // Add description here
+  },
+  {
+    id: "1 Tec Dive Seat",
+    name: "1 Tec Dive Seat",
+    quantity: 1,
+    price: 165, // Price Entire Charter
+    description: "1 Tec Dive", // Add description here
+  },
+  {
+    id: "Tec Entire Charter",
+    name: "Tec Entire Charter",
+    quantity: 1,
+    price: 330, // Price Entire Charter
+    description: "Tec Entire Charter", // Add description here
   },
 ];

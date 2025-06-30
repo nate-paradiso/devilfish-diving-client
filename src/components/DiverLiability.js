@@ -73,7 +73,7 @@ const DiverLiability = () => {
     emergencyContactName: "",
     emergencyContactPhone: "",
     divingDate: "",
-    message: "",
+    // message: "",
     electronicSignature: "",
     electronicParentSignature: "",
     electronicSignatureDate: "",
@@ -281,15 +281,15 @@ const DiverLiability = () => {
         submitButton.disabled = false; // Re-enable the submit button
         return;
       }
-      if (!validateMessage(data.message)) {
-        setValidationErrors(prevErrors => ({
-          ...prevErrors,
-          message: "Please enter a message.",
-        }));
-        form.removeAttribute("data-submitting"); // Release the form from submitting state
-        submitButton.disabled = false; // Re-enable the submit button
-        return;
-      }
+      // if (!validateMessage(data.message)) {
+      //   setValidationErrors(prevErrors => ({
+      //     ...prevErrors,
+      //     message: "Please enter a message.",
+      //   }));
+      //   form.removeAttribute("data-submitting"); // Release the form from submitting state
+      //   submitButton.disabled = false; // Re-enable the submit button
+      //   return;
+      // }
       if (!validateElectronicSignature(data.electronicSignature)) {
         setValidationErrors(prevErrors => ({
           ...prevErrors,
@@ -860,7 +860,8 @@ const DiverLiability = () => {
 
                 <div className="flex-col flex">
                   <label htmlFor="message" className="mt-2 flex flex-row">
-                    Send a Message: <span className="text-red-500">*</span>
+                    Send a Message:
+                    {/* <span className="text-red-500">*</span> */}
                   </label>
                   <textarea
                     id="message"
@@ -871,7 +872,7 @@ const DiverLiability = () => {
                     value={formData.message}
                     onChange={handleInputChange}
                   />
-                  <div className="md:w-64">
+                  {/* <div className="md:w-64">
                     {validationErrors.message && (
                       <span
                         ref={el => (errorRefs.current.message = el)}
@@ -880,7 +881,7 @@ const DiverLiability = () => {
                         {validationErrors.message}
                       </span>
                     )}
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

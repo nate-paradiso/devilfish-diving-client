@@ -38,6 +38,9 @@ const CalendarComponent = () => {
           "3rd Diver",
           "3rd Booked",
           "Entire Charter",
+          "Tec",
+          "1 Tec Dive Seat",
+          "Tec Entire Charter",
           "Entire Charter - 3 Divers",
           "Class - 3 Divers",
           "Holding",
@@ -89,6 +92,9 @@ const CalendarComponent = () => {
         clickedEvent.title !== "1 Dive Seat" &&
         clickedEvent.title !== "Cruise" &&
         clickedEvent.title !== "3rd Diver" &&
+        clickedEvent.title !== "Tec" &&
+        clickedEvent.title !== "1 Tec Dive Seat" &&
+        clickedEvent.title !== "Tec Entire Charter" &&
         clickedEvent.title !== "Entire Charter - 3 Divers" &&
         clickedEvent.title !== "Class - 3 Divers" &&
         clickedEvent.title !== "Entire Charter")
@@ -101,6 +107,9 @@ const CalendarComponent = () => {
       clickedEvent.title === "Dive" ||
       clickedEvent.title === "1 Dive Seat" ||
       clickedEvent.title === "Entire Charter" ||
+      clickedEvent.title === "Tec" ||
+      clickedEvent.title === "1 Tec Dive Seat" ||
+      clickedEvent.title === "Tec Entire Charter" ||
       clickedEvent.title === "Entire Charter - 3 Divers" ||
       clickedEvent.title === "Class - 3 Divers" ||
       clickedEvent.title === "3rd Diver"
@@ -143,6 +152,12 @@ const CalendarComponent = () => {
     } else if (arg.event.title === "Dive Booked") {
       eventClasses = "bg-red-500"; // Red background for "Dive Booked" events
     } else if (arg.event.title === "1 Dive Seat") {
+      eventClasses = "bg-blue-500"; // Green background for "Dive" events
+    } else if (arg.event.title === "Tec") {
+      eventClasses = "bg-blue-500"; // Green background for "Dive" events
+    } else if (arg.event.title === "1 Tec Dive Seat") {
+      eventClasses = "bg-blue-500"; // Green background for "Dive" events
+    } else if (arg.event.title === "Tec Entire Charter") {
       eventClasses = "bg-blue-500"; // Green background for "Dive" events
     } else if (arg.event.title === "Cruise") {
       eventClasses = "bg-green-500"; // Green background for "Cruise" events
@@ -262,7 +277,7 @@ const CalendarComponent = () => {
                       </h3>{" "}
                       {(eventTitle === "Dive" || eventTitle === "1 Dive Seat") && (
                         <h3 className="mt-1">
-                          Price: <span className="font-bold">$145 per diver +tax.</span>
+                          Price: <span className="font-bold">$150 per diver +tax.</span>
                         </h3>
                       )}
                       {eventTitle === "3rd Diver" && (
@@ -270,14 +285,29 @@ const CalendarComponent = () => {
                           Price: <span className="font-bold">$100 per diver +tax.</span>
                         </h3>
                       )}
+                      {eventTitle === "Tec" && (
+                        <h3 className="mt-1">
+                          Price: <span className="font-bold">$165 per diver +tax.</span>
+                        </h3>
+                      )}
+                      {eventTitle === "1 Tec Dive Seat" && (
+                        <h3 className="mt-1">
+                          Price: <span className="font-bold">$165 per diver +tax.</span>
+                        </h3>
+                      )}
+                      {eventTitle === "Tec Entire Charter" && (
+                        <h3 className="mt-1">
+                          Price: <span className="font-bold">$330 +tax.</span>
+                        </h3>
+                      )}
                       {eventTitle === "Entire Charter" && (
                         <h3 className="mt-1">
-                          Price: <span className="font-bold">$290 +tax.</span>
+                          Price: <span className="font-bold">$300 +tax.</span>
                         </h3>
                       )}
                       {eventTitle === "Entire Charter - 3 Divers" && (
                         <h3 className="mt-1">
-                          Price: <span className="font-bold">$435 +tax.</span>
+                          Price: <span className="font-bold">$450 +tax.</span>
                         </h3>
                       )}
                       {eventTitle === "Class - 3 Divers" && (
@@ -305,6 +335,9 @@ const CalendarComponent = () => {
                       eventTitle === "3rd Diver" ||
                       eventTitle === "Entire Charter - 3 Divers" ||
                       eventTitle === "Class - 3 Divers" ||
+                      eventTitle === "Tec" ||
+                      eventTitle === "1 Tec Dive Seat" ||
+                      eventTitle === "Tec Entire Charter" ||
                       eventTitle === "Entire Charter") && (
                       <div className="flex max-w-[1200px] mx-auto ">
                         <DiverInfo
