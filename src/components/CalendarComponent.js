@@ -204,15 +204,28 @@ const CalendarComponent = () => {
           ) : (
             <div className="m-4 mt-0 flex justify-center flex-col ">
               <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px]">
-                <h3 className="text-xl mb-1 text-center">Diving</h3>
+                <h3 className="text-xl mb-1 text-center">Recreational Diving</h3>
 
                 <p>
                   Choose between <span className="font-bold">Dive</span> or{" "}
-                  <span className="font-bold"> 1 Dive Seat </span> events for an underwater
-                  adventure. <span className="font-bold">Dive</span> events offer two available
-                  seats, while <span className="font-bold"> 1 Dive Seat </span> events have only
-                  one. For safety and enjoyment, there is a minimum and maximum of two divers per
-                  outing—no solo diving allowed.
+                  <span className="font-bold"> 1 Dive Seat </span> events for recreational dives.{" "}
+                  <span className="font-bold">Dive</span> events offer two available seats, while{" "}
+                  <span className="font-bold"> 1 Dive Seat </span> events have only one. For safety
+                  and enjoyment, there is a minimum and maximum of two divers per outing—no solo
+                  diving allowed.
+                </p>
+              </div>
+              <br />
+              <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px]">
+                <h3 className="text-xl mb-1 text-center">Tec Diving</h3>
+
+                <p>
+                  Choose between <span className="font-bold">Tec</span> or{" "}
+                  <span className="font-bold"> 1 Tec Dive Seat </span> events for tec dives.{" "}
+                  <span className="font-bold">Tec</span> events offer two available seats, while{" "}
+                  <span className="font-bold"> 1 Dive Seat </span> events have only one. For safety
+                  and enjoyment, there is a minimum and maximum of two divers per outing—no solo
+                  diving allowed.
                 </p>
               </div>
               <br />
@@ -383,7 +396,7 @@ const CalendarComponent = () => {
             >
               Don Armeni Boat Ramp
             </a>{" "} */}
-            Boat Ramp at <span className="font-bold">7:30 AM </span>
+            Boat Ramp on{" "}
             <span className="font-bold ">
               {getDayName(selectedDate)} - {selectedDateStr}
             </span>
