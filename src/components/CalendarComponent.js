@@ -27,18 +27,18 @@ const CalendarComponent = () => {
       const response = await axios.get(`${serverUrl}/api/google-calendar-events`); // Endpoint on your backend
       const data = response.data;
 
-      // Filter events to include only those with titles "Dive Booked", "Dive", "1 Dive Seat", or "Cruise" or "Cruise Booked"
+      // Filter events to include only those with titles "Dive Booked", "Rec Dive", "1 Rec Dive Seat", or "Cruise" or "Cruise Booked"
       const filteredEvents = data.filter(event =>
         [
           "Dive Booked",
-          "Dive",
-          "1 Dive Seat",
+          "Rec Dive",
+          "1 Rec Dive Seat",
           "Cruise",
           "Cruise Booked",
           "3rd Diver",
           "3rd Booked",
           "Entire Charter",
-          "Tec",
+          "Tec Dive",
           "1 Tec Dive Seat",
           "Tec Entire Charter",
           "Entire Charter - 3 Divers",
@@ -88,11 +88,11 @@ const CalendarComponent = () => {
       (clickedEvent.title === "Dive Booked" &&
         clickedEvent.title === "Cruise Booked" &&
         clickedEvent.title === "Holding") ||
-      (clickedEvent.title !== "Dive" &&
-        clickedEvent.title !== "1 Dive Seat" &&
+      (clickedEvent.title !== "Rec Dive" &&
+        clickedEvent.title !== "1 Rec Dive Seat" &&
         clickedEvent.title !== "Cruise" &&
         clickedEvent.title !== "3rd Diver" &&
-        clickedEvent.title !== "Tec" &&
+        clickedEvent.title !== "Tec Dive" &&
         clickedEvent.title !== "1 Tec Dive Seat" &&
         clickedEvent.title !== "Tec Entire Charter" &&
         clickedEvent.title !== "Entire Charter - 3 Divers" &&
@@ -104,10 +104,10 @@ const CalendarComponent = () => {
       return; // Stop further execution
     }
     if (
-      clickedEvent.title === "Dive" ||
-      clickedEvent.title === "1 Dive Seat" ||
+      clickedEvent.title === "Rec Dive" ||
+      clickedEvent.title === "1 Rec Dive Seat" ||
       clickedEvent.title === "Entire Charter" ||
-      clickedEvent.title === "Tec" ||
+      clickedEvent.title === "Tec Dive" ||
       clickedEvent.title === "1 Tec Dive Seat" ||
       clickedEvent.title === "Tec Entire Charter" ||
       clickedEvent.title === "Entire Charter - 3 Divers" ||
@@ -147,13 +147,13 @@ const CalendarComponent = () => {
     let eventClasses = ""; // Initialize event classes
 
     // Apply Tailwind classes based on event title
-    if (arg.event.title === "Dive") {
+    if (arg.event.title === "Rec Dive") {
       eventClasses = "bg-blue-500"; // Blue background for "Dive" events
     } else if (arg.event.title === "Dive Booked") {
       eventClasses = "bg-red-500"; // Red background for "Dive Booked" events
-    } else if (arg.event.title === "1 Dive Seat") {
+    } else if (arg.event.title === "1 Rec Dive Seat") {
       eventClasses = "bg-blue-500"; // Green background for "Dive" events
-    } else if (arg.event.title === "Tec") {
+    } else if (arg.event.title === "Tec Dive") {
       eventClasses = "bg-blue-500"; // Green background for "Dive" events
     } else if (arg.event.title === "1 Tec Dive Seat") {
       eventClasses = "bg-blue-500"; // Green background for "Dive" events
@@ -204,14 +204,27 @@ const CalendarComponent = () => {
           ) : (
             <div className="m-4 mt-0 flex justify-center flex-col ">
               <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px]">
-                <h3 className="text-xl mb-1 text-center">Diving</h3>
+                <h3 className="text-xl mb-1 text-center">Recreational Diving</h3>
 
                 <p>
-                  Choose between <span className="font-bold">Dive</span> or{" "}
-                  <span className="font-bold"> 1 Dive Seat </span> events for an underwater
-                  adventure. <span className="font-bold">Dive</span> events offer two available
-                  seats, while <span className="font-bold"> 1 Dive Seat </span> events have only
+                  Choose between <span className="font-bold">Rec Dive</span> or{" "}
+                  <span className="font-bold"> 1 Rec Dive Seat </span> events for recreational
+                  dives. <span className="font-bold">Rec Dive</span> events offer two available
+                  seats, while <span className="font-bold"> 1 Rec Dive Seat </span> events have only
                   one. For safety and enjoyment, there is a minimum and maximum of two divers per
+                  outing—no solo diving allowed.
+                </p>
+              </div>
+              <br />
+              <div className=" bg-white bg-opacity-60 shadow-lg rounded-md p-4 border-[1px]">
+                <h3 className="text-xl mb-1 text-center">Tec Diving</h3>
+
+                <p>
+                  Choose between <span className="font-bold">Tec Dive</span> or{" "}
+                  <span className="font-bold"> 1 Tec Dive Seat </span> events for tec dives.{" "}
+                  <span className="font-bold">Tec Dive</span> events offer two available seats,
+                  while <span className="font-bold"> 1 Tec Dive Seat </span> events have only one.
+                  For safety and enjoyment, there is a minimum and maximum of two divers per
                   outing—no solo diving allowed.
                 </p>
               </div>
@@ -275,7 +288,7 @@ const CalendarComponent = () => {
                           {getDayName(selectedDate)} - {selectedDateStr}
                         </span>
                       </h3>{" "}
-                      {(eventTitle === "Dive" || eventTitle === "1 Dive Seat") && (
+                      {(eventTitle === "Rec Dive" || eventTitle === "1 Rec Dive Seat") && (
                         <h3 className="mt-1">
                           Price: <span className="font-bold">$150 per diver +tax.</span>
                         </h3>
@@ -285,7 +298,7 @@ const CalendarComponent = () => {
                           Price: <span className="font-bold">$100 per diver +tax.</span>
                         </h3>
                       )}
-                      {eventTitle === "Tec" && (
+                      {eventTitle === "Tec Dive" && (
                         <h3 className="mt-1">
                           Price: <span className="font-bold">$165 per diver +tax.</span>
                         </h3>
@@ -330,12 +343,12 @@ const CalendarComponent = () => {
                         </button>
                       </div>
                     </div>
-                    {(eventTitle === "Dive" ||
-                      eventTitle === "1 Dive Seat" ||
+                    {(eventTitle === "Rec Dive" ||
+                      eventTitle === "1 Rec Dive Seat" ||
                       eventTitle === "3rd Diver" ||
                       eventTitle === "Entire Charter - 3 Divers" ||
                       eventTitle === "Class - 3 Divers" ||
-                      eventTitle === "Tec" ||
+                      eventTitle === "Tec Dive" ||
                       eventTitle === "1 Tec Dive Seat" ||
                       eventTitle === "Tec Entire Charter" ||
                       eventTitle === "Entire Charter") && (
@@ -383,7 +396,7 @@ const CalendarComponent = () => {
             >
               Don Armeni Boat Ramp
             </a>{" "} */}
-            Boat Ramp at <span className="font-bold">7:30 AM </span>
+            Boat Ramp on{" "}
             <span className="font-bold ">
               {getDayName(selectedDate)} - {selectedDateStr}
             </span>

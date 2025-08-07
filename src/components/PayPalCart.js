@@ -1,14 +1,14 @@
 export const cartItems = [
   {
-    id: "Dive",
-    name: "Dive",
+    id: "Rec Dive",
+    name: "Rec Dive",
     quantity: 1,
     price: 150, // Price for Dive
     description: "1st Diver", // Add description here
   },
   {
-    id: "1 Dive Seat",
-    name: "1 Dive Seat",
+    id: "1 Rec Dive Seat",
+    name: "1 Rec Dive Seat",
     quantity: 1,
     price: 150, // Price for Dive
     description: "2nd Diver", // Add description here
@@ -49,8 +49,8 @@ export const cartItems = [
     description: "Class - 3 Divers", // Add description here
   },
   {
-    id: "Tec",
-    name: "Tec",
+    id: "Tec Dive",
+    name: "Tec Dive",
     quantity: 1,
     price: 165, // Price Entire Charter
     description: "1 Tec Dive", // Add description here
