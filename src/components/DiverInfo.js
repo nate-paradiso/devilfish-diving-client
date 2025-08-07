@@ -506,27 +506,27 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     }
   }, [isPayPalSuccessful]);
 
-  // Define function to update Calendar from Dive to 1 Dive Seat
+  // Define function to update Calendar from Rec Dive to 1 Rec Dive Seat
   const upDateCalendar1Seat = async formData => {
     try {
       const response = await axios.patch(`${serverUrl}/api/update-calendar-1seat`, {
         formData,
       });
       console.log(
-        "Diving date sent to the backend to update calendar to (1 Dive Seat)",
+        "Diving date sent to the backend to update calendar to (1 Rec Dive Seat)",
         response.data,
       );
       return response.data;
     } catch (error) {
       console.error(
-        "Error sending diving date to backend to update calendar to (1 Dive Seat):",
+        "Error sending diving date to backend to update calendar to (1 Rec Dive Seat):",
         error,
       );
       throw error;
     }
   };
 
-  // Define function to update Calendar from Tec to 1 Tec Dive Seat
+  // Define function to update Calendar from Tec Dive to 1 Tec Dive Seat
   const upDateCalendar1TecSeat = async formData => {
     try {
       const response = await axios.patch(`${serverUrl}/api/update-calendar-1tec-seat`, {
@@ -546,7 +546,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
     }
   };
 
-  // Define function to update Calendar from 1 Dive Seat and 1 Tec Dive Seat to Dive Booked
+  // Define function to update Calendar from 1 Rec Dive Seat and 1 Tec Dive Seat to Dive Booked
   const upDateCalendarBooked = async formData => {
     try {
       const response = await axios.patch(`${serverUrl}/api/update-calendar-dive-booked`, {
@@ -712,7 +712,7 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         handleGoogleSheetSubmit();
 
         // Update Calendar for various event titles
-        if (eventTitle === "1 Dive Seat" || eventTitle === "1 Tec Dive Seat") {
+        if (eventTitle === "1 Rec Dive Seat" || eventTitle === "1 Tec Dive Seat") {
           upDateCalendarBooked(formData);
           console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
         } else if (eventTitle === "Entire Charter") {
@@ -724,10 +724,10 @@ const DiverInfo = ({ selectedDate, setIsSubmitted, eventTitle }) => {
         } else if (eventTitle === "3rd Diver") {
           upDateCalendar3rdBooked(formData);
           console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
-        } else if (eventTitle === "Dive") {
+        } else if (eventTitle === "Rec Dive") {
           upDateCalendar1Seat(formData);
           console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
-        } else if (eventTitle === "Tec") {
+        } else if (eventTitle === "Tec Dive") {
           upDateCalendar1TecSeat(formData);
           console.log("Event Title is", eventTitle); // Make sure this logs to confirm flow reaches here
         } else if (eventTitle === "Tec Entire Charter") {
