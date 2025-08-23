@@ -12,6 +12,11 @@ import {
   ScaleControl,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+// Default Leaflet marker fix (since React-Leaflet doesn't auto-load icons)
+import iconUrl from "leaflet/dist/images/marker-icon.png";
+import iconShadow from "leaflet/dist/images/marker-shadow.png";
+import { useMap } from "react-leaflet";
+
 // import "~react-leaflet-markercluster/dist/styles.min.css";
 // import Script from "next/script";
 import { Icon } from "leaflet"; // Importing L from Leaflet
@@ -33,6 +38,12 @@ const { BaseLayer } = LayersControl;
 const MapComponent = () => {
   const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
   const componentRef = useRef(null); // Create a ref for the component
+  const [heading, setHeading] = useState(0);
+  const [tracking, setTracking] = useState(false);
+  const [position, setPosition] = useState(null);
+  const watchIdRef = useRef(null);
+  const [accuracy, setAccuracy] = useState(null);
+  const [speed, setSpeed] = useState(null);
 
   // Bathymetry images
   const loadPNGImages = () => {
@@ -286,6 +297,14 @@ const MapComponent = () => {
   // Define your second custom icon
   const customIcon2 = new Icon({ iconUrl: "/images/boat-launch.svg", iconSize: [37, 50] });
 
+  // Nav Icon
+  const arrowIcon = new Icon({
+    iconUrl: "/images/arrow-icon.png", // path in public folder
+    iconSize: [40, 40], // adjust size to your image
+    iconAnchor: [20, 20], // center the boat on location
+    popupAnchor: [0, -20], // popup appears above the boat
+  });
+
   // State to manage which component to render under the map
   const [selectedComponent, setSelectedComponent] = useState(null);
 
@@ -305,7 +324,73 @@ const MapComponent = () => {
 
     return null;
   };
+  const DefaultIcon = L.icon({
+    iconUrl,
+    shadowUrl: iconShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+  });
+  L.Marker.prototype.options.icon = DefaultIcon;
 
+  // Component to move map when position changes
+  function RecenterMap({ position }) {
+    const map = useMap();
+    useEffect(() => {
+      if (position) {
+        map.setView(position, map.getZoom());
+      }
+    }, [position, map]);
+    return null;
+  }
+
+  // Function to follow user
+  // Refactored logic using useEffect
+  useEffect(() => {
+    if (tracking) {
+      if (navigator.geolocation) {
+        // Start watching the position
+        const id = navigator.geolocation.watchPosition(
+          pos => {
+            const { latitude, longitude, heading, accuracy, speed } = pos.coords; // Destructure accuracy and speed
+            setPosition([latitude, longitude]);
+            setHeading(heading || 0);
+            setAccuracy(accuracy); // Update accuracy state
+            setSpeed(speed); // Update speed state
+          },
+          err => {
+            console.error(err);
+            // Optional: Turn off tracking on error
+            setTracking(false);
+          },
+          { enableHighAccuracy: true },
+        );
+        // Store the ID in a ref
+        watchIdRef.current = id;
+      } else {
+        alert("Geolocation not supported by your browser.");
+        setTracking(false); // Make sure to turn off tracking if not supported
+      }
+    } else {
+      // Clean up the watcher when tracking is turned off
+      if (watchIdRef.current) {
+        navigator.geolocation.clearWatch(watchIdRef.current);
+        watchIdRef.current = null; // Clear the ref
+        setPosition(null); // Clear the marker from the map
+      }
+    }
+
+    // Cleanup function for useEffect
+    return () => {
+      if (watchIdRef.current) {
+        navigator.geolocation.clearWatch(watchIdRef.current);
+      }
+    };
+  }, [tracking]); // The effect runs whenever the 'tracking' state changes
+
+  // The toggle function just flips the state
+  const toggleTracking = () => {
+    setTracking(prevTracking => !prevTracking);
+  };
   return (
     <div className="mb-2 flex flex-col mt-4 ">
       <div className=" flex max-w-[1000px] justify-center items-center  m-auto flex-col text-center ">
@@ -328,76 +413,110 @@ const MapComponent = () => {
         </p>
       </div>
       <div className="flex justify-center flex-col z-1 ">
-        {/* <Script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></Script>
-      <Script src="https://unpkg.com/Leaflet.TileLayer.MBTiles@1.0.0/Leaflet.TileLayer.MBTiles.js"></Script> */}
-        <MapContainer
-          className="h-[550px] w-full md:h-[500px] shadow-md mb-2 "
-          center={[47.69532618372522, -122.39365052155932]}
-          zoom={10}
-        >
-          <LayersControl position="topright">
-            <ScaleControl position="bottomleft" imperial={true} />
-            <MapEvents />
-            {loadPNGImages()}
-            {markers.map((marker, index) => (
-              <Marker
-                key={index}
-                position={marker.position}
-                icon={
-                  marker.name === "Don Armeni Boat Launch" ||
-                  marker.name === "Newport Shores Boat Launch" ||
-                  marker.name === "Magnuson Park Boat Launch" ||
-                  marker.name === "Atlantic City Boat Launch" ||
-                  marker.name === "Eddie Vine Boat Launch"
-                    ? customIcon2
-                    : customIcon
-                }
-              >
-                <Popup>
-                  <button
-                    className="text-blue-700 hover:text-blue-900"
-                    onClick={() => handlePopupLinkClick(marker.name)}
-                  >
-                    {marker.name}
-                  </button>
-                </Popup>{" "}
-              </Marker>
-            ))}{" "}
-            <BaseLayer name="Esri World Imagery">
-              <TileLayer
-                url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-                attribution="Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
-              />
-            </BaseLayer>{" "}
-            <BaseLayer name="Nautical Chart - Depth in Meters">
-              <TileLayer
-                url="https://www.marinetraffic.com/TMS/1.0.0/TX97/{z}/{x}/{y}.png?v=3"
-                minZoom={0}
-                maxZoom={20}
-                attribution="&copy; Marine Traffic"
-              />
-            </BaseLayer>
-            <BaseLayer name="Esri Ocean Basemap">
-              <TileLayer
-                attribution="Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri"
-                url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}"
-                maxZoom={16}
-              />
-            </BaseLayer>
-            <BaseLayer checked name="OpenStreetMap">
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-            </BaseLayer>
-          </LayersControl>
-        </MapContainer>
+        {/* The new parent div with relative positioning */}
+        <div className="h-[550px] w-full md:h-[500px] shadow-md mb-2 relative">
+          <MapContainer
+            className="h-full w-full"
+            center={[47.69532618372522, -122.39365052155932]}
+            zoom={10}
+          >
+            <LayersControl position="topright">
+              <ScaleControl position="bottomleft" imperial={true} />
+              <MapEvents />
+              {loadPNGImages()}
+              {markers.map((marker, index) => (
+                <Marker
+                  key={index}
+                  position={marker.position}
+                  icon={
+                    marker.name === "Don Armeni Boat Launch" ||
+                    marker.name === "Newport Shores Boat Launch" ||
+                    marker.name === "Magnuson Park Boat Launch" ||
+                    marker.name === "Atlantic City Boat Launch" ||
+                    marker.name === "Eddie Vine Boat Launch"
+                      ? customIcon2
+                      : customIcon
+                  }
+                >
+                  <Popup>
+                    <button
+                      className="text-blue-700 hover:text-blue-900"
+                      onClick={() => handlePopupLinkClick(marker.name)}
+                    >
+                      {marker.name}
+                    </button>
+                  </Popup>{" "}
+                </Marker>
+              ))}{" "}
+              {position && (
+                <>
+                  <Marker
+                    position={position}
+                    icon={arrowIcon}
+                    rotationAngle={heading || 0}
+                    rotationOrigin="center"
+                  />
+                  <RecenterMap position={position} />
+                </>
+              )}
+              <BaseLayer name="Esri World Imagery">
+                <TileLayer
+                  url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                  attribution="Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
+                />
+              </BaseLayer>{" "}
+              <BaseLayer name="Nautical Chart - Depth in Meters">
+                <TileLayer
+                  url="https://www.marinetraffic.com/TMS/1.0.0/TX97/{z}/{x}/{y}.png?v=3"
+                  minZoom={0}
+                  maxZoom={20}
+                  attribution="&copy; Marine Traffic"
+                />
+              </BaseLayer>
+              <BaseLayer name="Esri Ocean Basemap">
+                <TileLayer
+                  attribution="Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri"
+                  url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}"
+                  maxZoom={16}
+                />
+              </BaseLayer>
+              <BaseLayer checked name="OpenStreetMap">
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+              </BaseLayer>
+            </LayersControl>
+          </MapContainer>
 
+          {/* This is the new floating information box */}
+          {tracking && position && (
+            <div className="absolute bottom-4 right-4 z-[1000] bg-white bg-opacity-70 p-3 rounded-md shadow-lg text-sm">
+              <p className="font-bold">Your Location</p>
+              <hr className="my-1" />
+              <p>Lat: {position[0].toFixed(6)}</p>
+              <p>Lng: {position[1].toFixed(6)}</p>
+              {accuracy !== null && <p>Accuracy: &plusmn;{(accuracy * 3.28084).toFixed(1)} ft</p>}
+              {speed !== null && <p>Speed: {(speed * 2.237).toFixed(1)} mph</p>}
+            </div>
+          )}
+        </div>
         <div className="">
-          <div className=" text-sm mt-2  justify-evenly flex flex-col border-[1px] bg-white bg-opacity-60 shadow-md rounded-md p-3  w-[180px] m-auto">
-            {" "}
-            <p>Latitude: {coordinates.lat.toFixed(6)}</p>
-            <p>Longitude: {coordinates.lng.toFixed(6)}</p>
+          <div className="flex justify-center items-center gap-4 mt-2 mb-4 ml-2 mr-2">
+            {/* The Button */}
+            <button
+              onClick={toggleTracking}
+              // Removed absolute positioning and related classes
+              className="bg-sky-700 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-sky-600"
+            >
+              {tracking ? "Stop Tracking" : "Start Tracking"}
+            </button>
+
+            {/* The Lat/Long Display Div */}
+            <div className="text-sm flex flex-col border-[1px] bg-white bg-opacity-60 shadow-md rounded-md p-3">
+              <p>Lat: {coordinates.lat.toFixed(6)}</p>
+              <p>Lng: {coordinates.lng.toFixed(6)}</p>
+            </div>
           </div>{" "}
           <div ref={componentRef}>
             {selectedComponent === "Blakely Rock - Shangri-La" && <BlakelyRock />}
