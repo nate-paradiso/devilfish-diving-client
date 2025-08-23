@@ -462,7 +462,7 @@ const MapComponent = () => {
               <BaseLayer name="Esri World Imagery">
                 <TileLayer
                   url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-                  attribution="Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
+                  attribution=""
                 />
               </BaseLayer>{" "}
               <BaseLayer name="Nautical Chart - Depth in Meters">
@@ -470,7 +470,7 @@ const MapComponent = () => {
                   url="https://www.marinetraffic.com/TMS/1.0.0/TX97/{z}/{x}/{y}.png?v=3"
                   minZoom={0}
                   maxZoom={20}
-                  attribution="&copy; Marine Traffic"
+                  attribution=""
                 />
               </BaseLayer>
               <BaseLayer name="Esri Ocean Basemap">
@@ -480,9 +480,9 @@ const MapComponent = () => {
                   maxZoom={16}
                 />
               </BaseLayer>
-              <BaseLayer checked name="OpenStreetMap">
+              <BaseLayer checked name="">
                 <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  attribution=""
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
               </BaseLayer>
