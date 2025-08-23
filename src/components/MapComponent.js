@@ -502,7 +502,7 @@ const MapComponent = () => {
           )}
         </div>
         <div className="">
-          <div className="flex justify-center items-center gap-4 mt-2 mb-4 ml-2 mr-2">
+          <div className="flex justify-center items-center gap-4 mt-1 mb-4 ml-2 mr-2">
             {/* The Button */}
             <button
               onClick={toggleTracking}
