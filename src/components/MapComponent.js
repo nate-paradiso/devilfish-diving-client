@@ -17,6 +17,8 @@ import iconUrl from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import { useMap } from "react-leaflet";
 
+import RotatedMarker from "./RotatedMarker";
+
 // import "~react-leaflet-markercluster/dist/styles.min.css";
 // import Script from "next/script";
 import { Icon } from "leaflet"; // Importing L from Leaflet
@@ -450,7 +452,7 @@ const MapComponent = () => {
               ))}{" "}
               {position && (
                 <>
-                  <Marker
+                  <RotatedMarker
                     position={position}
                     icon={arrowIcon}
                     rotationAngle={heading || 0}

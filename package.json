@@ -26,6 +26,7 @@
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
     "leaflet-geotiff": "^0.2.0",
+    "leaflet-rotatedmarker": "^0.2.0",
     "leaflet-tilelayer-mbtiles": "^1.4.1",
     "leaflet.markercluster": "^1.5.3",
     "next": "14.1.3",
