@@ -10,6 +10,7 @@ import {
   Popup,
   useMapEvents,
   ScaleControl,
+  Polyline,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 // Default Leaflet marker fix (since React-Leaflet doesn't auto-load icons)
@@ -46,6 +47,7 @@ const MapComponent = () => {
   const watchIdRef = useRef(null);
   const [accuracy, setAccuracy] = useState(null);
   const [speed, setSpeed] = useState(null);
+  const [trackHistory, setTrackHistory] = useState([]);
 
   // Bathymetry images
   const loadPNGImages = () => {
@@ -346,22 +348,28 @@ const MapComponent = () => {
   }
 
   // Function to follow user
-  // Refactored logic using useEffect
+
   useEffect(() => {
     if (tracking) {
       if (navigator.geolocation) {
         // Start watching the position
         const id = navigator.geolocation.watchPosition(
           pos => {
-            const { latitude, longitude, heading, accuracy, speed } = pos.coords; // Destructure accuracy and speed
-            setPosition([latitude, longitude]);
+            // Get all the data from the position object
+            const { latitude, longitude, heading, accuracy, speed } = pos.coords;
+            const newPosition = [latitude, longitude];
+
+            // All state updates must happen inside this callback function
+            setPosition(newPosition);
             setHeading(heading || 0);
-            setAccuracy(accuracy); // Update accuracy state
-            setSpeed(speed); // Update speed state
+            setAccuracy(accuracy);
+            setSpeed(speed);
+
+            // This is the correct place to update the track history
+            setTrackHistory(prevHistory => [...prevHistory, newPosition]);
           },
           err => {
             console.error(err);
-            // Optional: Turn off tracking on error
             setTracking(false);
           },
           { enableHighAccuracy: true },
@@ -370,14 +378,16 @@ const MapComponent = () => {
         watchIdRef.current = id;
       } else {
         alert("Geolocation not supported by your browser.");
-        setTracking(false); // Make sure to turn off tracking if not supported
+        setTracking(false);
       }
     } else {
       // Clean up the watcher when tracking is turned off
       if (watchIdRef.current) {
         navigator.geolocation.clearWatch(watchIdRef.current);
-        watchIdRef.current = null; // Clear the ref
-        setPosition(null); // Clear the marker from the map
+        watchIdRef.current = null;
+        setPosition(null);
+        // Clear the history when tracking stops
+        setTrackHistory([]);
       }
     }
 
@@ -388,7 +398,6 @@ const MapComponent = () => {
       }
     };
   }, [tracking]); // The effect runs whenever the 'tracking' state changes
-
   // The toggle function just flips the state
   const toggleTracking = () => {
     setTracking(prevTracking => !prevTracking);
@@ -461,6 +470,10 @@ const MapComponent = () => {
                   <RecenterMap position={position} />
                 </>
               )}
+              {/* This is the new Polyline component */}
+              {trackHistory.length > 0 && (
+                <Polyline pathOptions={{ color: "#007bff", weight: 4 }} positions={trackHistory} />
+              )}
               <BaseLayer name="Esri World Imagery">
                 <TileLayer
                   url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
@@ -475,14 +488,14 @@ const MapComponent = () => {
                   attribution=""
                 />
               </BaseLayer>
-              <BaseLayer name="Esri Ocean Basemap">
+              <BaseLayer name="Esri Ocean">
                 <TileLayer
                   attribution="Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri"
                   url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}"
                   maxZoom={16}
                 />
               </BaseLayer>
-              <BaseLayer checked name="">
+              <BaseLayer checked name="Open Street">
                 <TileLayer
                   attribution=""
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
