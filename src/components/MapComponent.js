@@ -480,7 +480,7 @@ const MapComponent = () => {
                   attribution=""
                 />
               </BaseLayer>{" "}
-              <BaseLayer name="Nautical Chart - Depth in Meters">
+              <BaseLayer name="Nautical Chart - Depth in m">
                 <TileLayer
                   url="https://www.marinetraffic.com/TMS/1.0.0/TX97/{z}/{x}/{y}.png?v=3"
                   minZoom={0}
