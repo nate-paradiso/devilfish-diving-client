@@ -10,6 +10,7 @@ import {
   Popup,
   useMapEvents,
   ScaleControl,
+  Polyline,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 // Default Leaflet marker fix (since React-Leaflet doesn't auto-load icons)
@@ -37,15 +38,33 @@ import BlakeIsland from "./BlakeIsland";
 
 const { BaseLayer } = LayersControl;
 
+// New component to handle map invalidation on fullscreen change
+const MapFullscreenHandler = () => {
+  const map = useMap();
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      // Invalidate the map size to ensure it renders correctly after a fullscreen toggle
+      map.invalidateSize();
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, [map]);
+  return null;
+};
+
 const MapComponent = () => {
   const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
   const componentRef = useRef(null); // Create a ref for the component
+  const mapContainerRef = useRef(null); // Ref for the map container for fullscreen
   const [heading, setHeading] = useState(0);
   const [tracking, setTracking] = useState(false);
   const [position, setPosition] = useState(null);
   const watchIdRef = useRef(null);
   const [accuracy, setAccuracy] = useState(null);
   const [speed, setSpeed] = useState(null);
+  const [trackHistory, setTrackHistory] = useState([]);
 
   // Bathymetry images
   const loadPNGImages = () => {
@@ -346,22 +365,28 @@ const MapComponent = () => {
   }
 
   // Function to follow user
-  // Refactored logic using useEffect
+
   useEffect(() => {
     if (tracking) {
       if (navigator.geolocation) {
         // Start watching the position
         const id = navigator.geolocation.watchPosition(
           pos => {
-            const { latitude, longitude, heading, accuracy, speed } = pos.coords; // Destructure accuracy and speed
-            setPosition([latitude, longitude]);
+            // Get all the data from the position object
+            const { latitude, longitude, heading, accuracy, speed } = pos.coords;
+            const newPosition = [latitude, longitude];
+
+            // All state updates must happen inside this callback function
+            setPosition(newPosition);
             setHeading(heading || 0);
-            setAccuracy(accuracy); // Update accuracy state
-            setSpeed(speed); // Update speed state
+            setAccuracy(accuracy);
+            setSpeed(speed);
+
+            // This is the correct place to update the track history
+            setTrackHistory(prevHistory => [...prevHistory, newPosition]);
           },
           err => {
             console.error(err);
-            // Optional: Turn off tracking on error
             setTracking(false);
           },
           { enableHighAccuracy: true },
@@ -370,14 +395,16 @@ const MapComponent = () => {
         watchIdRef.current = id;
       } else {
         alert("Geolocation not supported by your browser.");
-        setTracking(false); // Make sure to turn off tracking if not supported
+        setTracking(false);
       }
     } else {
       // Clean up the watcher when tracking is turned off
       if (watchIdRef.current) {
         navigator.geolocation.clearWatch(watchIdRef.current);
-        watchIdRef.current = null; // Clear the ref
-        setPosition(null); // Clear the marker from the map
+        watchIdRef.current = null;
+        setPosition(null);
+        // Clear the history when tracking stops
+        setTrackHistory([]);
       }
     }
 
@@ -388,11 +415,20 @@ const MapComponent = () => {
       }
     };
   }, [tracking]); // The effect runs whenever the 'tracking' state changes
-
   // The toggle function just flips the state
   const toggleTracking = () => {
     setTracking(prevTracking => !prevTracking);
   };
+
+  // Function to toggle full-screen mode
+  const toggleFullscreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else if (mapContainerRef.current) {
+      mapContainerRef.current.requestFullscreen();
+    }
+  };
+
   return (
     <div className="mb-2 flex flex-col mt-4 ">
       <div className=" flex max-w-[1000px] justify-center items-center  m-auto flex-col text-center ">
@@ -416,7 +452,10 @@ const MapComponent = () => {
       </div>
       <div className="flex justify-center flex-col z-1 ">
         {/* The new parent div with relative positioning */}
-        <div className="h-[550px] w-full md:h-[500px] shadow-md mb-2 relative">
+        <div
+          ref={mapContainerRef}
+          className="h-[550px] w-full md:h-[500px] shadow-md mb-2 relative"
+        >
           <MapContainer
             className="h-full w-full"
             center={[47.69532618372522, -122.39365052155932]}
@@ -425,6 +464,7 @@ const MapComponent = () => {
             <LayersControl position="topright">
               <ScaleControl position="bottomleft" imperial={true} />
               <MapEvents />
+              <MapFullscreenHandler /> {/* Add the fullscreen handler here */}
               {loadPNGImages()}
               {markers.map((marker, index) => (
                 <Marker
@@ -461,39 +501,72 @@ const MapComponent = () => {
                   <RecenterMap position={position} />
                 </>
               )}
+              {/* This is the new Polyline component */}
+              {trackHistory.length > 0 && (
+                <Polyline pathOptions={{ color: "#007bff", weight: 2 }} positions={trackHistory} />
+              )}
               <BaseLayer name="Esri World Imagery">
                 <TileLayer
                   url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                   attribution=""
+                  maxZoom={21}
                 />
               </BaseLayer>{" "}
-              <BaseLayer name="Nautical Chart - Depth in Meters">
+              <BaseLayer name="Nautical Chart - Depth in m">
                 <TileLayer
                   url="https://www.marinetraffic.com/TMS/1.0.0/TX97/{z}/{x}/{y}.png?v=3"
                   minZoom={0}
-                  maxZoom={20}
+                  maxZoom={18}
                   attribution=""
                 />
               </BaseLayer>
-              <BaseLayer name="Esri Ocean Basemap">
-                <TileLayer
-                  attribution="Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri"
-                  url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}"
-                  maxZoom={16}
-                />
-              </BaseLayer>
-              <BaseLayer checked name="">
+              <BaseLayer checked name="Open Street">
                 <TileLayer
                   attribution=""
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  maxZoom={20}
                 />
               </BaseLayer>
+              <LayersControl.Overlay checked name="NOAA Bag Relief Model">
+                <TileLayer
+                  url="https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/bag_hillshades/MapServer/tile/{z}/{y}/{x}"
+                  attribution='&copy; <a href="https://www.ncei.noaa.gov/maps/bathymetry/" target="_blank">NOAA/NCEI</a>'
+                  maxNativeZoom={15}
+                  maxZoom={21}
+                  opacity={0.9}
+                />
+              </LayersControl.Overlay>{" "}
             </LayersControl>
           </MapContainer>
-
+          {/* This is the new full-screen button */}
+          <button
+            onClick={toggleFullscreen}
+            className="absolute bottom-7 right-2.5 z-[1000] p-2 bg-white rounded-full shadow-lg border border-gray-300 hover:bg-gray-100 transition-colors"
+          >
+            <svg
+              className="w-6 h-6 text-gray-700"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 1v4m0 0h-4m4 0l-5-5"></path>
+            </svg>
+          </button>
+          {/* The Button */}
+          <button
+            onClick={toggleTracking}
+            className={`absolute -bottom-1 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1000] text-white bg-opacity-90 p-3 rounded-md shadow-lg text-sm" ${
+              tracking ? " bg-red-700 hover:bg-red-600" : "bg-sky-700 hover:bg-sky-600"
+            }`}
+          >
+            {tracking ? "Stop Tracking" : "Start Tracking"}
+          </button>
           {/* This is the new floating information box */}
           {tracking && position && (
-            <div className="absolute bottom-4 right-4 z-[1000] bg-white bg-opacity-70 p-3 rounded-md shadow-lg text-sm">
+            <div className="absolute bottom-12 left-1 z-[1000] bg-white bg-opacity-70 p-3 rounded-md shadow-lg text-sm">
               <p className="font-bold">Your Location</p>
               <hr className="my-1" />
               <p>Lat: {position[0].toFixed(6)}</p>
@@ -505,15 +578,6 @@ const MapComponent = () => {
         </div>
         <div className="">
           <div className="flex justify-center items-center gap-4 mt-1 mb-4 ml-2 mr-2">
-            {/* The Button */}
-            <button
-              onClick={toggleTracking}
-              // Removed absolute positioning and related classes
-              className="bg-sky-700 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-sky-600"
-            >
-              {tracking ? "Stop Tracking" : "Start Tracking"}
-            </button>
-
             {/* The Lat/Long Display Div */}
             <div className="text-sm flex flex-col border-[1px] bg-white bg-opacity-60 shadow-md rounded-md p-3">
               <p>Lat: {coordinates.lat.toFixed(6)}</p>
