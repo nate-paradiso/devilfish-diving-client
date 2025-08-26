@@ -456,7 +456,7 @@ const MapComponent = () => {
         watchIdRef.current = null;
         setPosition(null);
         // Clear the history when tracking stops
-        setTrackHistory([]);
+
         setIsFollowing(false);
       }
     }
@@ -515,7 +515,7 @@ const MapComponent = () => {
         {/* The new parent div with relative positioning */}
         <div
           ref={mapContainerRef}
-          className="h-[650px] w-full md:h-[500px] shadow-md mb-2 relative"
+          className="h-[600px] w-full md:h-[500px] shadow-md mb-2 relative"
         >
           <MapContainer
             className="h-full w-full"
@@ -565,7 +565,7 @@ const MapComponent = () => {
               {/* This is the new Polyline component */}
               {trackHistory.length > 0 && (
                 <Polyline
-                  pathOptions={{ color: "#007bff", weight: 2, dashArray: "20, 20" }}
+                  pathOptions={{ color: "#007bff", weight: 2, dashArray: "15, 15" }}
                   positions={trackHistory}
                 />
               )}
@@ -605,7 +605,9 @@ const MapComponent = () => {
             <button
               onClick={toggleFollowing}
               className={`absolute bottom-[132px] right-2.5 z-[1000] p-2 rounded-full shadow-lg border-[1px] border-gray-300 transition-colors ${
-                isFollowing ? "bg-sky-700 text-white" : "bg-white text-gray-700 hover:bg-gray-100"
+                isFollowing
+                  ? "bg-sky-700 text-white hover:bg-sky-700 active:bg-sky-700"
+                  : "bg-white text-gray-700 active:bg-white md:hover:bg-gray-100"
               }`}
               disabled={!position || !tracking}
               title="Toggle Follow Me"
@@ -653,7 +655,7 @@ const MapComponent = () => {
           </button>
           {/* This is the new floating information box */}
           {tracking && position && (
-            <div className="absolute top-[80px] left-2.5 z-[1000] bg-white bg-opacity-70 p-3 rounded-md shadow-lg text-sm">
+            <div className="absolute top-[80px] left-2.5 z-[1000] bg-white bg-opacity-90 p-3 rounded-md shadow-lg text-sm">
               <p className="font-bold">Your Location</p>
               <hr className="my-1" />
               <p>Lat: {position[0].toFixed(6)}</p>
