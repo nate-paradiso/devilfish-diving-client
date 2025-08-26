@@ -17,9 +17,7 @@ import "leaflet/dist/leaflet.css";
 import iconUrl from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import { useMap } from "react-leaflet";
-
 import RotatedMarker from "./RotatedMarker";
-
 // import "~react-leaflet-markercluster/dist/styles.min.css";
 // import Script from "next/script";
 import { Icon } from "leaflet"; // Importing L from Leaflet
@@ -54,6 +52,67 @@ const MapFullscreenHandler = () => {
   return null;
 };
 
+const RecenterButton = ({ position, zoom }) => {
+  const map = useMap();
+  const recenter = () => {
+    if (position) {
+      map.setView(position, map.getZoom());
+    }
+  };
+
+  return (
+    <button
+      onClick={recenter}
+      className="absolute bottom-[80px] right-2.5 z-[1000] p-2 bg-white rounded-full shadow-lg border-[1px] border-gray-300 hover:bg-gray-100 transition-colors"
+      disabled={!position}
+      title="Recenter Map"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+        />
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M19.5 10.5c0 3.86-1.73 7.54-5 9.87-1.35 1-3.26 1-4.62 0-3.27-2.33-5-6.01-5-9.87a7.5 7.5 0 0 1 15 0Z"
+        />
+      </svg>{" "}
+    </button>
+  );
+};
+
+// NEW: Component to center the map on the first fix
+const RecenterOnFirstFix = ({ position, recenterOnFirstFix }) => {
+  const map = useMap();
+  useEffect(() => {
+    if (position && recenterOnFirstFix.current) {
+      map.setView(position, map.getZoom());
+      recenterOnFirstFix.current = false; // Reset the flag after recentering
+    }
+  }, [position, recenterOnFirstFix, map]);
+  return null;
+};
+
+// NEW: Component to center the map on location only when the button is active
+const FollowLocation = ({ position, tracking, isFollowing }) => {
+  const map = useMap();
+  useEffect(() => {
+    if (tracking && isFollowing && position) {
+      map.setView(position);
+    }
+  }, [position, tracking, isFollowing, map]);
+  return null;
+};
+
 const MapComponent = () => {
   const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
   const componentRef = useRef(null); // Create a ref for the component
@@ -65,6 +124,10 @@ const MapComponent = () => {
   const [accuracy, setAccuracy] = useState(null);
   const [speed, setSpeed] = useState(null);
   const [trackHistory, setTrackHistory] = useState([]);
+  const [initialCenter] = useState([47.69532618372522, -122.39365052155932]);
+  const [initialZoom] = useState(10);
+  const recenterOnFirstFix = useRef(false);
+  const [isFollowing, setIsFollowing] = useState(false);
 
   // Bathymetry images
   const loadPNGImages = () => {
@@ -353,17 +416,6 @@ const MapComponent = () => {
   });
   L.Marker.prototype.options.icon = DefaultIcon;
 
-  // Component to move map when position changes
-  function RecenterMap({ position }) {
-    const map = useMap();
-    useEffect(() => {
-      if (position) {
-        map.setView(position, map.getZoom());
-      }
-    }, [position, map]);
-    return null;
-  }
-
   // Function to follow user
 
   useEffect(() => {
@@ -405,6 +457,7 @@ const MapComponent = () => {
         setPosition(null);
         // Clear the history when tracking stops
         setTrackHistory([]);
+        setIsFollowing(false);
       }
     }
 
@@ -415,11 +468,19 @@ const MapComponent = () => {
       }
     };
   }, [tracking]); // The effect runs whenever the 'tracking' state changes
+
   // The toggle function just flips the state
   const toggleTracking = () => {
-    setTracking(prevTracking => !prevTracking);
+    setTracking(prevTracking => {
+      // Set the flag to true if we are about to start tracking
+      recenterOnFirstFix.current = !prevTracking;
+      return !prevTracking;
+    });
   };
 
+  const toggleFollowing = () => {
+    setIsFollowing(prev => !prev);
+  };
   // Function to toggle full-screen mode
   const toggleFullscreen = () => {
     if (document.fullscreenElement) {
@@ -454,7 +515,7 @@ const MapComponent = () => {
         {/* The new parent div with relative positioning */}
         <div
           ref={mapContainerRef}
-          className="h-[550px] w-full md:h-[500px] shadow-md mb-2 relative"
+          className="h-[650px] w-full md:h-[500px] shadow-md mb-2 relative"
         >
           <MapContainer
             className="h-full w-full"
@@ -498,12 +559,15 @@ const MapComponent = () => {
                     rotationAngle={heading || 0}
                     rotationOrigin="center"
                   />
-                  <RecenterMap position={position} />
+                  {/* <RecenterMap position={position} /> */}
                 </>
               )}
               {/* This is the new Polyline component */}
               {trackHistory.length > 0 && (
-                <Polyline pathOptions={{ color: "#007bff", weight: 2 }} positions={trackHistory} />
+                <Polyline
+                  pathOptions={{ color: "#007bff", weight: 2, dashArray: "20, 20" }}
+                  positions={trackHistory}
+                />
               )}
               <BaseLayer name="Esri World Imagery">
                 <TileLayer
@@ -537,6 +601,29 @@ const MapComponent = () => {
                 />
               </LayersControl.Overlay>{" "}
             </LayersControl>
+            {/* SIMPLE CROSS ICON FOR FOLLOW BUTTON */}
+            <button
+              onClick={toggleFollowing}
+              className={`absolute bottom-[132px] right-2.5 z-[1000] p-2 rounded-full shadow-lg border-[1px] border-gray-300 transition-colors ${
+                isFollowing ? "bg-sky-700 text-white" : "bg-white text-gray-700 hover:bg-gray-100"
+              }`}
+              disabled={!position || !tracking}
+              title="Toggle Follow Me"
+            >
+              <svg
+                className="w-6 h-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15M4.5 12h15" />
+              </svg>
+            </button>{" "}
+            <RecenterButton position={position} />
+            <RecenterOnFirstFix position={position} recenterOnFirstFix={recenterOnFirstFix} />
+            <FollowLocation position={position} tracking={tracking} isFollowing={isFollowing} />
           </MapContainer>
           {/* This is the new full-screen button */}
           <button
@@ -566,13 +653,22 @@ const MapComponent = () => {
           </button>
           {/* This is the new floating information box */}
           {tracking && position && (
-            <div className="absolute bottom-12 left-1 z-[1000] bg-white bg-opacity-70 p-3 rounded-md shadow-lg text-sm">
+            <div className="absolute top-[80px] left-2.5 z-[1000] bg-white bg-opacity-70 p-3 rounded-md shadow-lg text-sm">
               <p className="font-bold">Your Location</p>
               <hr className="my-1" />
               <p>Lat: {position[0].toFixed(6)}</p>
               <p>Lng: {position[1].toFixed(6)}</p>
-              {accuracy !== null && <p>Accuracy: &plusmn;{(accuracy * 3.28084).toFixed(1)} ft</p>}
-              {speed !== null && <p>Speed: {(speed * 2.237).toFixed(1)} mph</p>}
+              {accuracy !== null && (
+                <p>
+                  Accuracy: &plusmn;
+                  <span className="font-bold">{(accuracy * 3.28084).toFixed(1)}ft</span>
+                </p>
+              )}
+              {speed !== null && (
+                <p>
+                  Speed: <span className="font-bold">{(speed * 2.237).toFixed(1)} mph</span>
+                </p>
+              )}
             </div>
           )}
         </div>
