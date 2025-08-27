@@ -131,7 +131,6 @@ const MapComponent = () => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [polylineDistance, setPolylineDistance] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  console.log(isFullscreen);
 
   // Function to calculate distance between two coordinates using Haversine formula
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
@@ -647,7 +646,7 @@ const MapComponent = () => {
                 <TileLayer
                   url="https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/bag_hillshades/MapServer/tile/{z}/{y}/{x}"
                   attribution='&copy; <a href="https://www.ncei.noaa.gov/maps/bathymetry/" target="_blank">NOAA/NCEI</a>'
-                  maxNativeZoom={15}
+                  maxNativeZoom={14}
                   maxZoom={21}
                   opacity={0.9}
                 />
@@ -760,7 +759,7 @@ const MapComponent = () => {
               </p>
               {accuracy !== null && (
                 <p>
-                  <span className="font-bold text-xl">&plusmn; </span>
+                  <span className="font-bold text-xl">&plusmn;</span>
                   <span className="font-bold text-xl">{(accuracy * 3.28084).toFixed(1)}ft</span>
                 </p>
               )}
