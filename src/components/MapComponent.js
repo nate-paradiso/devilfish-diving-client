@@ -11,6 +11,7 @@ import {
   useMapEvents,
   ScaleControl,
   Polyline,
+  ZoomControl,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 // Default Leaflet marker fix (since React-Leaflet doesn't auto-load icons)
@@ -63,7 +64,7 @@ const RecenterButton = ({ position, zoom }) => {
   return (
     <button
       onClick={recenter}
-      className="absolute bottom-[80px] right-2.5 z-[1000] p-2 bg-white rounded-full shadow-lg border-[1px] border-gray-300 hover:bg-gray-100 transition-colors"
+      className="absolute bottom-[190px] right-2.5 z-[1000] p-2 bg-white rounded-full shadow-lg border-[1px] border-gray-300 hover:bg-gray-100 transition-colors"
       disabled={!position}
       title="Recenter Map"
     >
@@ -107,7 +108,7 @@ const FollowLocation = ({ position, tracking, isFollowing }) => {
   const map = useMap();
   useEffect(() => {
     if (tracking && isFollowing && position) {
-      map.setView(position);
+      map.panTo(position);
     }
   }, [position, tracking, isFollowing, map]);
   return null;
@@ -128,6 +129,53 @@ const MapComponent = () => {
   const [initialZoom] = useState(10);
   const recenterOnFirstFix = useRef(false);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [polylineDistance, setPolylineDistance] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  console.log(isFullscreen);
+
+  // Function to calculate distance between two coordinates using Haversine formula
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371e3; // metres
+    const φ1 = (lat1 * Math.PI) / 180; // φ, λ in radians
+    const φ2 = (lat2 * Math.PI) / 180;
+    const Δφ = ((lat2 - lat1) * Math.PI) / 180;
+    const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+
+    const a =
+      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const d = R * c; // in metres
+    return d;
+  };
+
+  // NEW: UseEffect to calculate the total polyline distance whenever trackHistory changes
+  useEffect(() => {
+    let totalDistance = 0;
+    if (trackHistory.length > 1) {
+      for (let i = 0; i < trackHistory.length - 1; i++) {
+        const [lat1, lng1] = trackHistory[i];
+        const [lat2, lng2] = trackHistory[i + 1];
+        totalDistance += calculateDistance(lat1, lng1, lat2, lng2);
+      }
+    }
+    // Convert meters to miles (1 meter = 0.000621371 miles)
+    setPolylineDistance(totalDistance * 0.000621371);
+  }, [trackHistory]);
+
+  // / NEW: useEffect to listen for fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
 
   // Bathymetry images
   const loadPNGImages = () => {
@@ -490,6 +538,11 @@ const MapComponent = () => {
     }
   };
 
+  const clearPolyline = () => {
+    setTrackHistory([]);
+    setPolylineDistance(0); // Reset distance to 0 as well
+  };
+
   return (
     <div className="mb-2 flex flex-col mt-4 ">
       <div className=" flex max-w-[1000px] justify-center items-center  m-auto flex-col text-center ">
@@ -521,11 +574,13 @@ const MapComponent = () => {
             className="h-full w-full"
             center={[47.69532618372522, -122.39365052155932]}
             zoom={10}
+            zoomControl={false}
           >
             <LayersControl position="topright">
               <ScaleControl position="bottomleft" imperial={true} />
               <MapEvents />
               <MapFullscreenHandler /> {/* Add the fullscreen handler here */}
+              <ZoomControl position="bottomright" />
               {loadPNGImages()}
               {markers.map((marker, index) => (
                 <Marker
@@ -564,10 +619,7 @@ const MapComponent = () => {
               )}
               {/* This is the new Polyline component */}
               {trackHistory.length > 0 && (
-                <Polyline
-                  pathOptions={{ color: "#007bff", weight: 2, dashArray: "15, 15" }}
-                  positions={trackHistory}
-                />
+                <Polyline pathOptions={{ color: "#FFD700", weight: 4 }} positions={trackHistory} />
               )}
               <BaseLayer name="Esri World Imagery">
                 <TileLayer
@@ -604,7 +656,7 @@ const MapComponent = () => {
             {/* SIMPLE CROSS ICON FOR FOLLOW BUTTON */}
             <button
               onClick={toggleFollowing}
-              className={`absolute bottom-[132px] right-2.5 z-[1000] p-2 rounded-full shadow-lg border-[1px] border-gray-300 transition-colors ${
+              className={`absolute bottom-[240px] right-2.5 z-[1000] p-2 rounded-full shadow-lg border-[1px] border-gray-300 transition-colors ${
                 isFollowing
                   ? "bg-sky-700 text-white hover:bg-sky-700 active:bg-sky-700"
                   : "bg-white text-gray-700 active:bg-white md:hover:bg-gray-100"
@@ -627,23 +679,65 @@ const MapComponent = () => {
             <RecenterOnFirstFix position={position} recenterOnFirstFix={recenterOnFirstFix} />
             <FollowLocation position={position} tracking={tracking} isFollowing={isFollowing} />
           </MapContainer>
-          {/* This is the new full-screen button */}
+          {/* NEW: Clear Polyline Button */}
           <button
-            onClick={toggleFullscreen}
-            className="absolute bottom-7 right-2.5 z-[1000] p-2 bg-white rounded-full shadow-lg border border-gray-300 hover:bg-gray-100 transition-colors"
+            onClick={clearPolyline}
+            className="absolute bottom-[50px] left-2.5 z-[1000] p-2 bg-white rounded-full shadow-lg border-[1px] border-gray-300 hover:bg-gray-100 transition-colors"
+            title="Clear Polyline"
           >
             <svg
               className="w-6 h-6 text-gray-700"
+              xmlns="http://www.w3.org/2000/svg"
               fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
               viewBox="0 0 24 24"
+              strokeWidth="1.5"
               stroke="currentColor"
             >
-              <path d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 1v4m0 0h-4m4 0l-5-5"></path>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.918a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.166m-1.022.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.918a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12-.562c.34-.059.68-.114 1.022-.166"
+              />
             </svg>
           </button>
+          {/* This is the new full-screen button */}
+          <button
+            onClick={toggleFullscreen}
+            className="absolute bottom-[140px] right-2.5 z-[1000] p-2 bg-white rounded-full shadow-lg border border-gray-300 hover:bg-gray-100 transition-colors"
+            title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+          >
+            {isFullscreen ? (
+              // Correct Exit Fullscreen Icon (arrows pointing inward)
+              <svg
+                className="w-6 h-6 text-gray-700"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            ) : (
+              // Correct Enter Fullscreen Icon (arrows pointing outward)
+              <svg
+                className="w-6 h-6 text-gray-700"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15.75M20.25 3.75v4.5m0-4.5h-4.5m4.5 0L15 9m5.25 11.25v-4.5m0 4.5h-4.5m4.5 0L15 15.75"
+                />
+              </svg>
+            )}
+          </button>{" "}
           {/* The Button */}
           <button
             onClick={toggleTracking}
@@ -655,20 +749,30 @@ const MapComponent = () => {
           </button>
           {/* This is the new floating information box */}
           {tracking && position && (
-            <div className="absolute top-[80px] left-2.5 z-[1000] bg-white bg-opacity-90 p-3 rounded-md shadow-lg text-sm">
-              <p className="font-bold">Your Location</p>
+            <div className="absolute top-[10px] left-2.5 z-[1000] bg-white bg-opacity-90 p-3 rounded-md shadow-lg text-sm">
+              <p className="font-bold text-lg">Position Info</p>
               <hr className="my-1" />
               <p>Lat: {position[0].toFixed(6)}</p>
               <p>Lng: {position[1].toFixed(6)}</p>
+
+              <p>
+                Distance: <span className="font-bold">{polylineDistance.toFixed(2)} mi</span>
+              </p>
               {accuracy !== null && (
                 <p>
-                  Accuracy: &plusmn;
-                  <span className="font-bold">{(accuracy * 3.28084).toFixed(1)}ft</span>
+                  <span className="font-bold text-xl">&plusmn; </span>
+                  <span className="font-bold text-xl">{(accuracy * 3.28084).toFixed(1)}ft</span>
+                </p>
+              )}
+
+              {heading !== null && (
+                <p>
+                  <span className="font-bold text-xl">{heading.toFixed(0)}°</span>
                 </p>
               )}
               {speed !== null && (
                 <p>
-                  Speed: <span className="font-bold">{(speed * 2.237).toFixed(1)} mph</span>
+                  <span className="font-bold text-3xl">{(speed * 2.237).toFixed(1)}mph</span>
                 </p>
               )}
             </div>

@@ -77,3 +77,16 @@ button:hover {
     font-weight: 900;
   }
 }
+.leaflet-control-zoom-in,
+.leaflet-control-zoom .leaflet-control-zoom-out {
+  font-size: 24px !important;
+  width: 45px !important;
+  height: 45px !important;
+  line-height: 45px !important;
+  font-weight: bold;
+}
+/* .leaflet-control-layers-toggle {
+  width: 50px !important;
+  height: 50px !important;
+  background-size: 28px 28px !important;
+} */
