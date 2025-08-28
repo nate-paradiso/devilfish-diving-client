@@ -772,10 +772,10 @@ const MapComponent = () => {
               {speed !== null && (
                 <>
                   <p>
-                    <span className="font-bold text-3xl">{(speed * 2.237).toFixed(1)}mph</span>
+                    <span className="font-bold text-2xl">{(speed * 2.237).toFixed(1)}mph</span>
                   </p>
                   <p>
-                    <span className="font-bold text-xl">{(speed * 1.943844).toFixed(1)}knts</span>
+                    <span className="font-bold text-3xl">{(speed * 1.943844).toFixed(1)}knts</span>
                   </p>
                 </>
               )}
