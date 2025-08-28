@@ -689,15 +689,15 @@ const MapComponent = () => {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              strokeWidth="1.5"
               stroke="currentColor"
+              strokeWidth="2"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.918a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.166m-1.022.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.918a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12-.562c.34-.059.68-.114 1.022-.166"
+                d="M19 7l-.867 12.142A2 2 0 0116.035 21H7.965a2 2 0 01-1.997-1.858L5 7m5 4v6m4-6v6m1-9V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
               />
-            </svg>
+            </svg>{" "}
           </button>
           {/* This is the new full-screen button */}
           <button
@@ -770,9 +770,14 @@ const MapComponent = () => {
                 </p>
               )}
               {speed !== null && (
-                <p>
-                  <span className="font-bold text-3xl">{(speed * 2.237).toFixed(1)}mph</span>
-                </p>
+                <>
+                  <p>
+                    <span className="font-bold text-3xl">{(speed * 2.237).toFixed(1)}mph</span>
+                  </p>
+                  <p>
+                    <span className="font-bold text-xl">{(speed * 1.943844).toFixed(1)}knts</span>
+                  </p>
+                </>
               )}
             </div>
           )}
