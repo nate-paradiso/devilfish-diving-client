@@ -20,13 +20,13 @@ export default function Home() {
       <Hero />
 
       <div className="flex justify-center items-center m-8 bg-cover bg-center">
-        <Image
+        {/* <Image
           className="h-auto w-[140px] md:w-[200px] p-1" // Consistent responsive sizing
           src="/images/gpologo-invert.png"
           alt="Devilfish Logo"
           width={600}
           height={272}
-        />
+        /> */}
         <Link href="/calendar">
           <button
             className="p-3 md:p-4 md:text-3xl transition-colors duration-200 hover:bg-slate-100 
@@ -35,13 +35,13 @@ export default function Home() {
             Book Now!
           </button>
         </Link>
-        <Image
+        {/* <Image
           className="h-auto w-[140px] md:w-[200px] p-1 transform scale-x-[-1]" // Consistent responsive sizing and mirror effect
           src="/images/gpologo-invert.png"
           alt="Devilfish Logo"
           width={600}
           height={272}
-        />
+        /> */}
       </div>
 
       <section className="flex justify-center items-center flex-col ">
