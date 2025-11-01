@@ -28,7 +28,7 @@ const CancelPolicy = () => {
         <ul className="list-disc list-inside pl-4">
           <li>
             Cancellations made at least 2 days (48 hours) before the scheduled service will receive
-            a 100% refund.
+            a 100% refund minus the transaction fee.
           </li>
           <li>
             Cancellations made within 2 days (48 hours) of the scheduled service will not be
@@ -36,7 +36,7 @@ const CancelPolicy = () => {
           </li>
           <li>
             In the event of unforeseen circumstances by the charter or weather-related, a 100%
-            refund will be granted.
+            refund will be granted minus the transaction fee.
           </li>
         </ul>
         <br />

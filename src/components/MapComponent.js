@@ -627,14 +627,15 @@ const MapComponent = () => {
                   maxZoom={21}
                 />
               </BaseLayer>{" "}
-              <BaseLayer name="Nautical Chart - Depth in m">
+              {/* <BaseLayer name="Nautical Chart - Depth in m">
                 <TileLayer
-                  url="https://www.marinetraffic.com/TMS/1.0.0/TX97/{z}/{x}/{y}.png?v=3"
+                  key="openseamap"
+                  url="https://tileservice.charts.noaa.gov/tiles/ecdis/{z}/{x}/{y}.png"
                   minZoom={0}
                   maxZoom={18}
                   attribution=""
                 />
-              </BaseLayer>
+              </BaseLayer> */}
               <BaseLayer checked name="Open Street">
                 <TileLayer
                   attribution=""
