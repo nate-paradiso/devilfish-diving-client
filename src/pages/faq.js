@@ -59,9 +59,10 @@ const FAQ = () => {
         <p className="italic text-gray-900">
           {" "}
           Cancellations made at least 2 days (48 hours) before the scheduled service will receive a
-          100% refund. Cancellations made within 2 days (48 hours) of the scheduled service will not
-          be eligible for a refund. In the event of unforeseen circumstances by the charter or
-          weather-related, a 100% refund will be granted.
+          100% refund minus the transaction fee. Cancellations made within 2 days (48 hours) of the
+          scheduled service will not be eligible for a refund. In the event of unforeseen
+          circumstances by the charter or weather-related, a 100% refund will be granted minus the
+          transaction fee.
         </p>
 
         <br />
