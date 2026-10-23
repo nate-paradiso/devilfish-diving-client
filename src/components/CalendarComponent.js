@@ -310,7 +310,7 @@ const CalendarComponent = () => {
                       )}
                       {eventTitle === "Tec Entire Charter" && (
                         <h3 className="mt-1">
-                          Price: <span className="font-bold">$330 +tax.</span>
+                          Price: <span className="font-bold">$495 +tax.</span>
                         </h3>
                       )}
                       {eventTitle === "Entire Charter" && (
