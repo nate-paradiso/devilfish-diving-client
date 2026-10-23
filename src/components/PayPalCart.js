@@ -66,7 +66,7 @@ export const cartItems = [
     id: "Tec Entire Charter",
     name: "Tec Entire Charter",
     quantity: 1,
-    price: 330, // Price Entire Charter
+    price: 495, // Price Entire Charter
     description: "Tec Entire Charter", // Add description here
   },
 ];
