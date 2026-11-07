@@ -542,6 +542,24 @@ const MapComponent = () => {
     setPolylineDistance(0); // Reset distance to 0 as well
   };
 
+  function convertToDMS(decimal, isLatitude) {
+    const absolute = Math.abs(decimal);
+    const degrees = Math.floor(absolute);
+    const minutesNotTruncated = (absolute - degrees) * 60;
+    const minutes = Math.floor(minutesNotTruncated);
+    const seconds = ((minutesNotTruncated - minutes) * 60).toFixed(2); // Adjust decimals if needed
+
+    // Determine direction suffix (N/S for latitude, E/W for longitude)
+    let direction = "";
+    if (isLatitude) {
+      direction = decimal >= 0 ? "N" : "S";
+    } else {
+      direction = decimal >= 0 ? "E" : "W";
+    }
+
+    return `${degrees}° ${minutes}' ${seconds}" ${direction}`;
+  }
+
   return (
     <div className="mb-2 flex flex-col mt-4 ">
       <div className=" flex max-w-[1000px] justify-center items-center  m-auto flex-col text-center ">
@@ -752,8 +770,8 @@ const MapComponent = () => {
             <div className="absolute top-[10px] left-2.5 z-[1000] bg-white bg-opacity-90 p-3 rounded-md shadow-lg text-sm">
               <p className="font-bold text-lg">Position Info</p>
               <hr className="my-1" />
-              <p>Lat: {position[0].toFixed(6)}</p>
-              <p>Lng: {position[1].toFixed(6)}</p>
+              <p>{convertToDMS(coordinates.lat, true)}</p>
+              <p>{convertToDMS(coordinates.lng, false)}</p>
 
               <p>
                 Distance: <span className="font-bold">{polylineDistance.toFixed(2)} mi</span>
@@ -785,12 +803,12 @@ const MapComponent = () => {
         </div>
         <div className="">
           <div className="flex justify-center items-center gap-4 mt-1 mb-4 ml-2 mr-2">
-            {/* The Lat/Long Display Div */}
+            {/* The Lat/Long Display Div in DMS Format */}
             <div className="text-sm flex flex-col border-[1px] bg-white bg-opacity-60 shadow-md rounded-md p-3">
-              <p>Lat: {coordinates.lat.toFixed(6)}</p>
-              <p>Lng: {coordinates.lng.toFixed(6)}</p>
+              <p>{convertToDMS(coordinates.lat, true)}</p>
+              <p>{convertToDMS(coordinates.lng, false)}</p>
             </div>
-          </div>{" "}
+          </div>
           <div ref={componentRef}>
             {selectedComponent === "Blakely Rock - Shangri-La" && <BlakelyRock />}
             {selectedComponent === "China Wall" && <ChinaWall />}
