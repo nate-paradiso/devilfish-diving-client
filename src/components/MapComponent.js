@@ -770,8 +770,8 @@ const MapComponent = () => {
             <div className="absolute top-[10px] left-2.5 z-[1000] bg-white bg-opacity-90 p-3 rounded-md shadow-lg text-sm">
               <p className="font-bold text-lg">Position Info</p>
               <hr className="my-1" />
-              <p>{convertToDMS(coordinates.lat, true)}</p>
-              <p>{convertToDMS(coordinates.lng, false)}</p>
+              <p>Lat: {convertToDMS(position[0])}</p>
+              <p>Lng: {convertToDMS(position[1])}</p>
 
               <p>
                 Distance: <span className="font-bold">{polylineDistance.toFixed(2)} mi</span>
