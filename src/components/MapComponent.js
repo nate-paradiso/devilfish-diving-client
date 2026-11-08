@@ -788,8 +788,8 @@ const MapComponent = () => {
             <div className="absolute top-[10px] left-2.5 z-[1000] bg-white bg-opacity-90 p-3 rounded-md shadow-lg text-sm">
               <p className="font-bold text-lg">Position Info</p>
               <hr className="my-1" />
-              <p>Lat: {convertToDMSPopup(position[0], true)}</p>
-              <p>Lng: {convertToDMSPopup(position[1], false)}</p>
+              <p>{convertToDMSPopup(position[0], true)}</p>
+              <p>{convertToDMSPopup(position[1], false)}</p>
 
               <p>
                 Distance: <span className="font-bold">{polylineDistance.toFixed(2)} mi</span>
