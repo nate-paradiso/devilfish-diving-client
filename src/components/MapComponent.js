@@ -560,6 +560,24 @@ const MapComponent = () => {
     return `${degrees}° ${minutes}' ${seconds}" ${direction}`;
   }
 
+  const convertToDMSPopup = (coordinate, isLatitude = true) => {
+    const absolute = Math.abs(coordinate);
+    const degrees = Math.floor(absolute);
+    const minutesNotTruncated = (absolute - degrees) * 60;
+    const minutes = Math.floor(minutesNotTruncated);
+    const seconds = ((minutesNotTruncated - minutes) * 60).toFixed(2);
+
+    // Determine the correct cardinal direction letter
+    let direction = "";
+    if (isLatitude) {
+      direction = coordinate >= 0 ? "N" : "S";
+    } else {
+      direction = coordinate >= 0 ? "E" : "W";
+    }
+
+    return `${degrees}° ${minutes}' ${seconds}" ${direction}`;
+  };
+
   return (
     <div className="mb-2 flex flex-col mt-4 ">
       <div className=" flex max-w-[1000px] justify-center items-center  m-auto flex-col text-center ">
@@ -770,8 +788,8 @@ const MapComponent = () => {
             <div className="absolute top-[10px] left-2.5 z-[1000] bg-white bg-opacity-90 p-3 rounded-md shadow-lg text-sm">
               <p className="font-bold text-lg">Position Info</p>
               <hr className="my-1" />
-              <p>{convertToDMS(position[0]), 'lat'}</p>
-              <p>{convertToDMS(position[1]), 'lng'}</p>
+              <p>Lat: {convertToDMSPopup(position[0], true)}</p>
+              <p>Lng: {convertToDMSPopup(position[1], false)}</p>
 
               <p>
                 Distance: <span className="font-bold">{polylineDistance.toFixed(2)} mi</span>
